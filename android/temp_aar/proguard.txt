@@ -1,0 +1,36 @@
+-keep class org.spongycastle.jcajce.provider.asymmetric.RSA$Mappings** { *; }
+-keep class org.spongycastle.jcajce.provider.asymmetric.rsa.PSSSignatureSpi$SHA256withRSA** { *; }
+-keep class org.spongycastle.jcajce.provider.symmetric.AES$AlgParamsGCM**
+-keep class org.spongycastle.jcajce.provider.symmetric.AES$ECB**
+-keep class org.spongycastle.jcajce.provider.symmetric.AES$Mappings**
+-keep class org.spongycastle.jcajce.provider.symmetric.AES {*;}
+
+-keep class org.emvco.threeds.core.MessageExtension { *; }
+-keepclassmembers,allowobfuscation class com.usdk.android.Attributes {
+    <methods>;
+}
+-keep class com.usdk.android.ScaDeviceInfo { *; }
+-keep,allowobfuscation class com.usdk.android.ScaDeviceInfo
+-keep class com.usdk.android.ScaData { *; }
+-keep class com.usdk.android.UsdkManagerResponse** { *; }
+-keep class com.usdk.android.UsdkUsageCounter$** { *; }
+-keep class com.usdk.android.UsdkPrompt { *; }
+-keep class com.usdk.android.LocalBioAuth { *; }
+-keep class com.usdk.android.AttrGatheringMethod { *; }
+-keep class com.usdk.android.SupportedVersionResponse { *; }
+-keep class com.usdk.android.DirectoryServerItem { *; }
+-keep class com.usdk.android.AuthenticationResponse { *; }
+
+-keep class * extends java.lang.Enum { *; }
+
+-dontwarn org.bouncycastle.crypto.**
+-dontwarn com.google.android.gms.safetynet.**
+-dontwarn com.scottyab.rootbeer.**
+
+-keepclassmembers,allowobfuscation class * {
+  <init>(...);
+  @com.google.gson.annotations.SerializedName <fields>;
+}
+-keep class com.google.gson.reflect.TypeToken
+-keep class * extends com.google.gson.reflect.TypeToken
+-keep public class * implements java.lang.reflect.Type

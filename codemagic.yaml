@@ -1,0 +1,202 @@
+# 🚀 Codemagic CI/CD Configuration for Amina App
+# ملف تكوين Codemagic لبناء تطبيق أمينة على iOS و Android
+
+workflows:
+  # ============================================
+  # iOS Release Build Workflow
+  # ============================================
+  ios-release:
+    name: 📱 iOS Release Build
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.amina.app
+      vars:
+        XCODE_WORKSPACE: "ios/Runner.xcworkspace"
+        XCODE_SCHEME: "Runner"
+        BUNDLE_ID: "com.amina.app"
+        APP_STORE_CONNECT_ISSUER_ID: Encrypted(...)
+        APP_STORE_CONNECT_KEY_IDENTIFIER: Encrypted(...)
+        APP_STORE_CONNECT_PRIVATE_KEY: Encrypted(...)
+        CERTIFICATE_PRIVATE_KEY: Encrypted(...)
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: 🔑 Set up code signing
+        script: |
+          keychain initialize
+
+      - name: 📦 Get Flutter packages
+        script: |
+          flutter pub get
+
+      - name: 🔨 Install CocoaPods dependencies
+        script: |
+          cd ios
+          pod install
+
+      - name: 🏗️ Build iOS app
+        script: |
+          flutter build ipa --release \
+            --export-options-plist=/Users/builder/export_options.plist
+
+      - name: ✅ Verify build output
+        script: |
+          ls -lh build/ios/ipa/*.ipa
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_testflight: true
+
+  # ============================================
+  # iOS Debug Build Workflow (for testing)
+  # ============================================
+  ios-debug:
+    name: 🔧 iOS Debug Build
+    instance_type: mac_mini_m2
+    max_build_duration: 30
+    environment:
+      vars:
+        BUNDLE_ID: "com.amina.app"
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: 📦 Get Flutter packages
+        script: |
+          flutter pub get
+
+      - name: 🔨 Install CocoaPods dependencies
+        script: |
+          cd ios
+          pod install
+
+      - name: 🏗️ Build iOS app (Debug)
+        script: |
+          flutter build ios --debug --no-codesign
+
+    artifacts:
+      - build/ios/Debug-iphoneos/*.app
+
+  # ============================================
+  # Android Release Build Workflow
+  # ============================================
+  android-release:
+    name: 🤖 Android Release Build
+    instance_type: linux_x2
+    max_build_duration: 60
+    environment:
+      android_signing:
+        - amina_keystore
+      groups:
+        - google_play
+      vars:
+        PACKAGE_NAME: "com.amina.app"
+      flutter: stable
+      java: 17
+    scripts:
+      - name: 📦 Get Flutter packages
+        script: |
+          flutter pub get
+
+      - name: 🏗️ Build Android APK
+        script: |
+          flutter build apk --release
+
+      - name: 🏗️ Build Android App Bundle
+        script: |
+          flutter build appbundle --release
+
+      - name: ✅ Verify build outputs
+        script: |
+          ls -lh build/app/outputs/flutter-apk/*.apk
+          ls -lh build/app/outputs/bundle/release/*.aab
+
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
+      - build/app/outputs/bundle/release/*.aab
+      - build/app/outputs/mapping/release/mapping.txt
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: true
+
+  # ============================================
+  # Both Platforms Build Workflow
+  # ============================================
+  ios-android-release:
+    name: 🚀 iOS + Android Release
+    instance_type: mac_mini_m2
+    max_build_duration: 90
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.amina.app
+      android_signing:
+        - amina_keystore
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      java: 17
+    scripts:
+      - name: 📦 Get Flutter packages
+        script: |
+          flutter pub get
+
+      # iOS Build
+      - name: 🍎 Install iOS dependencies
+        script: |
+          cd ios
+          pod install
+          cd ..
+
+      - name: 🍎 Build iOS
+        script: |
+          flutter build ipa --release
+
+      # Android Build
+      - name: 🤖 Build Android APK
+        script: |
+          flutter build apk --release
+
+      - name: 🤖 Build Android App Bundle
+        script: |
+          flutter build appbundle --release
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/app/outputs/flutter-apk/*.apk
+      - build/app/outputs/bundle/release/*.aab
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true

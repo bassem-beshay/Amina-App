@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxWidth="440dp"
+    android:background="@drawable/fingerprint_bottomsheet_background"
+    >
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:ellipsize="marquee"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="3sp"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textColor="@color/biometric_title_color"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/description_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_text"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="24dp"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:maxLines="4"
+        android:textColor="@color/biometric_description_color"
+        android:textSize="16sp"
+        />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_below="@id/description_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        app:srcCompat="@drawable/ic_fingerprint"
+        />
+
+    <ImageView
+        android:id="@+id/error_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_below="@+id/description_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_error_outline_red"
+        />
+
+    <TextView
+        android:id="@+id/icon_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/icon"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/biometric_icon_text_color"
+        android:textSize="12sp"
+        android:text="@string/fingerprint_icon_text"
+        />
+
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/icon_text"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/biometric_cancel_button_background"
+        android:text="@android:string/cancel"
+        android:textColor="@color/biometric_cancel_button_text_color"
+        android:theme="@style/BiometricCancelButtonStyle"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        />
+
+</RelativeLayout>

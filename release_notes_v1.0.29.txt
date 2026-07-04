@@ -1,0 +1,88 @@
+===========================================
+📱 Amina Platform - Release Notes
+الإصدار 1.0.29 (Build 29)
+===========================================
+
+🇦🇪 العربية - Arabic
+===========================================
+
+🆕 الجديد في هذا الإصدار:
+
+🔔 إصلاح مشكلة صوت الإشعارات
+• إصلاح مشكلة عدم ظهور صوت الإشعارات
+• إعادة إنشاء قنوات الإشعارات بإعدادات محسّنة
+• رفع أولوية الإشعارات لضمان الوصول
+• تحسين الاهتزاز وإضاءة LED
+
+🎨 تحسينات الواجهة
+• تمرير تلقائي للخدمات السريعة كل 7 ثواني
+• تحسين تجربة التصفح والتنقل
+• رسوم متحركة أكثر سلاسة
+
+⚡ تحسينات الأداء
+• تحسين سرعة التطبيق
+• تقليل استهلاك البطارية
+• إصلاح عدة مشاكل تقنية
+
+🔒 الأمان
+• تحسين أمان البيانات
+• تحديث مكتبات الأمان
+
+
+🇬🇧 English
+===========================================
+
+🆕 What's New in This Version:
+
+🔔 Notification Sound Fix
+• Fixed notification sound not playing issue
+• Recreated notification channels with improved settings
+• Increased notification priority for better delivery
+• Enhanced vibration and LED light
+
+🎨 UI Enhancements
+• Auto-scroll for quick services every 7 seconds
+• Improved browsing and navigation experience
+• Smoother animations
+
+⚡ Performance Improvements
+• Faster app performance
+• Reduced battery consumption
+• Various technical bug fixes
+
+🔒 Security
+• Enhanced data security
+• Updated security libraries
+
+
+===========================================
+Technical Details (للمطورين فقط)
+===========================================
+
+Version Name: 1.0.29
+Version Code: 29
+Min SDK: 21 (Android 5.0)
+Target SDK: 34 (Android 14)
+
+Critical Changes:
+- Changed notification channel IDs to force recreation:
+  * amina_notifications → amina_notifications_v2
+  * amina_urgent → amina_urgent_v2
+  * amina_chat → amina_chat_v2
+- Changed importance from HIGH to MAX for all channels
+- Changed priority from HIGH to MAX
+- Updated AndroidManifest default channel
+- Enhanced notification settings
+
+Files Modified:
+- lib/services/push_notification_service.dart
+- android/app/src/main/AndroidManifest.xml
+- pubspec.yaml (1.0.28+28 → 1.0.29+29)
+
+Dependencies: No changes
+
+IMPORTANT:
+Users MUST uninstall and reinstall the app OR
+clear app data to apply new notification channels!
+
+===========================================

@@ -1,0 +1,173 @@
+# 🍎 GitHub Actions Workflow for iOS Build
+# ملف GitHub Actions لبناء تطبيق Amina على iOS
+
+name: 📱 iOS Build
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build Type'
+        required: true
+        default: 'release'
+        type: choice
+        options:
+          - release
+          - debug
+
+env:
+  FLUTTER_VERSION: '3.24.5'
+  XCODE_VERSION: '15.0'
+
+jobs:
+  # ============================================
+  # iOS Build Job
+  # ============================================
+  build-ios:
+    name: 🏗️ Build iOS App
+    runs-on: macos-14
+    timeout-minutes: 60
+
+    steps:
+      # الخطوة 1: Checkout الكود
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      # الخطوة 2: تثبيت Flutter
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      # الخطوة 3: التحقق من نسخة Flutter
+      - name: ✅ Verify Flutter installation
+        run: |
+          flutter --version
+          flutter doctor -v
+
+      # الخطوة 4: تحميل Flutter dependencies
+      - name: 📦 Get Flutter dependencies
+        run: flutter pub get
+
+      # الخطوة 5: تثبيت CocoaPods
+      - name: 🔨 Install CocoaPods dependencies
+        run: |
+          cd ios
+          sudo gem install cocoapods
+          pod install --verbose
+          cd ..
+
+      # الخطوة 6: التحقق من تثبيت CocoaPods
+      - name: ✅ Verify CocoaPods installation
+        run: |
+          if [ -d "ios/Pods" ]; then
+            echo "✅ CocoaPods installed successfully"
+            ls -la ios/Pods/
+          else
+            echo "❌ CocoaPods installation failed"
+            exit 1
+          fi
+
+      # الخطوة 7: Build iOS (Debug - بدون code signing)
+      - name: 🏗️ Build iOS app (Debug)
+        if: github.event.inputs.build_type == 'debug' || github.event_name == 'pull_request'
+        run: |
+          flutter build ios --debug --no-codesign
+
+      # الخطوة 8: Build iOS (Release)
+      - name: 🏗️ Build iOS app (Release)
+        if: github.event.inputs.build_type == 'release' || github.event_name == 'push'
+        env:
+          # أضف هنا Secrets للـ code signing إذا كنت تريد بناء Release
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+        run: |
+          # لبناء Release مع code signing، ستحتاج إلى إعداد certificates
+          # حالياً سنبني بدون code signing للتأكد من أن الكود يعمل
+          flutter build ios --release --no-codesign
+
+      # الخطوة 9: عرض معلومات البيلد
+      - name: 📊 Display build info
+        run: |
+          echo "================================================"
+          echo "✅ iOS Build completed successfully!"
+          echo "================================================"
+          echo "Build outputs:"
+          ls -lah build/ios/iphoneos/
+          echo ""
+          echo "Flutter version: $(flutter --version)"
+          echo "Xcode version: $(xcodebuild -version)"
+          echo "================================================"
+
+      # الخطوة 10: رفع build artifacts
+      - name: 📤 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build-${{ github.run_number }}
+          path: |
+            build/ios/iphoneos/Runner.app
+            ios/Podfile.lock
+          retention-days: 30
+
+  # ============================================
+  # iOS Archive Job (للنشر على App Store)
+  # ============================================
+  archive-ios:
+    name: 📦 Archive iOS App (App Store)
+    runs-on: macos-14
+    timeout-minutes: 60
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: 📦 Get Flutter dependencies
+        run: flutter pub get
+
+      - name: 🔨 Install CocoaPods dependencies
+        run: |
+          cd ios
+          pod install
+          cd ..
+
+      # هنا يمكنك إضافة خطوات code signing و archiving
+      # باستخدام fastlane أو xcodebuild
+      - name: 🏗️ Build IPA (App Store)
+        env:
+          # أضف هنا Secrets الخاصة بـ App Store Connect
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+        run: |
+          echo "⚠️ Code signing not configured yet"
+          echo "📝 To enable App Store builds, configure:"
+          echo "   1. Apple Developer certificates"
+          echo "   2. Provisioning profiles"
+          echo "   3. App Store Connect API key"
+          echo ""
+          echo "For now, building without code signing..."
+          flutter build ios --release --no-codesign
+
+      - name: 📤 Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa-${{ github.run_number }}
+          path: build/ios/iphoneos/Runner.app
+          retention-days: 60

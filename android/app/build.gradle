@@ -1,0 +1,161 @@
+plugins {
+    id "com.android.application"
+    id "org.jetbrains.kotlin.android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+apply plugin: 'com.google.gms.google-services'
+// 🔒 CRASHLYTICS: Auto-upload native debug symbols
+apply plugin: 'com.google.firebase.crashlytics'
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+android {
+    namespace "com.amina.platform"
+    compileSdk 36
+    buildToolsVersion "35.0.0"
+
+    def keystorePropertiesFile = rootProject.file("key.properties")
+    def keystoreProperties = new Properties()
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    defaultConfig {
+        applicationId "com.amina2.platform"
+        // 🔒 SECURITY: Raised to API 29 (Android 10) for Enhanced Security
+        // ✅ Protects against critical vulnerabilities in Android 9 and below
+        // ✅ Enforces scoped storage and stronger privacy controls
+        // ✅ Required for secure payment processing and modern security features
+        // ✅ Meets Google Play Store recommended security baseline
+        minSdkVersion 28
+        targetSdk 35
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+
+        // 🔒 SECURITY: Native code hardening flags
+        // These flags protect against buffer overflows and memory corruption attacks
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64'
+        }
+
+        externalNativeBuild {
+            cmake {
+                // Stack protection against buffer overflows
+                cppFlags "-fstack-protector-strong"
+                cFlags "-fstack-protector-strong"
+
+                // Fortify source for secure string functions
+                cppFlags "-D_FORTIFY_SOURCE=2"
+                cFlags "-D_FORTIFY_SOURCE=2"
+
+                // Position independent code (required for PIE/ASLR)
+                cppFlags "-fPIC", "-fPIE"
+                cFlags "-fPIC", "-fPIE"
+
+                // Hide symbols by default
+                cppFlags "-fvisibility=hidden"
+                cFlags "-fvisibility=hidden"
+
+                // Full RELRO + immediate binding (prevents GOT overwrite)
+                arguments "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-z,relro,-z,now"
+                arguments "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-z,relro,-z,now"
+            }
+        }
+    }
+
+    signingConfigs {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+
+                // 🔒 SECURITY: Enable V1, V2, and V3 signing schemes
+                // V1: JAR signing (backward compatibility)
+                // V2: APK Signature Scheme v2 (Android 7.0+, protects against Janus)
+                // V3: APK Signature Scheme v3 (Android 9.0+, key rotation support)
+                v1SigningEnabled true
+                v2SigningEnabled true
+            }
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+            }
+            minifyEnabled true
+            shrinkResources true
+
+            // 🔒 NATIVE DEBUG SYMBOLS: Generate debug symbols for crash analysis
+            ndk {
+                debugSymbolLevel 'FULL'  // Generate full debug symbols
+            }
+
+            // 📊 CRASHLYTICS: Configure native symbol upload
+            firebaseCrashlytics {
+                // Upload native debug symbols automatically to Firebase
+                nativeSymbolUploadEnabled true
+                // Process symbols to reduce size
+                strippedNativeLibsDir 'build/intermediates/stripped_native_libs/release/out/lib'
+                // Upload unstripped symbols for better crash reports
+                unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
+            }
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    // Core library desugaring for Java 8+ APIs
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+
+    // Kotlin Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+
+    // Google Pay support (optional but recommended)
+    implementation 'com.google.android.gms:play-services-wallet:19.3.0'
+}

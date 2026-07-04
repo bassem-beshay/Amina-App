@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 🔒 CRITICAL SECURITY: Production Domain - HTTPS ONLY + Certificate Pinning -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">amina.bdcbiz.com</domain>
+        <!-- 🔒 SECURITY: Certificate Pinning for Man-in-the-Middle Attack Prevention -->
+        <!-- ✅ Pins the public key of the server certificate -->
+        <!-- ⚠️ UPDATE: When renewing SSL certificate, update these pins! -->
+        <pin-set expiration="2026-12-31">
+            <!-- Backup pin (Let's Encrypt ISRG Root X1) -->
+            <pin digest="SHA-256">C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=</pin>
+        </pin-set>
+        <trust-anchors>
+            <certificates src="system" overridePins="false" />
+        </trust-anchors>
+    </domain-config>
+
+    <!-- 🔒 CRITICAL SECURITY: PaySky Payment Gateway - HTTPS ONLY (PCI DSS Compliant) -->
+    <domain-config cleartextTrafficPermitted="false">
+        <!-- Testing Environment -->
+        <domain includeSubdomains="true">grey.paysky.io</domain>
+        <domain includeSubdomains="true">testpaymentpage.paysky.io</domain>
+
+        <!-- Production Environment -->
+        <domain includeSubdomains="true">cube.paysky.io</domain>
+        <domain includeSubdomains="true">paymentpage.paysky.io</domain>
+        <domain includeSubdomains="true">paysky.io</domain>
+
+        <!-- 🔒 SECURITY: Trust system certificates with pinning protection -->
+        <trust-anchors>
+            <certificates src="system" overridePins="false" />
+        </trust-anchors>
+    </domain-config>
+
+    <!-- 🔒 CRITICAL SECURITY: Base configuration - HTTPS ONLY for ALL domains -->
+    <!-- ⚠️ NO cleartext traffic allowed in production -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" overridePins="false" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

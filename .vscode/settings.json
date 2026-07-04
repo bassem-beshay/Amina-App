@@ -1,0 +1,48 @@
+{
+  "terminal.integrated.env.windows": {
+    "LANG": "ar_SA.UTF-8",
+    "CHCP": "65001",
+    "PYTHONIOENCODING": "utf-8"
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell (Arabic)",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell (Arabic)": {
+      "source": "PowerShell",
+      "args": ["-NoExit", "-Command", "chcp 65001; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8"]
+    },
+    "Command Prompt (Arabic)": {
+      "path": "cmd.exe",
+      "args": ["/K", "chcp 65001"]
+    }
+  },
+  "terminal.external.windowsExec": "wt.exe",
+  "terminal.explorerKind": "external",
+  "terminal.integrated.tabs.enabled": false,
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.fontFamily": "'Courier New', monospace",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.unicodeVersion": "11",
+  "terminal.integrated.rightClickBehavior": "default",
+  "terminal.integrated.gpuAcceleration": "off",
+  "editor.fontFamily": "'Courier New', 'Consolas', monospace",
+  "editor.fontSize": 14,
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  "files.encoding": "utf8",
+  "files.autoGuessEncoding": true,
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "rtlTextDocuments.enable": true,
+  "rtlTextDocuments.forceMode": "rtl",
+  "vscode_custom_css_silent.imports": [
+    "file:///c%3A/Users/win/.vscode/extensions/alirezakay.rtltextdocuments-0.1.4/assets/cascadia.css",
+    "file:///c%3A/Users/win/.vscode/extensions/alirezakay.rtltextdocuments-0.1.4/assets/rtl.css",
+    "file:///c%3A/Users/win/.vscode/extensions/alirezakay.rtltextdocuments-0.1.4/assets/rtl.js"
+  ]
+}

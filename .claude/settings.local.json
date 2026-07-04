@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter clean:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(ssh root@31.97.46.103 \"journalctl -u gunicorn --since ''30 seconds ago'' | grep -i firebase | tail -5\")",
+      "Bash(ssh root@31.97.46.103 \"journalctl -u gunicorn --since ''30 seconds ago'' | tail -20\")",
+      "Bash(ssh:*)",
+      "Bash(ren:*)",
+      "Bash(dir)",
+      "Bash(flutter pub add:*)",
+      "Bash(flutter run)",
+      "Bash(flutter attach:*)",
+      "Bash(git restore:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(adb uninstall:*)",
+      "Bash(adb reboot:*)",
+      "Bash(adb devices:*)",
+      "Bash(taskkill:*)",
+      "Bash(nul)",
+      "Bash(nc:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(awk:*)",
+      "Bash(dir:*)",
+      "Bash(git stash:*)",
+      "Bash(cd:*)",
+      "Bash(chcp)",
+      "Bash(cmd.exe /c chcp:*)",
+      "Bash(powershell:*)",
+      "WebSearch",
+      "Bash(code --install-extension:*)",
+      "Bash(wt --version:*)",
+      "Bash(flutter devices:*)",
+      "Bash(flutter emulators:*)",
+      "Bash(adb:*)",
+      "Bash(flutter run:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

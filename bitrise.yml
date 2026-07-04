@@ -1,0 +1,262 @@
+# 🚀 Bitrise CI/CD Configuration for Amina App
+# ملف تكوين Bitrise لبناء تطبيق أمينة على iOS و Android
+
+format_version: '13'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+# ============================================
+# App Configuration
+# ============================================
+app:
+  envs:
+    - FLUTTER_VERSION: stable
+    - XCODE_PROJECT_PATH: ios/Runner.xcworkspace
+    - XCODE_SCHEME: Runner
+    - BUNDLE_ID: com.amina.app
+    - DEVELOPMENT_TEAM: 9F54T23LQ6
+
+# ============================================
+# Workflows
+# ============================================
+workflows:
+  # ------------------------------------------
+  # iOS Release Build
+  # ------------------------------------------
+  ios-release:
+    description: 📱 Build iOS Release
+    steps:
+      # Git Clone
+      - git-clone@8:
+          title: 📥 Clone Git Repository
+          inputs:
+            - clone_depth: '0'
+
+      # Install Flutter
+      - flutter-installer@0:
+          title: 🔧 Install Flutter SDK
+          inputs:
+            - version: $FLUTTER_VERSION
+            - is_update: 'true'
+
+      # Flutter Doctor
+      - script@1:
+          title: ✅ Flutter Doctor
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter doctor -v
+
+      # Get Flutter Dependencies
+      - script@1:
+          title: 📦 Get Flutter Dependencies
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter pub get
+
+      # Install CocoaPods
+      - cocoapods-install@2:
+          title: 🔨 Install CocoaPods
+          inputs:
+            - source_root_path: $BITRISE_SOURCE_DIR/ios
+            - verbose: 'true'
+
+      # Verify CocoaPods Installation
+      - script@1:
+          title: ✅ Verify CocoaPods Installation
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                if [ -d "ios/Pods" ]; then
+                  echo "✅ CocoaPods installed successfully"
+                  ls -la ios/Pods/
+                else
+                  echo "❌ CocoaPods installation failed"
+                  exit 1
+                fi
+
+      # Build iOS (No Codesign for testing)
+      - script@1:
+          title: 🏗️ Build iOS App (No Codesign)
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter build ios --release --no-codesign
+
+      # Alternative: Build with Xcode Archive (requires code signing)
+      # - xcode-archive@5:
+      #     title: 🏗️ Build iOS Archive
+      #     inputs:
+      #       - project_path: $XCODE_PROJECT_PATH
+      #       - scheme: $XCODE_SCHEME
+      #       - distribution_method: app-store
+      #       - automatic_code_signing: api-key
+      #       - configuration: Release
+
+      # Deploy to Bitrise
+      - deploy-to-bitrise-io@2:
+          title: 📤 Deploy Build Artifacts
+          inputs:
+            - deploy_path: build/ios/iphoneos/Runner.app
+            - is_compress: 'true'
+
+  # ------------------------------------------
+  # iOS Debug Build
+  # ------------------------------------------
+  ios-debug:
+    description: 🔧 Build iOS Debug
+    steps:
+      - git-clone@8:
+          title: 📥 Clone Git Repository
+
+      - flutter-installer@0:
+          title: 🔧 Install Flutter SDK
+          inputs:
+            - version: $FLUTTER_VERSION
+
+      - script@1:
+          title: 📦 Get Flutter Dependencies
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter pub get
+
+      - cocoapods-install@2:
+          title: 🔨 Install CocoaPods
+          inputs:
+            - source_root_path: $BITRISE_SOURCE_DIR/ios
+
+      - script@1:
+          title: 🏗️ Build iOS App (Debug)
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter build ios --debug --no-codesign
+
+      - deploy-to-bitrise-io@2:
+          title: 📤 Deploy Build Artifacts
+
+  # ------------------------------------------
+  # Android Release Build
+  # ------------------------------------------
+  android-release:
+    description: 🤖 Build Android Release
+    steps:
+      - git-clone@8:
+          title: 📥 Clone Git Repository
+
+      - flutter-installer@0:
+          title: 🔧 Install Flutter SDK
+          inputs:
+            - version: $FLUTTER_VERSION
+
+      - script@1:
+          title: 📦 Get Flutter Dependencies
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter pub get
+
+      - script@1:
+          title: 🏗️ Build Android APK
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter build apk --release
+
+      - script@1:
+          title: 🏗️ Build Android App Bundle
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter build appbundle --release
+
+      - deploy-to-bitrise-io@2:
+          title: 📤 Deploy Build Artifacts
+          inputs:
+            - deploy_path: |
+                build/app/outputs/flutter-apk/app-release.apk
+                build/app/outputs/bundle/release/app-release.aab
+
+  # ------------------------------------------
+  # Primary Workflow (iOS + Android)
+  # ------------------------------------------
+  primary:
+    description: 🚀 Build Both iOS and Android
+    steps:
+      - git-clone@8:
+          title: 📥 Clone Git Repository
+
+      - flutter-installer@0:
+          title: 🔧 Install Flutter SDK
+          inputs:
+            - version: $FLUTTER_VERSION
+
+      - script@1:
+          title: 📦 Get Flutter Dependencies
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter pub get
+
+      # iOS Build
+      - cocoapods-install@2:
+          title: 🍎 Install iOS CocoaPods
+          inputs:
+            - source_root_path: $BITRISE_SOURCE_DIR/ios
+
+      - script@1:
+          title: 🍎 Build iOS
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter build ios --release --no-codesign
+
+      # Android Build
+      - script@1:
+          title: 🤖 Build Android APK
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter build apk --release
+
+      - script@1:
+          title: 🤖 Build Android App Bundle
+          inputs:
+            - content: |
+                #!/bin/bash
+                set -ex
+                flutter build appbundle --release
+
+      - deploy-to-bitrise-io@2:
+          title: 📤 Deploy All Build Artifacts
+          inputs:
+            - deploy_path: |
+                build/ios/iphoneos/Runner.app
+                build/app/outputs/flutter-apk/app-release.apk
+                build/app/outputs/bundle/release/app-release.aab
+
+# ============================================
+# Trigger Map (متى يتم تشغيل كل workflow)
+# ============================================
+trigger_map:
+  - push_branch: master
+    workflow: primary
+  - push_branch: main
+    workflow: primary
+  - push_branch: develop
+    workflow: ios-debug
+  - pull_request_source_branch: "*"
+    workflow: ios-debug

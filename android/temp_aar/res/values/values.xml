@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="biometric_cancel_button_background">#FFFFFF</color>
+    <color name="biometric_cancel_button_text_color">#1a73e8</color>
+    <color name="biometric_description_color">@android:color/black</color>
+    <color name="biometric_icon_text_color">#767676</color>
+    <color name="biometric_icon_text_color_error">#d93025</color>
+    <color name="biometric_title_color">@android:color/black</color>
+    <string name="already_initialized_error_msg">UsdkThreeDS2ServiceImpl was initialized already</string>
+    <string name="app_name">Challenge</string>
+    <string name="btn_back_to_app">Back to application</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="default_local_bio_auth_message">Authenticate on your device to continue</string>
+    <string name="default_local_bio_auth_title">Local Authentication</string>
+    <string name="dialog_msg_app_lost_state">Failed to process your request, please navigate back to the app and retry the attempt or restart the application.\n\nTransaction identifier: %1$s</string>
+    <string name="dialog_title_app_lost_state">Fatal Error encountered</string>
+    <string name="down_arrow">▼</string>
+    <string name="empty_usdk_prompt_response_msg">You must provide a response in order to proceed.</string>
+    <string name="encrypt_stats_failure_msg">Encrypt statistics failure. Please contact with mSIGNIA administrator</string>
+    <string name="encrypting_device_data_error_msg">Error during encrypting device data occurred</string>
+    <string name="fingerprint_icon_text">Touch the fingerprint sensor</string>
+    <string name="formatting_device_data_error_msg">Error during formatting device data occurred</string>
+    <string name="invalid_licence_key_error_msg">Invalid license key, please contact mSignia administrator</string>
+    <string name="invalid_parameter_error_msg">\'%1$s\' is not valid!</string>
+    <string name="invalid_parameter_received_error_msg">\'%1$s\' can not be null or empty!</string>
+    <string name="invalid_signed_content_passed_error_msg">Invalid AcsSignedContent received</string>
+    <string name="invlid_payload_parameter">Failed to validate \'%1$s\'!</string>
+    <string name="license_key_null_error_msg">The license key is null. Please pass it via config parameters!</string>
+    <string name="msg_app_lost_state">Could not call the application back after challenge as it seems to have gone under high memory pressure</string>
+    <string name="msg_can_not_decrypt_cres">Can not decrypt CRes message</string>
+    <string name="msg_element_not_recognised">Message element not recognised</string>
+    <string name="msg_invalid_formatted">Invalid Formatted Message</string>
+    <string name="msg_invalid_message_for_receiving_component">Invalid Message for the receiving component</string>
+    <string name="msg_invalid_message_type">Invalid Message Type</string>
+    <string name="msg_invalid_transaction_id">The Transaction ID received was invalid</string>
+    <string name="msg_unexpected_sdk_error">Unexpected uSDK error.</string>
+    <string name="no_btn">No</string>
+    <string name="not_initialized_error_msg">UsdkThreeDS2ServiceImpl is not initialized</string>
+    <string name="parameter_is_not_present_or_incorrect">\'%1$s\' is not present or has incorrect value in challenge response!</string>
+    <string name="parameter_null_error_msg">The \'%1$s\' argument can not be null!</string>
+    <string name="parameter_of_message_extension_is_not_present_or_incorrect">\'%1$s\' of message extension is not present or incorrect</string>
+    <string name="parameter_should_be_present">\'%1$s\' should be present in challenge response!</string>
+    <string name="select_ds_dialog_title">Please select Directory Server</string>
+    <string name="threeds_debugger_attached_warning">A debugger is attached to the App.</string>
+    <string name="threeds_device_jailbroken_warning">The device is jailbroken</string>
+    <string name="threeds_emulator_used_warning">An emulator is being used to run the App.</string>
+    <string name="threeds_failed_process_cancellation_msg">Failed process cancellation</string>
+    <string name="threeds_illegal_ui_type_msg">Illegal UI Type received from server</string>
+    <string name="threeds_incorrect_answer_length_msg">The answer can not be either blank or longer than %1$d characters!</string>
+    <string name="threeds_no_answer_msg">Enter your answer please</string>
+    <string name="threeds_no_choice_msg">Make your choice please</string>
+    <string name="threeds_ok_label">OK</string>
+    <string name="threeds_oob_auth_app_launch_failure_msg">Failed to launch authenticator app! Please make sure it is installed!</string>
+    <string name="threeds_oob_continue_label">Continue</string>
+    <string name="threeds_os_not_supported_warning">The OS or the OS version is not supported.</string>
+    <string name="threeds_sdk_integrity_tampered_warning">The integrity of the SDK has been tampered.</string>
+    <string name="toast_bio_auth_permanently_locked_out">Too many failed attempts for local authentication, please lock and unlock your device before next attempt</string>
+    <string name="toast_bio_auth_temporary_locked_out">Too many failed attempts for local authentication, please retry later</string>
+    <string name="toast_ds_not_selected_msg">Please, choose a Directory Server</string>
+    <string name="transaction_initialization_error_msg">Failed to initialize 3DS transaction!</string>
+    <string name="up_arrow">▲</string>
+    <string name="yes_btn">Yes</string>
+    <style name="BiometricCancelButtonStyle" parent="Widget.AppCompat.Button.Borderless">
+        <item name="colorAccent">@color/biometric_cancel_button_background</item>
+        <item name="colorPrimary">@color/biometric_cancel_button_background</item>
+    </style>
+    <style name="DefaultChallengeTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="UsdkFingerprintDialogStyle" parent="android:Theme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+    <style name="UsdkTheme.Prompt" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

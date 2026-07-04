@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+🔒 SECURITY: Data Extraction Rules for Android 12+ (API 31+)
+This file prevents automatic backup and cloud backup of app data
+to protect sensitive user information from unauthorized access.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- 🔒 SECURITY: Disable cloud backup completely -->
+        <include domain="root" />
+        <exclude domain="root" path="." />
+    </cloud-backup>
+
+    <device-transfer>
+        <!-- 🔒 SECURITY: Disable device-to-device transfer -->
+        <include domain="root" />
+        <exclude domain="root" path="." />
+    </device-transfer>
+</data-extraction-rules>

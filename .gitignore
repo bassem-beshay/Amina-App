@@ -1,0 +1,104 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# FVM (Flutter Version Manager)
+.fvm/flutter_sdk
+.fvm/versions
+
+# Flutter SDK (downloaded in CI)
+/flutter/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+aminaapplication/
+nul
+
+# ========================================
+# 🔒 SECURITY: Sensitive Files
+# ========================================
+# Never commit these files to version control!
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.env
+env.dart
+secrets.dart
+api_keys.dart
+
+# Android signing keys and keystores
+*.jks
+*.keystore
+key.properties
+keystore.properties
+google-services.json
+firebase-adminsdk.json
+
+# iOS certificates and provisioning profiles
+*.p12
+*.mobileprovision
+*.certSigningRequest
+
+# API keys and configuration
+**/config/secrets/*
+**/config/keys/*
+**/assets/secrets/*
+
+# Database files with sensitive data
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Temporary files
+*.tmp
+*.temp
+
+# Log files with potential sensitive data
+*.log
+logs/
+*.log.*

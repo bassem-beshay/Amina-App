@@ -1,0 +1,81 @@
+===========================================
+📱 Amina Platform - Release Notes
+الإصدار 1.0.28 (Build 28)
+===========================================
+
+🇦🇪 العربية - Arabic
+===========================================
+
+🆕 الجديد في هذا الإصدار:
+
+🔔 تحسينات الإشعارات
+• إضافة صوت واهتزاز لجميع الإشعارات
+• أنماط اهتزاز مميزة لكل نوع إشعار
+• إضاءة LED بلون التطبيق للأجهزة الداعمة
+• تحسين ظهور الإشعارات في الخلفية
+
+🎨 تحسينات الواجهة
+• تمرير تلقائي للخدمات السريعة كل 7 ثواني
+• تحسين تجربة التصفح والتنقل
+• رسوم متحركة أكثر سلاسة
+
+⚡ تحسينات الأداء
+• تحسين سرعة التطبيق
+• تقليل استهلاك البطارية
+• إصلاح عدة مشاكل تقنية
+
+🔒 الأمان
+• تحسين أمان البيانات
+• تحديث مكتبات الأمان
+
+
+🇬🇧 English
+===========================================
+
+🆕 What's New in This Version:
+
+🔔 Notification Improvements
+• Added sound & vibration for all notifications
+• Unique vibration patterns for each notification type
+• LED light with app brand color for supported devices
+• Enhanced background notification delivery
+
+🎨 UI Enhancements
+• Auto-scroll for quick services every 7 seconds
+• Improved browsing and navigation experience
+• Smoother animations
+
+⚡ Performance Improvements
+• Faster app performance
+• Reduced battery consumption
+• Various technical bug fixes
+
+🔒 Security
+• Enhanced data security
+• Updated security libraries
+
+
+===========================================
+Technical Details (للمطورين فقط)
+===========================================
+
+Version Name: 1.0.28
+Version Code: 28
+Min SDK: 21 (Android 5.0)
+Target SDK: 34 (Android 14)
+
+Changes:
+- Updated push_notification_service.dart
+- Added vibration patterns support
+- Added LED notification support
+- Implemented auto-scroll for PageView
+- Fixed notification sound issues
+- Improved timer management
+- Better resource cleanup
+
+Dependencies Updated:
+- flutter_local_notifications: 17.0.0
+- firebase_messaging: 14.7.9
+- permission_handler: 11.3.0
+
+===========================================
