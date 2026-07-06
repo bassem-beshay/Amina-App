@@ -25,7 +25,7 @@ on:
           - debug
 
 env:
-  FLUTTER_VERSION: '3.24.5'
+  FLUTTER_VERSION: '3.38.8'
   XCODE_VERSION: '15.0'
 
 jobs:
