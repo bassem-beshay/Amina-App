@@ -22,6 +22,25 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.amina.payment</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>aminaapp</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.amina.google</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.752936570315-ht42rphdcb9vu99migdi1957t7r6diqb</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -34,6 +53,27 @@
 	<string>نحتاج إلى الوصول إلى موقعك لتحديد مدينتك تلقائياً</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>نحتاج للوصول إلى معرض الصور لتتمكن من رفع صورتك الشخصية والمستندات المطلوبة</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneClassName</key>
+					<string>UIWindowScene</string>
+					<key>UISceneConfigurationName</key>
+					<string>flutter</string>
+					<key>UISceneDelegateClassName</key>
+					<string>FlutterSceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>Main</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -52,27 +92,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<!-- Deep Linking for PaySky payment callbacks -->
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>aminaapp</string>
-			</array>
-			<key>CFBundleURLName</key>
-			<string>com.amina.payment</string>
-		</dict>
-		<!-- Google Sign-In URL Scheme -->
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.752936570315-ht42rphdcb9vu99migdi1957t7r6diqb</string>
-			</array>
-			<key>CFBundleURLName</key>
-			<string>com.amina.google</string>
-		</dict>
 	</array>
 </dict>
 </plist>
