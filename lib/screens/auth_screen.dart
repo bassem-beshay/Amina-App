@@ -30,11 +30,20 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   bool _isLoading = false;
   bool _rememberMe = false;
 
+  // OTP Login State
+  int _loginStep = 1; // 1 = enter phone, 2 = enter OTP
+  String _loginPhoneNumber = '';
+  String _otpCode = '';
+  final TextEditingController _loginPhoneController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
+
   final FocusNode _firstNameFocus = FocusNode();
   final FocusNode _lastNameFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _phoneFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
+  final FocusNode _loginPhoneFocus = FocusNode();
+  final FocusNode _otpFocus = FocusNode();
 
   // Animation controllers
   late AnimationController _animationController;
@@ -128,20 +137,16 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   }
 
   // Load remembered credentials if "Remember Me" was checked
-  // 🔒 SECURITY FIX: Only load email, never load password!
   Future<void> _loadRememberedCredentials() async {
     final rememberMe = await StorageService.getRememberMe();
     if (rememberMe && _isLogin) {
-      final email = await StorageService.getRememberedEmail();
-      // ❌ REMOVED: getRememberedPassword() - SECURITY RISK!
-      // We only remember the email for user convenience
+      final phone = await StorageService.getRememberedPhone();
 
-      if (email != null) {
+      if (phone != null) {
         setState(() {
-          _email = email;
+          _loginPhoneNumber = phone;
           _rememberMe = true;
-          _emailController.text = email;
-          // User must enter password manually (security best practice)
+          _loginPhoneController.text = phone;
         });
       }
     }
@@ -157,8 +162,12 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     _emailFocus.dispose();
     _phoneFocus.dispose();
     _passwordFocus.dispose();
+    _loginPhoneFocus.dispose();
+    _otpFocus.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _loginPhoneController.dispose();
+    _otpController.dispose();
     super.dispose();
   }
 
@@ -171,6 +180,12 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       _email = '';
       _phoneNumber = '';
       _role = 'CLIENT';
+      // Reset OTP state
+      _loginStep = 1;
+      _loginPhoneNumber = '';
+      _otpCode = '';
+      _loginPhoneController.clear();
+      _otpController.clear();
     });
 
     // إعادة تشغيل الأنيميشن
@@ -178,41 +193,150 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     _animationController.forward();
   }
 
-  Future<void> _submit() async {
+  // Send OTP for login step 1
+  Future<void> _sendOtp() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     _formKey.currentState?.save();
 
     setState(() => _isLoading = true);
 
     try {
-      AuthResult result;
+      final result = await AuthService.sendOtp(phoneNumber: _loginPhoneNumber);
 
-      if (_isLogin) {
-        // تسجيل الدخول
-        result = await AuthService.login(
-          email: _email,
-          password: _password,
-          rememberMe: _rememberMe,
+      if (!mounted) return;
+
+      if (result.success) {
+        setState(() {
+          _loginStep = 2;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result.message ?? 'تم إرسال رمز التحقق'),
+            backgroundColor: Colors.green,
+          ),
         );
       } else {
-        // التسجيل
-        if (_role == 'CLIENT') {
-          result = await AuthService.registerClient(
-            email: _email,
-            password: _password,
-            firstName: _firstName,
-            lastName: _lastName,
-            phoneNumber: _phoneNumber,
-          );
-        } else {
-          result = await AuthService.registerProvider(
-            email: _email,
-            password: _password,
-            firstName: _firstName,
-            lastName: _lastName,
-            phoneNumber: _phoneNumber,
-          );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result.error ?? 'فشل إرسال رمز التحقق'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('خطأ: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  // Verify OTP for login step 2
+  Future<void> _verifyOtp() async {
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+    _formKey.currentState?.save();
+
+    setState(() => _isLoading = true);
+
+    try {
+      final result = await AuthService.verifyOtp(
+        phoneNumber: _loginPhoneNumber,
+        otpCode: _otpCode,
+        rememberMe: _rememberMe,
+      );
+
+      if (!mounted) return;
+
+      if (result.success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                AppLocalizations.of(context)?.loginSuccess ??
+                'Logged in successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+
+        // تهيئة Push Notifications بعد تسجيل الدخول الناجح
+        try {
+          await PushNotificationService().initialize();
+        } catch (e) {
         }
+
+        // التوجيه حسب الدور
+        final userRole =
+            result.user?.role ?? result.userData?['role'] ?? 'CLIENT';
+        final userRoleUpper = userRole.toString().toUpperCase();
+
+        if (userRoleUpper == 'ADMIN') {
+          Navigator.of(context).pushReplacementNamed('/admin-dashboard');
+        } else if (userRoleUpper == 'PROVIDER') {
+          Navigator.of(context).pushReplacementNamed('/provider-home');
+        } else {
+          Navigator.of(context).pushReplacementNamed('/customer-home');
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result.error ?? 'رمز التحقق غير صحيح'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('خطأ: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _submit() async {
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+    _formKey.currentState?.save();
+
+    // OTP login flow
+    if (_isLogin) {
+      if (_loginStep == 1) {
+        await _sendOtp();
+      } else {
+        await _verifyOtp();
+      }
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      AuthResult result;
+
+      // التسجيل فقط (تسجيل الدخول يتم عبر OTP أعلاه)
+      if (_role == 'CLIENT') {
+        result = await AuthService.registerClient(
+          email: _email,
+          password: _password,
+          firstName: _firstName,
+          lastName: _lastName,
+          phoneNumber: _phoneNumber,
+        );
+      } else {
+        result = await AuthService.registerProvider(
+          email: _email,
+          password: _password,
+          firstName: _firstName,
+          lastName: _lastName,
+          phoneNumber: _phoneNumber,
+        );
       }
 
       if (!mounted) return;
@@ -582,6 +706,141 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                               key: _formKey,
                               child: Column(
                                 children: [
+                                  // ===== Login Mode: Phone + OTP =====
+                                  if (_isLogin) ...[
+                                    if (_loginStep == 1) ...[
+                                      // الخطوة 1: إدخال رقم الهاتف
+                                      TextFormField(
+                                        controller: _loginPhoneController,
+                                        decoration: InputDecoration(
+                                          labelText: AppLocalizations.of(context)
+                                                  ?.phoneNumber ??
+                                              'رقم الهاتف',
+                                          hintText: 'أدخل رقم هاتفك المسجل',
+                                          prefixIcon: const Icon(Icons.phone),
+                                        ),
+                                        keyboardType: TextInputType.phone,
+                                        textInputAction: TextInputAction.done,
+                                        focusNode: _loginPhoneFocus,
+                                        onFieldSubmitted: (_) => _submit(),
+                                        onSaved: (v) => _loginPhoneNumber = v ?? '',
+                                        validator: _validatePhoneNumber,
+                                      ),
+                                    ] else ...[
+                                      // الخطوة 2: عرض الرقم + إدخال OTP
+                                      Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF4F46E5).withOpacity(0.05),
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Icons.phone, color: Color(0xFF4F46E5)),
+                                            const SizedBox(width: 8),
+                                            Expanded(
+                                              child: Text(
+                                                _loginPhoneNumber,
+                                                style: theme.textTheme.bodyLarge?.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  _loginStep = 1;
+                                                  _otpController.clear();
+                                                  _otpCode = '';
+                                                });
+                                              },
+                                              child: const Text('تغيير'),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      Text(
+                                        'أدخل رمز التحقق المرسل إلى هاتفك',
+                                        style: theme.textTheme.bodyMedium?.copyWith(
+                                          color: Colors.grey[600],
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      const SizedBox(height: 12),
+                                      TextFormField(
+                                        controller: _otpController,
+                                        decoration: const InputDecoration(
+                                          labelText: 'رمز التحقق',
+                                          hintText: '1234',
+                                          prefixIcon: Icon(Icons.lock_outline),
+                                        ),
+                                        keyboardType: TextInputType.number,
+                                        textInputAction: TextInputAction.done,
+                                        focusNode: _otpFocus,
+                                        maxLength: 4,
+                                        textAlign: TextAlign.center,
+                                        style: theme.textTheme.headlineSmall?.copyWith(
+                                          letterSpacing: 8,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        onFieldSubmitted: (_) => _submit(),
+                                        onSaved: (v) => _otpCode = v ?? '',
+                                        validator: (v) => (v == null || v.length != 4)
+                                            ? 'أدخل رمز التحقق المكون من 4 أرقام'
+                                            : null,
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: TextButton(
+                                          onPressed: _isLoading ? null : () => _sendOtp(),
+                                          child: const Text('إعادة إرسال الرمز'),
+                                        ),
+                                      ),
+                                    ],
+
+                                    // Remember Me checkbox
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      child: Row(
+                                        children: [
+                                          Checkbox(
+                                            value: _rememberMe,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _rememberMe = value ?? false;
+                                              });
+                                            },
+                                            materialTapTargetSize:
+                                                MaterialTapTargetSize
+                                                    .shrinkWrap,
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                          ),
+                                          Expanded(
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _rememberMe = !_rememberMe;
+                                                });
+                                              },
+                                              child: Text(
+                                                AppLocalizations.of(context)
+                                                        ?.rememberMe ??
+                                                    'تذكرني',
+                                                style:
+                                                    theme.textTheme.bodyMedium,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+
+                                  // ===== Registration Mode: Original fields =====
                                   if (!_isLogin) ...[
                                     // حقل الاسم الأول
                                     TextFormField(
@@ -626,36 +885,31 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                               : null,
                                     ),
                                     const SizedBox(height: 12),
-                                  ],
 
-                                  // حقل البريد الإلكتروني
-                                  TextFormField(
-                                    controller: _emailController,
-                                    decoration: InputDecoration(
-                                      labelText:
-                                          AppLocalizations.of(context)?.email ??
-                                              'البريد الإلكتروني',
+                                    // حقل البريد الإلكتروني
+                                    TextFormField(
+                                      controller: _emailController,
+                                      decoration: InputDecoration(
+                                        labelText:
+                                            AppLocalizations.of(context)?.email ??
+                                                'البريد الإلكتروني',
+                                      ),
+                                      keyboardType: TextInputType.emailAddress,
+                                      textInputAction: TextInputAction.next,
+                                      focusNode: _emailFocus,
+                                      onFieldSubmitted: (_) => FocusScope.of(context)
+                                              .requestFocus(_phoneFocus),
+                                      onSaved: (v) => _email = v ?? '',
+                                      validator: (v) =>
+                                          (v == null || !v.contains('@'))
+                                              ? (AppLocalizations.of(context)
+                                                      ?.enterValidEmail ??
+                                                  'أدخل بريدًا إلكترونيًا صالحًا')
+                                              : null,
                                     ),
-                                    keyboardType: TextInputType.emailAddress,
-                                    textInputAction: TextInputAction.next,
-                                    focusNode: _emailFocus,
-                                    onFieldSubmitted: (_) => _isLogin
-                                        ? FocusScope.of(context)
-                                            .requestFocus(_passwordFocus)
-                                        : FocusScope.of(context)
-                                            .requestFocus(_phoneFocus),
-                                    onSaved: (v) => _email = v ?? '',
-                                    validator: (v) =>
-                                        (v == null || !v.contains('@'))
-                                            ? (AppLocalizations.of(context)
-                                                    ?.enterValidEmail ??
-                                                'أدخل بريدًا إلكترونيًا صالحًا')
-                                            : null,
-                                  ),
-                                  const SizedBox(height: 12),
+                                    const SizedBox(height: 12),
 
-                                  if (!_isLogin) ...[
-                                    // حقل رقم الهاتف (مطلوب للتسجيل فقط)
+                                    // حقل رقم الهاتف (مطلوب للتسجيل)
                                     TextFormField(
                                       decoration: InputDecoration(
                                         labelText: AppLocalizations.of(context)
@@ -676,7 +930,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                     ),
                                     const SizedBox(height: 12),
 
-                                    // حقل اختيار الدور (مطلوب للتسجيل فقط)
+                                    // حقل اختيار الدور (مطلوب للتسجيل)
                                     DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
                                         labelText: AppLocalizations.of(context)
@@ -705,84 +959,44 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                       },
                                     ),
                                     const SizedBox(height: 12),
-                                  ],
 
-                                  // حقل كلمة المرور
-                                  TextFormField(
-                                    controller: _passwordController,
-                                    decoration: InputDecoration(
-                                      labelText: AppLocalizations.of(context)
-                                              ?.password ??
-                                          'كلمة المرور',
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          _obscure
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
+                                    // حقل كلمة المرور (للتسجيل فقط)
+                                    TextFormField(
+                                      controller: _passwordController,
+                                      decoration: InputDecoration(
+                                        labelText: AppLocalizations.of(context)
+                                                ?.password ??
+                                            'كلمة المرور',
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            _obscure
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                          ),
+                                          onPressed: () => setState(
+                                              () => _obscure = !_obscure),
+                                          tooltip: _obscure
+                                              ? (AppLocalizations.of(context)
+                                                      ?.showPassword ??
+                                                  'أظهر كلمة المرور')
+                                              : (AppLocalizations.of(context)
+                                                      ?.hidePassword ??
+                                                  'أخفِ كلمة المرور'),
                                         ),
-                                        onPressed: () => setState(
-                                            () => _obscure = !_obscure),
-                                        tooltip: _obscure
-                                            ? (AppLocalizations.of(context)
-                                                    ?.showPassword ??
-                                                'أظهر كلمة المرور')
-                                            : (AppLocalizations.of(context)
-                                                    ?.hidePassword ??
-                                                'أخفِ كلمة المرور'),
                                       ),
+                                      obscureText: _obscure,
+                                      focusNode: _passwordFocus,
+                                      textInputAction: TextInputAction.done,
+                                      onFieldSubmitted: (_) => _submit(),
+                                      onSaved: (v) => _password = v ?? '',
+                                      validator: (v) => (v == null ||
+                                              v.length < 6)
+                                          ? (AppLocalizations.of(context)
+                                                  ?.passwordMinLength ??
+                                              'يجب أن تكون كلمة المرور 6 أحرف على الأقل')
+                                          : null,
                                     ),
-                                    obscureText: _obscure,
-                                    focusNode: _passwordFocus,
-                                    textInputAction: TextInputAction.done,
-                                    onFieldSubmitted: (_) => _submit(),
-                                    onSaved: (v) => _password = v ?? '',
-                                    validator: (v) => (v == null ||
-                                            v.length < 6)
-                                        ? (AppLocalizations.of(context)
-                                                ?.passwordMinLength ??
-                                            'يجب أن تكون كلمة المرور 6 أحرف على الأقل')
-                                        : null,
-                                  ),
-
-                                  // Remember Me checkbox (only for login)
-                                  if (_isLogin)
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0),
-                                      child: Row(
-                                        children: [
-                                          Checkbox(
-                                            value: _rememberMe,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _rememberMe = value ?? false;
-                                              });
-                                            },
-                                            materialTapTargetSize:
-                                                MaterialTapTargetSize
-                                                    .shrinkWrap,
-                                            visualDensity:
-                                                VisualDensity.compact,
-                                          ),
-                                          Expanded(
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  _rememberMe = !_rememberMe;
-                                                });
-                                              },
-                                              child: Text(
-                                                AppLocalizations.of(context)
-                                                        ?.rememberMe ??
-                                                    'تذكرني',
-                                                style:
-                                                    theme.textTheme.bodyMedium,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                  ],
 
                                   const SizedBox(height: 20),
 
@@ -834,10 +1048,9 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                                   )
                                                 : Text(
                                                     _isLogin
-                                                        ? (AppLocalizations.of(
-                                                                    context)
-                                                                ?.login ??
-                                                            'دخول')
+                                                        ? (_loginStep == 1
+                                                            ? 'إرسال رمز التحقق'
+                                                            : 'تحقق ودخول')
                                                         : (AppLocalizations.of(
                                                                     context)
                                                                 ?.createAccount ??
@@ -947,18 +1160,6 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                   ),
 
                                   const SizedBox(height: 8),
-
-                                  // رابط نسيت كلمة المرور
-                                  if (_isLogin)
-                                    ConnectivityTextButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pushNamed('/forgot-password');
-                                      },
-                                      child: Text(AppLocalizations.of(context)
-                                              ?.forgotPassword ??
-                                          'نسيت كلمة المرور؟'),
-                                    ),
                                 ],
                               ),
                             ),

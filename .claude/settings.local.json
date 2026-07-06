@@ -34,7 +34,9 @@
       "Bash(flutter devices:*)",
       "Bash(flutter emulators:*)",
       "Bash(adb:*)",
-      "Bash(flutter run:*)"
+      "Bash(flutter run:*)",
+      "Bash(xargs grep:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []

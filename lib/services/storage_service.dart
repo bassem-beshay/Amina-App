@@ -158,6 +158,25 @@ class StorageService {
     }
   }
 
+  // Save Remembered Phone
+  static Future<bool> saveRememberedPhone(String phone) async {
+    try {
+      await SecureStorageService.saveRememberedPhone(phone);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Get Remembered Phone
+  static Future<String?> getRememberedPhone() async {
+    try {
+      return await SecureStorageService.getRememberedPhone();
+    } catch (e) {
+      return null;
+    }
+  }
+
   // Clear Remember Me data
   static Future<bool> clearRememberMe() async {
     try {
@@ -165,6 +184,7 @@ class StorageService {
       await prefs.remove(_keyRememberMe);
       // 🔒 SECURITY: Also clear from SecureStorage
       await SecureStorageService.deleteRememberedEmail();
+      await SecureStorageService.deleteRememberedPhone();
       return true;
     } catch (e) {
       return false;

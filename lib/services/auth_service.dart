@@ -215,6 +215,88 @@ class AuthService {
     }
   }
 
+  // Send OTP
+  static Future<AuthResult> sendOtp({
+    required String phoneNumber,
+  }) async {
+    try {
+      final response = await ApiClient.post(
+        ApiConfig.sendOtp,
+        body: {'phone_number': phoneNumber},
+      );
+
+      if (response.success) {
+        return AuthResult(
+          success: true,
+          message: response.message ?? 'تم إرسال رمز التحقق إلى رقم هاتفك',
+        );
+      }
+
+      return AuthResult(
+        success: false,
+        error: response.error ?? 'فشل إرسال رمز التحقق',
+      );
+    } catch (e) {
+      return AuthResult(
+        success: false,
+        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+      );
+    }
+  }
+
+  // Verify OTP and Login
+  static Future<AuthResult> verifyOtp({
+    required String phoneNumber,
+    required String otpCode,
+    bool rememberMe = false,
+  }) async {
+    try {
+      final response = await ApiClient.post(
+        ApiConfig.verifyOtp,
+        body: {'phone_number': phoneNumber, 'otp_code': otpCode},
+      );
+
+      if (response.success && response.rawResponse != null) {
+        final token = response.rawResponse!['token'] as String?;
+        final userData = response.rawResponse!['user'] as Map<String, dynamic>?;
+
+        if (token != null && userData != null) {
+          final user = User.fromJson(userData);
+
+          // Save token, user data and login status
+          await SecureStorageService.saveAuthToken(token);
+          await StorageService.saveUser(user);
+          await StorageService.setLoggedIn(true);
+          ApiClient.setAuthToken(token);
+
+          // Handle Remember Me - save phone number
+          if (rememberMe) {
+            await StorageService.setRememberMe(true);
+            await StorageService.saveRememberedPhone(phoneNumber);
+          } else {
+            await StorageService.clearRememberMe();
+          }
+
+          return AuthResult(
+            success: true,
+            message: response.message ?? 'تم تسجيل الدخول بنجاح',
+            user: user,
+          );
+        }
+      }
+
+      return AuthResult(
+        success: false,
+        error: response.error ?? 'فشل تسجيل الدخول',
+      );
+    } catch (e) {
+      return AuthResult(
+        success: false,
+        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+      );
+    }
+  }
+
   // Logout
   static Future<AuthResult> logout() async {
     try {
