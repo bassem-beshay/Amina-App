@@ -1821,8 +1821,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
               controller: _searchController,
               onChanged: _onSearchChanged,
               style: GoogleFonts.inter(fontSize: 16, color: Colors.black),
+              cursorColor: kPrimary,
               decoration: InputDecoration(
                 isDense: true,
+                filled: false,
                 hintText: 'Search address, city, location',
                 hintStyle: GoogleFonts.inter(
                   fontSize: 16,
@@ -1830,6 +1832,11 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   letterSpacing: 0.32,
                 ),
                 border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                focusedErrorBorder: InputBorder.none,
                 contentPadding: EdgeInsets.zero,
               ),
             ),
@@ -2419,26 +2426,22 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   }
 
   Widget _getDefaultAvatar() {
+    final hasName = _userData != null &&
+        _userData!['first_name'] != null &&
+        (_userData!['first_name'] as String).isNotEmpty;
     return Container(
-      width: 50,
-      height: 50,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
-        ),
-      ),
-      child: Center(
-        child: Text(
-          _userData != null && _userData!['first_name'] != null
-              ? (_userData!['first_name'] as String)[0].toUpperCase()
-              : '👤',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.surface,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      color: Colors.white,
+      alignment: Alignment.center,
+      child: hasName
+          ? Text(
+              (_userData!['first_name'] as String)[0].toUpperCase(),
+              style: GoogleFonts.poppins(
+                color: kPrimary,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
+            )
+          : const Icon(Icons.person, color: Color(0xFFBDBDBD), size: 24),
     );
   }
 
