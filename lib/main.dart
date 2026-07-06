@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
-import 'screens/auth_screen.dart';
+import 'screens/onboarding/login_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/customer_home_screen.dart';
 import 'screens/admin_dashboard_screen.dart';
@@ -104,7 +104,7 @@ class AminaPlatformApp extends StatelessWidget {
         return null;
       },
       routes: {
-        '/auth': (context) => const ConnectivityWrapper(child: AuthScreen(isLogin: true)),
+        '/auth': (context) => const ConnectivityWrapper(child: LoginScreen()),
         '/forgot-password': (context) => ConnectivityWrapper(child: ForgotPasswordScreen()),
         '/dashboard': (context) => const ConnectivityWrapper(child: AminaDashboard()),
         '/customer-home': (context) => const ConnectivityWrapper(child: CustomerHomeScreen()),
