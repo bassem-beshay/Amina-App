@@ -47,6 +47,9 @@ class ApiConfig {
   static const String me = '$apiPrefix/users/auth/me/';
   static const String changePassword = '$apiPrefix/users/auth/change_password/';
   static const String googleAuth = '$apiPrefix/users/auth/google/';
+  // OTP Login Endpoints
+  static const String sendOtp = '$apiPrefix/users/auth/send_otp/';
+  static const String verifyOtp = '$apiPrefix/users/auth/verify_otp/';
   // Password Reset Endpoints (Code-based - 6 digits)
   static const String sendPasswordResetCode = '$apiPrefix/users/auth/send_password_reset_code/';
   static const String verifyPasswordResetCode = '$apiPrefix/users/auth/verify_password_reset_code/';

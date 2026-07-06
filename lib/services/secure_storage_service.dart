@@ -19,6 +19,7 @@ class SecureStorageService {
   static const String _keyAuthToken = 'secure_auth_token';
   static const String _keyUserData = 'secure_user_data';  // 🔒 SECURITY: Store user data encrypted
   static const String _keyRememberedEmail = 'secure_remembered_email';  // 🔒 SECURITY: Store email encrypted
+  static const String _keyRememberedPhone = 'secure_remembered_phone';  // 🔒 SECURITY: Store phone encrypted
 
   // ==================== Auth Token Functions ====================
 
@@ -95,6 +96,32 @@ class SecureStorageService {
   static Future<void> deleteRememberedEmail() async {
     try {
       await _storage.delete(key: _keyRememberedEmail);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // ==================== Remembered Phone Functions ====================
+
+  static Future<void> saveRememberedPhone(String phone) async {
+    try {
+      await _storage.write(key: _keyRememberedPhone, value: phone);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<String?> getRememberedPhone() async {
+    try {
+      return await _storage.read(key: _keyRememberedPhone);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<void> deleteRememberedPhone() async {
+    try {
+      await _storage.delete(key: _keyRememberedPhone);
     } catch (e) {
       rethrow;
     }

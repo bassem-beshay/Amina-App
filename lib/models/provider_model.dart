@@ -14,6 +14,7 @@ class Provider {
   final int? totalRatings;
   final double? hourlyRate;
   final String? bio;
+  final String? providerType; // COMPANY, MEMBER
   final bool isAvailable;
   final bool isVerified;
 
@@ -33,6 +34,7 @@ class Provider {
     this.totalRatings,
     this.hourlyRate,
     this.bio,
+    this.providerType,
     required this.isAvailable,
     required this.isVerified,
   });
@@ -74,6 +76,7 @@ class Provider {
       totalRatings: json['total_ratings'],
       hourlyRate: json['hourly_rate'] != null ? double.tryParse(json['hourly_rate'].toString()) : null,
       bio: json['bio'],
+      providerType: json['provider_type'] as String?,
       isAvailable: json['is_available'] ?? true,
       isVerified: json['verification_status'] == 'VERIFIED' || json['is_verified'] == true,
     );
@@ -96,8 +99,12 @@ class Provider {
       'total_ratings': totalRatings,
       'hourly_rate': hourlyRate,
       'bio': bio,
+      'provider_type': providerType,
       'is_available': isAvailable,
       'is_verified': isVerified,
     };
   }
+
+  bool get isCompany => providerType == 'COMPANY';
+  bool get isMember => providerType == 'MEMBER';
 }

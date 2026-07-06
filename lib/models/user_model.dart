@@ -191,6 +191,7 @@ class ServiceProviderProfile {
   final String? healthCertificate;
   final String? city;
   final String? country;
+  final String? providerType; // COMPANY, MEMBER
   final String? verificationStatus; // PENDING, VERIFIED, REJECTED
   final List<int>? preferredServiceCategories;
   final List<String>? preferredServiceCategoriesList;
@@ -209,6 +210,7 @@ class ServiceProviderProfile {
     this.healthCertificate,
     this.city,
     this.country,
+    this.providerType,
     this.verificationStatus,
     this.preferredServiceCategories,
     this.preferredServiceCategoriesList,
@@ -229,6 +231,7 @@ class ServiceProviderProfile {
       healthCertificate: json['health_certificate_url'] as String? ?? json['health_certificate'] as String?,
       city: json['city'] as String?,
       country: json['country'] as String?,
+      providerType: json['provider_type'] as String?,
       verificationStatus: json['verification_status'] as String?,
       preferredServiceCategories: json['preferred_service_categories'] != null
           ? (json['preferred_service_categories'] as List).map((e) {
@@ -262,6 +265,7 @@ class ServiceProviderProfile {
       if (healthCertificate != null) 'health_certificate': healthCertificate,
       if (city != null) 'city': city,
       if (country != null) 'country': country,
+      if (providerType != null) 'provider_type': providerType,
       if (verificationStatus != null) 'verification_status': verificationStatus,
       if (averageRating != null) 'average_rating': averageRating,
       if (totalRatings != null) 'total_ratings': totalRatings,
@@ -274,6 +278,8 @@ class ServiceProviderProfile {
   bool get isVerified => verificationStatus == 'VERIFIED';
   bool get isPending => verificationStatus == 'PENDING';
   bool get isRejected => verificationStatus == 'REJECTED';
+  bool get isCompany => providerType == 'COMPANY';
+  bool get isMember => providerType == 'MEMBER';
 }
 
 class Address {
