@@ -73,7 +73,7 @@ class ApiClient {
     } catch (e) {
       return ApiResponse<T>(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
         statusCode: 0,
       );
     }
@@ -108,7 +108,7 @@ class ApiClient {
       print('❌ POST Error: $e');
       return ApiResponse<T>(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
         statusCode: 0,
       );
     }
@@ -159,7 +159,7 @@ class ApiClient {
     } catch (e) {
       return ApiResponse<T>(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
         statusCode: 0,
       );
     }
@@ -211,7 +211,7 @@ class ApiClient {
     } catch (e) {
       return ApiResponse<T>(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
         statusCode: 0,
       );
     }
@@ -235,7 +235,7 @@ class ApiClient {
     } catch (e) {
       return ApiResponse<T>(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
         statusCode: 0,
       );
     }
@@ -259,7 +259,7 @@ class ApiClient {
     } catch (e) {
       return ApiResponse<T>(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
         statusCode: 0,
       );
     }
@@ -281,7 +281,7 @@ class ApiClient {
     } catch (e) {
       return ApiResponse<T>(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
         statusCode: 0,
       );
     }
@@ -298,7 +298,7 @@ class ApiClient {
       if (body.startsWith('<!DOCTYPE') || body.startsWith('<html') || body.startsWith('<HTML')) {
         return ApiResponse<T>(
           success: false,
-          error: 'السيرفر غير متاح حالياً. يرجى المحاولة لاحقاً (Status: ${response.statusCode})',
+          error: 'Server unavailable. Please try again later (Status: ${response.statusCode})',
           statusCode: response.statusCode,
         );
       }
@@ -359,12 +359,10 @@ class ApiClient {
           errorMessage = jsonResponse['detail'].toString();
         }
 
-        // إضافة معلومات debug للمساعدة في تشخيص المشكلة
-        String detailedError = errorMessage ?? 'حدث خطأ غير معروف';
+        // Add debug info to help diagnose the issue
+        String detailedError = errorMessage ?? 'Unknown error occurred';
 
-        // إذا ما كانش في رسالة خطأ واضحة، نحاول نستخرج أي معلومات متاحة
         if (errorMessage == null) {
-          // جمع كل الأخطاء من كل الحقول
           final allErrors = <String>[];
           jsonResponse.forEach((key, value) {
             if (value is List && value.isNotEmpty) {
@@ -375,9 +373,9 @@ class ApiClient {
           });
 
           if (allErrors.isNotEmpty) {
-            detailedError = 'حدث خطأ:\n${allErrors.join('\n')}';
+            detailedError = 'Error:\n${allErrors.join('\n')}';
           } else {
-            detailedError = 'حدث خطأ غير معروف (Status: ${response.statusCode})';
+            detailedError = 'Unknown error occurred (Status: ${response.statusCode})';
           }
         }
 
@@ -392,7 +390,7 @@ class ApiClient {
     } catch (e) {
       return ApiResponse<T>(
         success: false,
-        error: 'خطأ في معالجة البيانات. يرجى المحاولة لاحقاً',
+        error: 'Data processing error. Please try again',
         statusCode: response.statusCode,
       );
     }

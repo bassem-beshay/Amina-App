@@ -50,11 +50,11 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
 
-  // أنيميشن إضافي للوجو
+  // Additional animation for logo
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
 
-  // أنيميشن الدوران
+  // Rotation animation
   late AnimationController _rotationController;
   late Animation<double> _rotationAnimation;
 
@@ -62,16 +62,16 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // قائمة الأدوار المتاحة
+  // Available roles list
   List<Map<String, String>> _getRoles(BuildContext context) {
     return [
       {
         'value': 'CLIENT',
-        'label': AppLocalizations.of(context)?.client ?? 'عميل'
+        'label': AppLocalizations.of(context)?.client ?? 'Client'
       },
       {
         'value': 'PROVIDER',
-        'label': AppLocalizations.of(context)?.serviceProvider ?? 'مقدم خدمة'
+        'label': AppLocalizations.of(context)?.serviceProvider ?? 'Service Provider'
       },
     ];
   }
@@ -82,7 +82,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     _isLogin = widget.isLogin;
     _loadRememberedCredentials();
 
-    // تهيئة الأنيميشن الرئيسي
+    // Initialize main animation
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
@@ -104,7 +104,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       curve: Curves.easeOutCubic,
     ));
 
-    // أنيميشن النبض المستمر للوجو
+    // Continuous pulse animation for logo
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2000),
@@ -118,7 +118,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       curve: Curves.easeInOut,
     ));
 
-    // أنيميشن الدوران الخفيف
+    // Subtle rotation animation
     _rotationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 3000),
@@ -132,7 +132,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       curve: Curves.easeInOutSine,
     ));
 
-    // بدء الأنيميشن الرئيسي
+    // Start main animation
     _animationController.forward();
   }
 
@@ -188,7 +188,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       _otpController.clear();
     });
 
-    // إعادة تشغيل الأنيميشن
+    // Restart animation
     _animationController.reset();
     _animationController.forward();
   }
@@ -211,14 +211,14 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(result.message ?? 'تم إرسال رمز التحقق'),
+            content: Text(result.message ?? 'Verification code sent'),
             backgroundColor: Colors.green,
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(result.error ?? 'فشل إرسال رمز التحقق'),
+            content: Text(result.error ?? 'Failed to send verification code'),
             backgroundColor: Colors.red,
           ),
         );
@@ -227,7 +227,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('خطأ: ${e.toString()}'),
+          content: Text('Error: ${e.toString()}'),
           backgroundColor: Colors.red,
         ),
       );
@@ -262,13 +262,13 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           ),
         );
 
-        // تهيئة Push Notifications بعد تسجيل الدخول الناجح
+        // Initialize Push Notifications after successful login
         try {
           await PushNotificationService().initialize();
         } catch (e) {
         }
 
-        // التوجيه حسب الدور
+        // Navigate based on role
         final userRole =
             result.user?.role ?? result.userData?['role'] ?? 'CLIENT';
         final userRoleUpper = userRole.toString().toUpperCase();
@@ -283,7 +283,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(result.error ?? 'رمز التحقق غير صحيح'),
+            content: Text(result.error ?? 'Incorrect verification code'),
             backgroundColor: Colors.red,
           ),
         );
@@ -292,7 +292,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('خطأ: ${e.toString()}'),
+          content: Text('Error: ${e.toString()}'),
           backgroundColor: Colors.red,
         ),
       );
@@ -320,7 +320,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     try {
       AuthResult result;
 
-      // التسجيل فقط (تسجيل الدخول يتم عبر OTP أعلاه)
+      // Registration only (login is handled via OTP above)
       if (_role == 'CLIENT') {
         result = await AuthService.registerClient(
           email: _email,
@@ -347,7 +347,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           // Navigate to email verification screen
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(result.message ?? 'تم إرسال كود التحقق إلى بريدك الإلكتروني'),
+              content: Text(result.message ?? 'Verification code sent to your email'),
               backgroundColor: Colors.green,
             ),
           );
@@ -373,7 +373,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           ),
         );
 
-        // تهيئة Push Notifications بعد تسجيل الدخول الناجح
+        // Initialize Push Notifications after successful login
         if (ApiClient.authToken != null) {
         }
 
@@ -382,19 +382,19 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         } catch (e) {
         }
 
-        // التوجيه حسب الدور
+        // Navigate based on role
         final userRole =
             result.user?.role ?? result.userData?['role'] ?? 'CLIENT';
         final userRoleUpper = userRole.toString().toUpperCase();
 
         if (userRoleUpper == 'ADMIN') {
-          // أدمن → Admin Dashboard
+          // Admin -> Admin Dashboard
           Navigator.of(context).pushReplacementNamed('/admin-dashboard');
         } else if (userRoleUpper == 'PROVIDER') {
-          // مقدم خدمة → Provider Home
+          // Provider -> Provider Home
           Navigator.of(context).pushReplacementNamed('/provider-home');
         } else {
-          // عميل → Customer Home
+          // Client -> Customer Home
           Navigator.of(context).pushReplacementNamed('/customer-home');
         }
       } else {
@@ -402,7 +402,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           SnackBar(
             content: Text(result.error ??
                 AppLocalizations.of(context)?.errorOccurred ??
-                'حدث خطأ'),
+                'An error occurred'),
             backgroundColor: Colors.red,
           ),
         );
@@ -412,7 +412,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-              '${AppLocalizations.of(context)?.error ?? 'خطأ'}: ${e.toString()}'),
+              '${AppLocalizations.of(context)?.error ?? 'Error'}: ${e.toString()}'),
           backgroundColor: Colors.red,
         ),
       );
@@ -422,33 +422,33 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
   }
 
   Future<void> _signInWithGoogle() async {
-    // عرض dialog لاختيار نوع الحساب
+    // Show dialog to choose account type
     final selectedRole = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)?.chooseAccountType ??
-            'اختر نوع الحساب'),
+            'Choose Account Type'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(AppLocalizations.of(context)?.pleaseSelectAccountType ??
-                'يرجى تحديد نوع حسابك قبل المتابعة'),
+                'Please select your account type before continuing'),
             const SizedBox(height: 20),
             ListTile(
               leading: const Icon(Icons.person),
-              title: Text(AppLocalizations.of(context)?.client ?? 'عميل'),
+              title: Text(AppLocalizations.of(context)?.client ?? 'Client'),
               subtitle: Text(
                   AppLocalizations.of(context)?.lookingForHomeServices ??
-                      'أبحث عن خدمات منزلية'),
+                      'Looking for home services'),
               onTap: () => Navigator.pop(context, 'CLIENT'),
             ),
             ListTile(
               leading: const Icon(Icons.work),
               title: Text(
-                  AppLocalizations.of(context)?.serviceProvider ?? 'مقدم خدمة'),
+                  AppLocalizations.of(context)?.serviceProvider ?? 'Service Provider'),
               subtitle: Text(
                   AppLocalizations.of(context)?.provideHomeServices ??
-                      'أقدم خدمات منزلية'),
+                      'I provide home services'),
               onTap: () => Navigator.pop(context, 'PROVIDER'),
             ),
           ],
@@ -475,7 +475,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           ),
         );
 
-        // تهيئة Push Notifications بعد تسجيل الدخول الناجح بـ Google
+        // Initialize Push Notifications after successful Google login
         if (ApiClient.authToken != null) {
         }
 
@@ -484,7 +484,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         } catch (e) {
         }
 
-        // التوجيه حسب الدور
+        // Navigate based on role
         final userRole =
             result.user?.role ?? result.userData?['role'] ?? 'CLIENT';
         final userRoleUpper = userRole.toString().toUpperCase();
@@ -501,7 +501,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           SnackBar(
             content: Text(result.error ??
                 AppLocalizations.of(context)?.loginFailed ??
-                'فشل تسجيل الدخول'),
+                'Login failed'),
             backgroundColor: Colors.red,
           ),
         );
@@ -511,7 +511,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-              '${AppLocalizations.of(context)?.error ?? 'خطأ'}: ${e.toString()}'),
+              '${AppLocalizations.of(context)?.error ?? 'Error'}: ${e.toString()}'),
           backgroundColor: Colors.red,
         ),
       );
@@ -520,22 +520,22 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     }
   }
 
-  // دالة للتحقق من صحة رقم الهاتف
+  // Phone number validation function
   String? _validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {
       return AppLocalizations.of(context)?.fieldRequired ??
-          'من فضلك أدخل رقم الهاتف';
+          'Please enter your phone number';
     }
 
-    // تحقق أساسي من تنسيق رقم الهاتف
+    // Basic phone number format validation
     final phoneRegex = RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
     if (!phoneRegex.hasMatch(value)) {
-      return AppLocalizations.of(context)?.invalidPhone ?? 'أدخل رقم هاتف صالح';
+      return AppLocalizations.of(context)?.invalidPhone ?? 'Enter a valid phone number';
     }
 
     if (value.length < 8) {
       return AppLocalizations.of(context)?.invalidPhone ??
-          'رقم الهاتف يجب أن يكون 8 أرقام على الأقل';
+          'Phone number must be at least 8 digits';
     }
 
     return null;
@@ -567,7 +567,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         child: SafeArea(
           child: Stack(
             children: [
-              // المحتوى الأصلي (يجب أن يكون أول عنصر)
+              // Main content (must be first element)
               Center(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 36),
@@ -590,10 +590,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            // Header مع لوجو محسن
+                            // Header with enhanced logo
                             Column(
                               children: [
-                                // اللوجو المحسن مع أنيميشنات متعددة
+                                // Enhanced logo with multiple animations
                                 AnimatedBuilder(
                                   animation: Listenable.merge([
                                     _pulseAnimation,
@@ -641,7 +641,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                               child: Stack(
                                                 alignment: Alignment.center,
                                                 children: [
-                                                  // الأيقونة الخلفية
+                                                  // Background icon
                                                   Icon(
                                                     Icons
                                                         .cleaning_services_rounded,
@@ -649,7 +649,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                                     color: Colors.white
                                                         .withOpacity(0.3),
                                                   ),
-                                                  // الأيقونة الأمامية
+                                                  // Front icon
                                                   Icon(
                                                     Icons.home_work_rounded,
                                                     size: 42,
@@ -667,14 +667,14 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                   },
                                 ),
                                 const SizedBox(height: 24),
-                                // العنوان
+                                // Title
                                 Text(
                                   _isLogin
                                       ? (AppLocalizations.of(context)
                                               ?.welcomeBack ??
-                                          'مرحباً بك مجدداً')
+                                          'Welcome Back')
                                       : (AppLocalizations.of(context)?.joinUs ??
-                                          'انضم إلينا'),
+                                          'Join Us'),
                                   style:
                                       theme.textTheme.headlineSmall?.copyWith(
                                     fontWeight: FontWeight.bold,
@@ -687,10 +687,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                   _isLogin
                                       ? (AppLocalizations.of(context)
                                               ?.gladToSeeYouAgain ??
-                                          'سُعدنا برؤيتك مجدداً، سجل دخولك للمتابعة')
+                                          'Glad to see you again, sign in to continue')
                                       : (AppLocalizations.of(context)
                                               ?.createNewAccount ??
-                                          'أنشئ حساباً جديداً وابدأ رحلتك معنا'),
+                                          'Create a new account and start your journey with us'),
                                   style: theme.textTheme.bodyMedium?.copyWith(
                                     color: Colors.grey[600],
                                   ),
@@ -709,14 +709,14 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                   // ===== Login Mode: Phone + OTP =====
                                   if (_isLogin) ...[
                                     if (_loginStep == 1) ...[
-                                      // الخطوة 1: إدخال رقم الهاتف
+                                      // Step 1: Enter phone number
                                       TextFormField(
                                         controller: _loginPhoneController,
                                         decoration: InputDecoration(
                                           labelText: AppLocalizations.of(context)
                                                   ?.phoneNumber ??
-                                              'رقم الهاتف',
-                                          hintText: 'أدخل رقم هاتفك المسجل',
+                                              'Phone Number',
+                                          hintText: 'Enter your registered phone number',
                                           prefixIcon: const Icon(Icons.phone),
                                         ),
                                         keyboardType: TextInputType.phone,
@@ -727,7 +727,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                         validator: _validatePhoneNumber,
                                       ),
                                     ] else ...[
-                                      // الخطوة 2: عرض الرقم + إدخال OTP
+                                      // Step 2: Show number + enter OTP
                                       Container(
                                         padding: const EdgeInsets.all(12),
                                         decoration: BoxDecoration(
@@ -754,14 +754,14 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                                   _otpCode = '';
                                                 });
                                               },
-                                              child: const Text('تغيير'),
+                                              child: const Text('Change'),
                                             ),
                                           ],
                                         ),
                                       ),
                                       const SizedBox(height: 16),
                                       Text(
-                                        'أدخل رمز التحقق المرسل إلى هاتفك',
+                                        'Enter the verification code sent to your phone',
                                         style: theme.textTheme.bodyMedium?.copyWith(
                                           color: Colors.grey[600],
                                         ),
@@ -771,7 +771,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                       TextFormField(
                                         controller: _otpController,
                                         decoration: const InputDecoration(
-                                          labelText: 'رمز التحقق',
+                                          labelText: 'Verification Code',
                                           hintText: '1234',
                                           prefixIcon: Icon(Icons.lock_outline),
                                         ),
@@ -787,7 +787,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                         onFieldSubmitted: (_) => _submit(),
                                         onSaved: (v) => _otpCode = v ?? '',
                                         validator: (v) => (v == null || v.length != 4)
-                                            ? 'أدخل رمز التحقق المكون من 4 أرقام'
+                                            ? 'Enter the 4-digit verification code'
                                             : null,
                                       ),
                                       const SizedBox(height: 8),
@@ -795,7 +795,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                         alignment: Alignment.center,
                                         child: TextButton(
                                           onPressed: _isLoading ? null : () => _sendOtp(),
-                                          child: const Text('إعادة إرسال الرمز'),
+                                          child: const Text('Resend Code'),
                                         ),
                                       ),
                                     ],
@@ -829,7 +829,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                               child: Text(
                                                 AppLocalizations.of(context)
                                                         ?.rememberMe ??
-                                                    'تذكرني',
+                                                    'Remember Me',
                                                 style:
                                                     theme.textTheme.bodyMedium,
                                               ),
@@ -842,12 +842,12 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
 
                                   // ===== Registration Mode: Original fields =====
                                   if (!_isLogin) ...[
-                                    // حقل الاسم الأول
+                                    // First name field
                                     TextFormField(
                                       decoration: InputDecoration(
                                         labelText: AppLocalizations.of(context)
                                                 ?.firstName ??
-                                            'الاسم الأول',
+                                            'First Name',
                                       ),
                                       textInputAction: TextInputAction.next,
                                       focusNode: _firstNameFocus,
@@ -859,17 +859,17 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                           (v == null || v.trim().length < 2)
                                               ? (AppLocalizations.of(context)
                                                       ?.enterValidName ??
-                                                  'من فضلك أدخل اسمًا صحيحًا')
+                                                  'Please enter a valid name')
                                               : null,
                                     ),
                                     const SizedBox(height: 12),
 
-                                    // حقل الاسم الأخير
+                                    // Last name field
                                     TextFormField(
                                       decoration: InputDecoration(
                                         labelText: AppLocalizations.of(context)
                                                 ?.lastName ??
-                                            'الاسم الأخير',
+                                            'Last Name',
                                       ),
                                       textInputAction: TextInputAction.next,
                                       focusNode: _lastNameFocus,
@@ -881,18 +881,18 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                           (v == null || v.trim().length < 2)
                                               ? (AppLocalizations.of(context)
                                                       ?.enterValidName ??
-                                                  'من فضلك أدخل اسمًا صحيحًا')
+                                                  'Please enter a valid name')
                                               : null,
                                     ),
                                     const SizedBox(height: 12),
 
-                                    // حقل البريد الإلكتروني
+                                    // Email field
                                     TextFormField(
                                       controller: _emailController,
                                       decoration: InputDecoration(
                                         labelText:
                                             AppLocalizations.of(context)?.email ??
-                                                'البريد الإلكتروني',
+                                                'Email',
                                       ),
                                       keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
@@ -904,20 +904,20 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                           (v == null || !v.contains('@'))
                                               ? (AppLocalizations.of(context)
                                                       ?.enterValidEmail ??
-                                                  'أدخل بريدًا إلكترونيًا صالحًا')
+                                                  'Please enter a valid email')
                                               : null,
                                     ),
                                     const SizedBox(height: 12),
 
-                                    // حقل رقم الهاتف (مطلوب للتسجيل)
+                                    // Phone number field (required for registration)
                                     TextFormField(
                                       decoration: InputDecoration(
                                         labelText: AppLocalizations.of(context)
                                                 ?.phoneNumber ??
-                                            'رقم الهاتف',
+                                            'Phone Number',
                                         hintText: AppLocalizations.of(context)
                                                 ?.enterPhoneNumber ??
-                                            'أدخل رقم هاتفك',
+                                            'Enter your phone number',
                                       ),
                                       keyboardType: TextInputType.phone,
                                       textInputAction: TextInputAction.next,
@@ -930,12 +930,12 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                     ),
                                     const SizedBox(height: 12),
 
-                                    // حقل اختيار الدور (مطلوب للتسجيل)
+                                    // Role selection field (required for registration)
                                     DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
                                         labelText: AppLocalizations.of(context)
                                                 ?.accountType ??
-                                            'نوع الحساب',
+                                            'Account Type',
                                       ),
                                       value: _role,
                                       items: _getRoles(context).map((role) {
@@ -953,20 +953,20 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                         if (value == null || value.isEmpty) {
                                           return AppLocalizations.of(context)
                                                   ?.fieldRequired ??
-                                              'من فضلك اختر نوع الحساب';
+                                              'Please select an account type';
                                         }
                                         return null;
                                       },
                                     ),
                                     const SizedBox(height: 12),
 
-                                    // حقل كلمة المرور (للتسجيل فقط)
+                                    // Password field (for registration only)
                                     TextFormField(
                                       controller: _passwordController,
                                       decoration: InputDecoration(
                                         labelText: AppLocalizations.of(context)
                                                 ?.password ??
-                                            'كلمة المرور',
+                                            'Password',
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             _obscure
@@ -978,10 +978,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                           tooltip: _obscure
                                               ? (AppLocalizations.of(context)
                                                       ?.showPassword ??
-                                                  'أظهر كلمة المرور')
+                                                  'Show password')
                                               : (AppLocalizations.of(context)
                                                       ?.hidePassword ??
-                                                  'أخفِ كلمة المرور'),
+                                                  'Hide password'),
                                         ),
                                       ),
                                       obscureText: _obscure,
@@ -993,14 +993,14 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                               v.length < 6)
                                           ? (AppLocalizations.of(context)
                                                   ?.passwordMinLength ??
-                                              'يجب أن تكون كلمة المرور 6 أحرف على الأقل')
+                                              'Password must be at least 6 characters')
                                           : null,
                                     ),
                                   ],
 
                                   const SizedBox(height: 20),
 
-                                  // زر الإرسال مع أنيميشن
+                                  // Submit button with animation
                                   TweenAnimationBuilder<double>(
                                     tween: Tween(begin: 1.0, end: 1.0),
                                     duration: const Duration(milliseconds: 200),
@@ -1049,12 +1049,12 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                                 : Text(
                                                     _isLogin
                                                         ? (_loginStep == 1
-                                                            ? 'إرسال رمز التحقق'
-                                                            : 'تحقق ودخول')
+                                                            ? 'Send Verification Code'
+                                                            : 'Verify & Login')
                                                         : (AppLocalizations.of(
                                                                     context)
                                                                 ?.createAccount ??
-                                                            'إنشاء حساب'),
+                                                            'Create Account'),
                                                     style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
@@ -1069,7 +1069,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
 
                                   const SizedBox(height: 12),
 
-                                  // زر التبديل بين التسجيل والدخول
+                                  // Toggle between registration and login
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -1077,10 +1077,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                         _isLogin
                                             ? (AppLocalizations.of(context)
                                                     ?.dontHaveAccount ??
-                                                'لا تملك حساباً؟')
+                                                "Don't have an account?")
                                             : (AppLocalizations.of(context)
                                                     ?.alreadyHaveAccount ??
-                                                'هل لديك حساب؟'),
+                                                'Already have an account?'),
                                       ),
                                       ConnectivityTextButton(
                                         onPressed: _toggleMode,
@@ -1088,10 +1088,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                           _isLogin
                                               ? (AppLocalizations.of(context)
                                                       ?.register ??
-                                                  'إنشاء الآن')
+                                                  'Sign Up')
                                               : (AppLocalizations.of(context)
                                                       ?.login ??
-                                                  'تسجيل الدخول'),
+                                                  'Sign In'),
                                         ),
                                       ),
                                     ],
@@ -1099,7 +1099,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
 
                                   const SizedBox(height: 16),
 
-                                  // فاصل "أو"
+                                  // "or" divider
                                   Row(
                                     children: [
                                       const Expanded(child: Divider()),
@@ -1108,7 +1108,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                             horizontal: 16),
                                         child: Text(
                                           AppLocalizations.of(context)?.or ??
-                                              'أو',
+                                              'or',
                                           style: theme.textTheme.bodyMedium
                                               ?.copyWith(
                                             color: Colors.grey,
@@ -1121,7 +1121,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
 
                                   const SizedBox(height: 16),
 
-                                  // زر تسجيل الدخول عبر Google
+                                  // Sign in with Google button
                                   SizedBox(
                                     width: double.infinity,
                                     child: OutlinedButton.icon(
@@ -1148,7 +1148,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                       label: Text(
                                         AppLocalizations.of(context)
                                                 ?.signInWithGoogle ??
-                                            'تسجيل الدخول عبر Google',
+                                            'Sign in with Google',
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: _isLoading
@@ -1173,35 +1173,6 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                 ),
               ),
 
-              // Theme toggle button في الزاوية العلوية اليمنى (آخر عنصر ليكون فوق كل شيء)
-              Positioned(
-                top: 16,
-                right: 16,
-                child: Material(
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(12),
-                  color: theme.colorScheme.surface,
-                  shadowColor: const Color(0xFF4F46E5).withOpacity(0.3),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () async {
-                      await themeProvider.toggleTheme();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      child: Icon(
-                        themeProvider.isDarkMode
-                            ? Icons.light_mode_rounded
-                            : Icons.dark_mode_rounded,
-                        color: themeProvider.isDarkMode
-                            ? const Color(0xFFFFD700)
-                            : const Color(0xFF4F46E5),
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

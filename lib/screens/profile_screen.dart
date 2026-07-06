@@ -15,7 +15,6 @@ import '../widgets/ratings_section.dart';
 import '../l10n/app_localizations.dart';
 import '../mixins/connectivity_aware_mixin.dart';
 import '../widgets/connectivity_button.dart';
-import '../providers/theme_provider.dart';
 import '../providers/language_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -35,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
   bool _isLoadingBookings = false;
   List<Map<String, dynamic>> _addresses = [];
   bool _isLoadingAddresses = false;
-  int _actualTotalRatings = 0; // عدد التقييمات الفعلي من قاعدة البيانات
+  int _actualTotalRatings = 0; // Actual ratings count from the database
 
   // ScrollController for scrolling to bookings section
   final ScrollController _scrollController = ScrollController();
@@ -135,7 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
         merged[k] = v;
       });
 
-      // Debug: طباعة الـ profile_picture للتأكد من القيمة
+      // Debug: print profile_picture to verify its value
       
       if (merged['profile_picture'] != null) {
       } else {
@@ -236,7 +235,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
         backgroundColor: const Color(0xFF4F46E5),
         elevation: 0,
         title: Text(
-          AppLocalizations.of(context)?.profile ?? 'الملف الشخصي',
+          AppLocalizations.of(context)?.profile ?? 'Profile',
           style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
@@ -263,30 +262,6 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // Dark Mode Toggle Icon
-          GestureDetector(
-            onTap: () {
-              provider_pkg.Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-            },
-            child: Container(
-              margin: const EdgeInsets.only(right: 12),
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: provider_pkg.Consumer<ThemeProvider>(
-                  builder: (context, themeProvider, child) => Icon(
-                    themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                    size: 22,
-                    color: Colors.white,
                   ),
                 ),
               ),
@@ -343,7 +318,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                         : null,
                                   ),
                                 ),
-                                // Verification badge (للمزودين فقط)
+                                // Verification badge (for providers only)
                                 if (isProvider) ...[
                                   const SizedBox(height: 8),
                                   _buildVerificationBadge(userData?['verification_status']),
@@ -405,7 +380,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                     ),
                                   ),
                                 );
-                                // لو رجع true يعني التعديل نجح، نحدث البيانات
+                                // If result is true, the edit was successful, refresh data
                                 if (result == true) {
                                   fetchUserProfile();
                                   _loadAddresses(); // Reload addresses in case location was saved
@@ -413,7 +388,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                               }
                             },
                             icon: const Icon(Icons.edit, size: 18),
-                            label: Text(AppLocalizations.of(context)?.editProfile ?? 'تعديل الملف الشخصي'),
+                            label: Text(AppLocalizations.of(context)?.editProfile ?? 'Edit Profile'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               foregroundColor: accent,
@@ -430,13 +405,13 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                   ),
                   const SizedBox(height: 16),
 
-                  // Verification Status Card (للمزودين فقط)
+                  // Verification Status Card (for providers only)
                   if (isProvider && userData != null) ...[
                     _buildVerificationStatusCard(userData?['verification_status']),
                     const SizedBox(height: 12),
                   ],
 
-                  // Provider Stats Card (للمزودين فقط)
+                  // Provider Stats Card (for providers only)
                   if (isProvider && userData != null) ...[
                     Card(
                       shape: RoundedRectangleBorder(
@@ -452,7 +427,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  AppLocalizations.of(context)?.ratingAndStats ?? 'التقييم والإحصائيات',
+                                  AppLocalizations.of(context)?.ratingAndStats ?? 'Rating & Statistics',
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -505,7 +480,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                 Expanded(
                                   child: _buildStatItem(
                                     icon: Icons.rate_review,
-                                    label: AppLocalizations.of(context)?.ratings ?? 'التقييمات',
+                                    label: AppLocalizations.of(context)?.ratings ?? 'Ratings',
                                     value: '$_actualTotalRatings',
                                     color: Colors.blue,
                                   ),
@@ -514,7 +489,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                 Expanded(
                                   child: _buildStatItem(
                                     icon: Icons.check_circle,
-                                    label: AppLocalizations.of(context)?.completedTasks ?? 'المهام المكتملة',
+                                    label: AppLocalizations.of(context)?.completedTasks ?? 'Completed Tasks',
                                     value: '${userData?['completed_jobs'] ?? 0}',
                                     color: Colors.green,
                                   ),
@@ -522,7 +497,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                               ],
                             ),
 
-                            // قسم التقييمات التفصيلية
+                            // Detailed ratings section
                             const SizedBox(height: 24),
                             const Divider(),
                             const SizedBox(height: 16),
@@ -554,7 +529,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            AppLocalizations.of(context)?.personalInfo ?? 'المعلومات الأساسية',
+                            AppLocalizations.of(context)?.personalInfo ?? 'Basic Information',
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -562,22 +537,22 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                           ),
                           const SizedBox(height: 12),
                           _infoRow(
-                            AppLocalizations.of(context)?.emailAddress ?? 'البريد الإلكتروني',
+                            AppLocalizations.of(context)?.emailAddress ?? 'Email',
                             userData?['email'] ?? '-',
                           ),
                           const SizedBox(height: 8),
                           _infoRow(
-                            AppLocalizations.of(context)?.firstName ?? 'الاسم الأول',
+                            AppLocalizations.of(context)?.firstName ?? 'First Name',
                             userData?['first_name'] ?? '-',
                           ),
                           const SizedBox(height: 8),
                           _infoRow(
-                            AppLocalizations.of(context)?.lastName ?? 'اسم العائلة',
+                            AppLocalizations.of(context)?.lastName ?? 'Last Name',
                             userData?['last_name'] ?? '-',
                           ),
                           const SizedBox(height: 8),
                           _infoRow(
-                            AppLocalizations.of(context)?.phoneNumber ?? 'الهاتف',
+                            AppLocalizations.of(context)?.phoneNumber ?? 'Phone Number',
                             userData?['phone_number'] ??
                                 userData?['phone'] ??
                                 '-',
@@ -588,9 +563,9 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                   ),
                   const SizedBox(height: 12),
 
-                  // وثيقة الهوية والشهادة الصحية (للمزودين فقط)
+                  // Identity document and health certificate (for providers only)
                   if (isProvider && userData != null) ...[
-                    // وثيقة الهوية
+                    // Identity document
                     if (userData!['identity_document_url'] != null ||
                         userData!['identity_document'] != null)
                       Card(
@@ -601,7 +576,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                           onTap: () => _openDocument(
                             userData!['identity_document_url'] ??
                                 userData!['identity_document'],
-                            AppLocalizations.of(context)?.profile ?? 'وثيقة الهوية',
+                            AppLocalizations.of(context)?.profile ?? 'Identity Document',
                           ),
                           borderRadius: BorderRadius.circular(12),
                           child: Padding(
@@ -627,7 +602,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        AppLocalizations.of(context)?.identityDocument ?? 'وثيقة الهوية',
+                                        AppLocalizations.of(context)?.identityDocument ?? 'Identity Document',
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
@@ -635,7 +610,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        'اضغط للعرض',
+                                        'Tap to view',
                                         style: const TextStyle(
                                           fontSize: 12,
                                           color: Colors.grey,
@@ -653,7 +628,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                       ),
                     const SizedBox(height: 12),
 
-                    // الشهادة الصحية
+                    // Health certificate
                     if (userData!['health_certificate_url'] != null ||
                         userData!['health_certificate'] != null)
                       Card(
@@ -664,7 +639,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                           onTap: () => _openDocument(
                             userData!['health_certificate_url'] ??
                                 userData!['health_certificate'],
-                            'الشهادة الصحية',
+                            'Health Certificate',
                           ),
                           borderRadius: BorderRadius.circular(12),
                           child: Padding(
@@ -690,7 +665,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        AppLocalizations.of(context)?.healthCertificate ?? 'الشهادة الصحية',
+                                        AppLocalizations.of(context)?.healthCertificate ?? 'Health Certificate',
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
@@ -698,7 +673,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        'اضغط للعرض',
+                                        'Tap to view',
                                         style: const TextStyle(
                                           fontSize: 12,
                                           color: Colors.grey,
@@ -731,7 +706,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AppLocalizations.of(context)?.aboutMe ?? 'نبذة عني',
+                              AppLocalizations.of(context)?.aboutMe ?? 'About Me',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -744,7 +719,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                       ),
                     ),
 
-                  // Addresses Section (للعملاء ومزودي الخدمة)
+                  // Addresses Section (for clients and providers)
                   if (userData != null) ...[
                     Card(
                       shape: RoundedRectangleBorder(
@@ -756,7 +731,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AppLocalizations.of(context)?.savedAddresses ?? 'العناوين المحفوظة',
+                              AppLocalizations.of(context)?.savedAddresses ?? 'Saved Addresses',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -783,7 +758,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                       ),
                                       const SizedBox(height: 12),
                                       Text(
-                                        'لا توجد عناوين محفوظة',
+                                        'No saved addresses',
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.grey[600],
@@ -879,7 +854,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                                       Icon(Icons.check_circle_outline,
                                                           size: 18),
                                                       SizedBox(width: 8),
-                                                      Text(AppLocalizations.of(context)?.setAsDefault ?? 'تعيين كافتراضي'),
+                                                      Text(AppLocalizations.of(context)?.setAsDefault ?? 'Set as Default'),
                                                     ],
                                                   ),
                                                 ),
@@ -890,7 +865,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                                     Icon(Icons.delete_outline,
                                                         size: 18, color: Colors.red),
                                                     SizedBox(width: 8),
-                                                    Text(AppLocalizations.of(context)?.deleteAddress ?? 'حذف',
+                                                    Text(AppLocalizations.of(context)?.deleteAddress ?? 'Delete',
                                                         style: TextStyle(color: Colors.red)),
                                                   ],
                                                 ),
@@ -935,7 +910,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                     const SizedBox(height: 12),
                   ],
 
-                  // زرار تسجيل الخروج
+                  // Logout button
                   const SizedBox(height: 12),
                   Card(
                     shape: RoundedRectangleBorder(
@@ -953,7 +928,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                             const Icon(Icons.logout, color: Colors.red),
                             const SizedBox(width: 12),
                             Text(
-                              AppLocalizations.of(context)?.logout ?? 'تسجيل الخروج',
+                              AppLocalizations.of(context)?.logout ?? 'Logout',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -978,7 +953,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)?.documentNotAvailable ?? 'الوثيقة غير متوفرة'),
+            content: Text(AppLocalizations.of(context)?.documentNotAvailable ?? 'Document not available'),
             backgroundColor: Colors.orange,
           ),
         );
@@ -1008,7 +983,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
           children: [
             const Icon(Icons.logout, color: Colors.red),
             const SizedBox(width: 8),
-            Text(AppLocalizations.of(context)?.logout ?? 'تسجيل الخروج'),
+            Text(AppLocalizations.of(context)?.logout ?? 'Logout'),
           ],
         ),
         content: Text(
@@ -1019,7 +994,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
           ConnectivityTextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
             child: Text(
-              AppLocalizations.of(context)?.cancel ?? 'إلغاء',
+              AppLocalizations.of(context)?.cancel ?? 'Cancel',
               style: const TextStyle(color: Colors.grey, fontSize: 16),
             ),
           ),
@@ -1034,7 +1009,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
             child: Text(
-              AppLocalizations.of(context)?.logout ?? 'تسجيل الخروج',
+              AppLocalizations.of(context)?.logout ?? 'Logout',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
@@ -1048,7 +1023,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
   }
 
   Future<void> _performLogout() async {
-    // عرض loading dialog
+    // Show loading dialog
     if (context.mounted) {
       showDialog(
         context: context,
@@ -1062,7 +1037,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                 children: [
                   CircularProgressIndicator(),
                   SizedBox(height: 16),
-                  Text(AppLocalizations.of(context)?.loggingOut ?? 'جاري تسجيل الخروج...'),
+                  Text(AppLocalizations.of(context)?.loggingOut ?? 'Logging out...'),
                 ],
               ),
             ),
@@ -1074,27 +1049,27 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
     try {
       final result = await AuthService.logout();
 
-      // إغلاق loading dialog
+      // Close loading dialog
       if (context.mounted) {
         Navigator.of(context).pop();
       }
 
       if (context.mounted) {
         if (result.success) {
-          // رجوع لصفحة تسجيل الدخول وحذف كل الـ routes
+          // Navigate to login screen and clear all routes
           Navigator.of(context).pushNamedAndRemoveUntil(
             '/auth',
             (route) => false,
           );
 
-          // عرض رسالة نجاح
+          // Show success message
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Row(
                 children: [
                   Icon(Icons.check_circle, color: Colors.white),
                   SizedBox(width: 8),
-                  Text(AppLocalizations.of(context)?.logoutSuccess ?? 'تم تسجيل الخروج بنجاح'),
+                  Text(AppLocalizations.of(context)?.logoutSuccess ?? 'Logged out successfully'),
                 ],
               ),
               backgroundColor: Colors.green,
@@ -1107,7 +1082,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(result.error ?? 'فشل تسجيل الخروج'),
+              content: Text(result.error ?? 'Logout failed'),
               backgroundColor: Colors.red,
             ),
           );
@@ -1115,12 +1090,12 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
       }
     } catch (e) {
 
-      // إغلاق loading dialog في حالة الخطأ
+      // Close loading dialog on error
       if (context.mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${AppLocalizations.of(context)?.logoutError ?? 'حدث خطأ أثناء تسجيل الخروج'}: $e'),
+            content: Text('${AppLocalizations.of(context)?.logoutError ?? 'An error occurred during logout'}: $e'),
             backgroundColor: Colors.red,
           ),
         );
@@ -1133,10 +1108,10 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
       return null;
     }
 
-    // جرب profile_picture_url الأول (من الـ API الجديد)
+    // Try profile_picture_url first (from the new API)
     var profilePic = userData['profile_picture_url'];
 
-    // لو مش موجود، جرب profile_picture (fallback)
+    // If not found, try profile_picture (fallback)
     if (profilePic == null || (profilePic as String).isEmpty) {
       profilePic = userData['profile_picture'];
     }
@@ -1147,12 +1122,12 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
     }
 
     String imageUrl = profilePic;
-    // لو الـ URL مش بادي بـ http يعني محتاج نضيف الـ base URL
+    // If the URL doesn't start with http, we need to prepend the base URL
     if (!imageUrl.startsWith('http')) {
       imageUrl = '${ApiConfig.baseUrl}$imageUrl';
     }
 
-    // إضافة timestamp لمنع الـ cache
+    // Add timestamp to prevent caching
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     imageUrl = '$imageUrl?t=$timestamp';
 
@@ -1235,32 +1210,32 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
     String label;
 
 
-    // تحديد الأيقونة واللون حسب الحالة
+    // Determine icon and color based on status
     switch (status?.toUpperCase()) {
       case 'VERIFIED':
         icon = Icons.check_circle;
         bgColor = Colors.green;
         iconColor = Colors.white;
-        label = AppLocalizations.of(context)?.verified ?? 'موثق';
+        label = AppLocalizations.of(context)?.verified ?? 'Verified';
         break;
       case 'PENDING':
         icon = Icons.access_time;
         bgColor = Colors.orange;
         iconColor = Colors.white;
-        label = AppLocalizations.of(context)?.underReview ?? 'قيد المراجعة';
+        label = AppLocalizations.of(context)?.underReview ?? 'Pending Review';
         break;
       case 'REJECTED':
         icon = Icons.cancel;
         bgColor = Colors.red;
         iconColor = Colors.white;
-        label = AppLocalizations.of(context)?.rejected ?? 'مرفوض';
+        label = AppLocalizations.of(context)?.rejected ?? 'Rejected';
         break;
       default:
-        // لو مفيش حالة أو البيانات ناقصة
+        // If no status or data is missing
         icon = Icons.error_outline;
         bgColor = Colors.grey;
         iconColor = Colors.white;
-        label = AppLocalizations.of(context)?.pleaseCompleteData ?? 'يرجى إكمال البيانات';
+        label = AppLocalizations.of(context)?.pleaseCompleteData ?? 'Please complete your data';
     }
 
     return Container(
@@ -1308,26 +1283,26 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
       case 'VERIFIED':
         icon = Icons.verified_user;
         statusColor = Colors.green;
-        title = AppLocalizations.of(context)?.accountVerified ?? 'حسابك موثق ✓';
-        description = AppLocalizations.of(context)?.accountVerifiedDescription ?? 'تم التحقق من هويتك وشهادتك الصحية بنجاح. يمكنك الآن تقديم عروضك على طلبات العملاء.';
+        title = AppLocalizations.of(context)?.accountVerified ?? 'Your account is verified';
+        description = AppLocalizations.of(context)?.accountVerifiedDescription ?? 'Your identity and health certificate have been verified successfully. You can now submit offers on client requests.';
         break;
       case 'PENDING':
         icon = Icons.hourglass_empty;
         statusColor = Colors.orange;
-        title = AppLocalizations.of(context)?.requestUnderReview ?? 'طلبك قيد المراجعة ⏳';
-        description = AppLocalizations.of(context)?.requestUnderReviewDescription ?? 'جاري مراجعة وثائقك من قبل الإدارة. سنقوم بإشعارك فور الانتهاء من المراجعة.';
+        title = AppLocalizations.of(context)?.requestUnderReview ?? 'Your request is under review';
+        description = AppLocalizations.of(context)?.requestUnderReviewDescription ?? 'Your documents are being reviewed by the administration. We will notify you once the review is complete.';
         break;
       case 'REJECTED':
         icon = Icons.error_outline;
         statusColor = Colors.red;
-        title = AppLocalizations.of(context)?.requestRejected ?? 'طلبك مرفوض ✗';
-        description = AppLocalizations.of(context)?.requestRejectedDescription ?? 'عذراً، لم يتم قبول وثائقك. يرجى تحديث وثيقة الهوية والشهادة الصحية من صفحة تعديل الملف الشخصي.';
+        title = AppLocalizations.of(context)?.requestRejected ?? 'Your request was rejected';
+        description = AppLocalizations.of(context)?.requestRejectedDescription ?? 'Sorry, your documents were not accepted. Please update your identity document and health certificate from the Edit Profile page.';
         break;
       default:
         icon = Icons.info_outline;
         statusColor = Colors.grey;
-        title = AppLocalizations.of(context)?.completeYourInfo ?? 'يرجى إكمال بياناتك';
-        description = AppLocalizations.of(context)?.verifiedProviderDescription ?? 'لتصبح مزود خدمة موثق، يجب عليك رفع وثيقة الهوية والشهادة الصحية من صفحة تعديل الملف الشخصي.';
+        title = AppLocalizations.of(context)?.completeYourInfo ?? 'Please complete your information';
+        description = AppLocalizations.of(context)?.verifiedProviderDescription ?? 'To become a verified service provider, you must upload your identity document and health certificate from the Edit Profile page.';
     }
 
     return Card(
@@ -1383,7 +1358,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                 height: 1.5,
               ),
             ),
-            // لو الحالة مرفوض أو ناقص، أضف زر تعديل
+            // If status is rejected or incomplete, add edit button
             if (status?.toUpperCase() != 'VERIFIED' &&
                 status?.toUpperCase() != 'PENDING') ...[
               const SizedBox(height: 16),
@@ -1404,7 +1379,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                   }
                 },
                 icon: const Icon(Icons.upload_file),
-                label: Text(AppLocalizations.of(context)?.editProfile ?? 'رفع الوثائق'),
+                label: Text(AppLocalizations.of(context)?.editProfile ?? 'Upload Documents'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: statusColor,
                   foregroundColor: Colors.white,
@@ -1447,7 +1422,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
               ),
               const SizedBox(height: 12),
               Text(
-                'لا توجد حجوزات حالياً',
+                'No bookings currently',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey[600],
@@ -1505,7 +1480,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          booking.serviceTitle ?? 'خدمة',
+                          booking.serviceTitle ?? 'Service',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -1590,7 +1565,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                 child: ConnectivityIconButton(
                   onPressed: () => _showOffersDialog(booking),
                   icon: const Icon(Icons.local_offer, size: 18),
-                  label: Text(AppLocalizations.of(context)?.viewOffers ?? 'عرض العروض'),
+                  label: Text(AppLocalizations.of(context)?.viewOffers ?? 'View Offers'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF3B82F6),
                     foregroundColor: Colors.white,
@@ -1611,23 +1586,23 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
   // Helper methods for booking display
   IconData _getServiceIcon(String serviceTitle) {
     final titleLower = serviceTitle.toLowerCase();
-    if (titleLower.contains('تنظيف')) return Icons.cleaning_services;
-    if (titleLower.contains('طبخ')) return Icons.restaurant;
-    if (titleLower.contains('أطفال')) return Icons.child_care;
-    if (titleLower.contains('مسن')) return Icons.accessible;
-    if (titleLower.contains('غسيل')) return Icons.local_laundry_service;
-    if (titleLower.contains('كي')) return Icons.checkroom;
+    if (titleLower.contains('cleaning')) return Icons.cleaning_services;
+    if (titleLower.contains('cooking')) return Icons.restaurant;
+    if (titleLower.contains('child') || titleLower.contains('kids')) return Icons.child_care;
+    if (titleLower.contains('elder')) return Icons.accessible;
+    if (titleLower.contains('laundry')) return Icons.local_laundry_service;
+    if (titleLower.contains('ironing')) return Icons.checkroom;
     return Icons.home_repair_service;
   }
 
   Color _getServiceColor(String serviceTitle) {
     final titleLower = serviceTitle.toLowerCase();
-    if (titleLower.contains('تنظيف')) return const Color(0xFF10B981);
-    if (titleLower.contains('طبخ')) return const Color(0xFFF59E0B);
-    if (titleLower.contains('أطفال')) return const Color(0xFF3B82F6);
-    if (titleLower.contains('مسن')) return const Color(0xFF4F46E5);
-    if (titleLower.contains('غسيل')) return const Color(0xFFEC4899);
-    if (titleLower.contains('كي')) return const Color(0xFF06B6D4);
+    if (titleLower.contains('cleaning')) return const Color(0xFF10B981);
+    if (titleLower.contains('cooking')) return const Color(0xFFF59E0B);
+    if (titleLower.contains('child') || titleLower.contains('kids')) return const Color(0xFF3B82F6);
+    if (titleLower.contains('elder')) return const Color(0xFF4F46E5);
+    if (titleLower.contains('laundry')) return const Color(0xFFEC4899);
+    if (titleLower.contains('ironing')) return const Color(0xFF06B6D4);
     return const Color(0xFF3B82F6);
   }
 
@@ -1649,30 +1624,30 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
   String _getStatusLabel(String status) {
     switch (status.toLowerCase()) {
       case 'open':
-        return 'مفتوح';
+        return 'Open';
       case 'accepted':
-        return 'مقبول';
+        return 'Accepted';
       case 'completed':
-        return 'مكتمل';
+        return 'Completed';
       case 'cancelled':
-        return 'ملغي';
+        return 'Cancelled';
       default:
         return status;
     }
   }
 
   String _formatDate(DateTime? date) {
-    if (date == null) return 'غير محدد';
+    if (date == null) return 'Not specified';
 
     final now = DateTime.now();
     final difference = date.difference(now).inDays;
 
     if (difference == 0) {
-      return 'اليوم';
+      return 'Today';
     } else if (difference == 1) {
-      return 'غداً';
+      return 'Tomorrow';
     } else if (difference == -1) {
-      return 'أمس';
+      return 'Yesterday';
     } else {
       return '${date.day}/${date.month}/${date.year}';
     }
@@ -1706,7 +1681,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
         title: Row(
           children: [
             Text(
-              'العروض المتاحة',
+              'Available Offers',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const Spacer(),
@@ -1717,7 +1692,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                '${offers.length} عرض',
+                '${offers.length} offers',
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -1733,7 +1708,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
               ? Padding(
                   padding: const EdgeInsets.all(20),
                   child: Text(
-                    'لا توجد عروض متاحة حالياً',
+                    'No offers available currently',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 14,
@@ -1784,7 +1759,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'عاملة #',
+                                      'Worker #',
                                       style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
@@ -1806,7 +1781,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '${offer.offeredPrice.toStringAsFixed(0)} جنيه',
+                                    '${offer.offeredPrice.toStringAsFixed(0)} EGP',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -1817,7 +1792,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                   ),
                                   if (isPriceHigher)
                                     Text(
-                                      '+${(offer.offeredPrice - (booking.clientBudget ?? 0)).toStringAsFixed(0)} جنيه',
+                                      '+${(offer.offeredPrice - (booking.clientBudget ?? 0)).toStringAsFixed(0)} EGP',
                                       style: const TextStyle(
                                         fontSize: 12,
                                         color: Color(0xFFF59E0B),
@@ -1864,7 +1839,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
                                   ),
                                 ),
                                 child: const Text(
-                                  'قبول العرض',
+                                  'Accept Offer',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -1899,7 +1874,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
         actions: [
           ConnectivityTextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(AppLocalizations.of(context)?.close ?? 'إغلاق'),
+            child: Text(AppLocalizations.of(context)?.close ?? 'Close'),
           ),
         ],
       ),
@@ -1930,7 +1905,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
             children: [
               Icon(Icons.check_circle, color: Colors.white),
               SizedBox(width: 12),
-              Text(AppLocalizations.of(context)?.bookingConfirmedSuccess ?? 'تم تأكيد الحجز بنجاح'),
+              Text(AppLocalizations.of(context)?.bookingConfirmedSuccess ?? 'Booking confirmed successfully'),
             ],
           ),
           backgroundColor: Colors.green,
@@ -1952,14 +1927,14 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
           children: [
             Icon(Icons.warning, color: Colors.orange),
             SizedBox(width: 8),
-            Text(AppLocalizations.of(context)?.confirmDelete ?? 'تأكيد الحذف'),
+            Text(AppLocalizations.of(context)?.confirmDelete ?? 'Confirm Delete'),
           ],
         ),
-        content: Text(AppLocalizations.of(context)?.deleteAddressConfirm ?? 'هل أنت متأكد من حذف هذا العنوان؟'),
+        content: Text(AppLocalizations.of(context)?.deleteAddressConfirm ?? 'Are you sure you want to delete this address?'),
         actions: [
           ConnectivityTextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: Text(AppLocalizations.of(context)?.cancel ?? 'إلغاء'),
+            child: Text(AppLocalizations.of(context)?.cancel ?? 'Cancel'),
           ),
           ConnectivityButton(
             onPressed: () => Navigator.of(ctx).pop(true),
@@ -1967,7 +1942,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
             ),
-            child: Text(AppLocalizations.of(context)?.deleteAddress ?? 'حذف'),
+            child: Text(AppLocalizations.of(context)?.deleteAddress ?? 'Delete'),
           ),
         ],
       ),
@@ -1988,13 +1963,13 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
     if (response.success) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context)?.addressDeletedSuccess ?? 'تم حذف العنوان بنجاح'),
+          content: Text(AppLocalizations.of(context)?.addressDeletedSuccess ?? 'Address deleted successfully'),
           backgroundColor: Colors.green,
         ),
       );
       _loadAddresses();
     } else {
-      final errorMsg = response.error ?? (AppLocalizations.of(context)?.failedToDeleteAddress ?? 'فشل حذف العنوان');
+      final errorMsg = response.error ?? (AppLocalizations.of(context)?.failedToDeleteAddress ?? 'Failed to delete address');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(errorMsg),
@@ -2019,13 +1994,13 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
     if (response.success) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppLocalizations.of(context)?.defaultAddressSetSuccess ?? 'تم تعيين العنوان الافتراضي بنجاح'),
+          content: Text(AppLocalizations.of(context)?.defaultAddressSetSuccess ?? 'Default address set successfully'),
           backgroundColor: Colors.green,
         ),
       );
       _loadAddresses();
     } else {
-      final errorMsg = response.error ?? (AppLocalizations.of(context)?.failedToSetDefaultAddress ?? 'فشل تعيين العنوان الافتراضي');
+      final errorMsg = response.error ?? (AppLocalizations.of(context)?.failedToSetDefaultAddress ?? 'Failed to set default address');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(errorMsg),

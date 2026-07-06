@@ -35,7 +35,7 @@ class AuthService {
           // Account created but needs email verification
           return AuthResult(
             success: true,
-            message: response.message ?? 'تم إنشاء الحساب. يرجى التحقق من بريدك الإلكتروني',
+            message: 'Account created. Please verify your email',
             requiresVerification: true,
             email: email,
           );
@@ -58,17 +58,17 @@ class AuthService {
 
           return AuthResult(
             success: true,
-            message: response.message ?? 'تم التسجيل بنجاح',
+            message: 'Registration successful',
             user: user,
           );
         }
       }
 
-      return AuthResult(success: false, error: response.error ?? 'فشل التسجيل');
+      return AuthResult(success: false, error: 'Registration failed');
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
       );
     }
   }
@@ -111,7 +111,7 @@ class AuthService {
           // Account created but needs email verification
           return AuthResult(
             success: true,
-            message: response.message ?? 'تم إنشاء الحساب. يرجى التحقق من بريدك الإلكتروني',
+            message: 'Account created. Please verify your email',
             requiresVerification: true,
             email: email,
           );
@@ -134,17 +134,17 @@ class AuthService {
 
           return AuthResult(
             success: true,
-            message: response.message ?? 'تم التسجيل بنجاح',
+            message: 'Registration successful',
             user: user,
           );
         }
       }
 
-      return AuthResult(success: false, error: response.error ?? 'فشل التسجيل');
+      return AuthResult(success: false, error: 'Registration failed');
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
       );
     }
   }
@@ -195,7 +195,7 @@ class AuthService {
 
           return AuthResult(
             success: true,
-            message: response.message ?? 'تم تسجيل الدخول بنجاح',
+            message: 'Login successful',
             user: user,
           );
         } else {
@@ -205,12 +205,12 @@ class AuthService {
 
       return AuthResult(
         success: false,
-        error: response.error ?? 'فشل تسجيل الدخول',
+        error: 'Login failed',
       );
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
       );
     }
   }
@@ -228,18 +228,18 @@ class AuthService {
       if (response.success) {
         return AuthResult(
           success: true,
-          message: response.message ?? 'تم إرسال رمز التحقق إلى رقم هاتفك',
+          message: 'Verification code sent to your phone',
         );
       }
 
       return AuthResult(
         success: false,
-        error: response.error ?? 'فشل إرسال رمز التحقق',
+        error: 'Failed to send verification code',
       );
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
       );
     }
   }
@@ -279,7 +279,7 @@ class AuthService {
 
           return AuthResult(
             success: true,
-            message: response.message ?? 'تم تسجيل الدخول بنجاح',
+            message: 'Login successful',
             user: user,
           );
         }
@@ -287,12 +287,12 @@ class AuthService {
 
       return AuthResult(
         success: false,
-        error: response.error ?? 'فشل تسجيل الدخول',
+        error: 'Login failed',
       );
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
       );
     }
   }
@@ -300,23 +300,21 @@ class AuthService {
   // Logout
   static Future<AuthResult> logout() async {
     try {
-      // محاولة إرسال طلب logout للسيرفر
       await ApiClient.post(ApiConfig.logout, needsAuth: true);
 
-      // حذف البيانات المحلية
       // 🔒 SECURITY FIX: Clear token from secure storage
       await SecureStorageService.deleteAuthToken();
       await StorageService.clearAll();
       ApiClient.setAuthToken(null);
 
-      return AuthResult(success: true, message: 'تم تسجيل الخروج بنجاح');
+      return AuthResult(success: true, message: 'Logged out successfully');
     } catch (e) {
-      // حتى لو فشل الاتصال، امسح البيانات المحلية
+      // Even if server call fails, clear local data
       await SecureStorageService.deleteAuthToken();
       await StorageService.clearAll();
       ApiClient.setAuthToken(null);
 
-      return AuthResult(success: true, message: 'تم تسجيل الخروج');
+      return AuthResult(success: true, message: 'Logged out');
     }
   }
 
@@ -351,13 +349,13 @@ class AuthService {
       } else {
         return AuthResult(
           success: false,
-          error: response.error ?? 'فشل جلب بيانات المستخدم',
+          error: 'Failed to fetch user data',
         );
       }
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
       );
     }
   }
@@ -377,18 +375,18 @@ class AuthService {
       if (response.success) {
         return AuthResult(
           success: true,
-          message: response.message ?? 'تم تغيير كلمة المرور بنجاح',
+          message: 'Password changed successfully',
         );
       } else {
         return AuthResult(
           success: false,
-          error: response.error ?? 'فشل تغيير كلمة المرور',
+          error: 'Password change failed',
         );
       }
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
       );
     }
   }
@@ -435,18 +433,18 @@ class AuthService {
 
         return AuthResult(
           success: true,
-          message: response.message ?? 'تم تحديث الملف الشخصي بنجاح',
+          message: 'Profile updated successfully',
         );
       } else {
         return AuthResult(
           success: false,
-          error: response.error ?? 'فشل تحديث الملف الشخصي',
+          error: 'Profile update failed',
         );
       }
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
       );
     }
   }
@@ -462,10 +460,9 @@ class AuthService {
 
   // ===================== Password Reset (Code-based - 6 digits) =====================
 
-  /// إرسال كود إعادة تعيين كلمة المرور (6 أرقام) إلى البريد الإلكتروني
+  /// Send password reset code (6 digits) to email
   static Future<Map<String, dynamic>> forgotPassword(String email) async {
     try {
-      // استخدام endpoint الكود (6 أرقام) بدلاً من الرابط
       final response = await ApiClient.post(
         ApiConfig.sendPasswordResetCode,
         body: {'email': email},
@@ -474,27 +471,26 @@ class AuthService {
       if (response.success) {
         return {
           'success': true,
-          'message': response.message ?? 'تم إرسال كود التحقق إلى بريدك الإلكتروني',
+          'message': 'Verification code sent to your email',
         };
       } else {
         return {
           'success': false,
-          'error': response.error ?? 'فشل إرسال كود التحقق',
+          'error': 'Failed to send verification code',
         };
       }
     } catch (e) {
       return {
         'success': false,
-        'error': 'خطأ في الاتصال: ${e.toString()}',
+        'error': 'Connection error: ${e.toString()}',
       };
     }
   }
 
-  /// التحقق من كود إعادة تعيين كلمة المرور (6 أرقام)
+  /// Verify password reset code (6 digits)
   static Future<Map<String, dynamic>> verifyResetCode(
       String email, String code) async {
     try {
-      // استخدام endpoint التحقق من الكود
       final response = await ApiClient.post(
         ApiConfig.verifyPasswordResetCode,
         body: {'email': email, 'code': code},
@@ -504,27 +500,26 @@ class AuthService {
         return {
           'success': true,
           'can_reset': response.rawResponse!['can_reset'] ?? true,
-          'message': response.message ?? 'الكود صحيح',
+          'message': 'Code verified successfully',
         };
       } else {
         return {
           'success': false,
-          'error': response.error ?? 'الكود غير صحيح أو منتهي الصلاحية',
+          'error': 'Invalid or expired code',
         };
       }
     } catch (e) {
       return {
         'success': false,
-        'error': 'خطأ في الاتصال: ${e.toString()}',
+        'error': 'Connection error: ${e.toString()}',
       };
     }
   }
 
-  /// إعادة تعيين كلمة المرور باستخدام الكود (6 أرقام)
+  /// Reset password using code (6 digits)
   static Future<Map<String, dynamic>> resetPassword(
       String email, String code, String newPassword) async {
     try {
-      // استخدام endpoint إعادة التعيين بالكود
       final response = await ApiClient.post(
         ApiConfig.resetPasswordWithCode,
         body: {
@@ -537,18 +532,18 @@ class AuthService {
       if (response.success) {
         return {
           'success': true,
-          'message': response.message ?? 'تم إعادة تعيين كلمة المرور بنجاح',
+          'message': 'Password reset successfully',
         };
       } else {
         return {
           'success': false,
-          'error': response.error ?? 'فشل إعادة تعيين كلمة المرور',
+          'error': 'Password reset failed',
         };
       }
     } catch (e) {
       return {
         'success': false,
-        'error': 'خطأ في الاتصال: ${e.toString()}',
+        'error': 'Connection error: ${e.toString()}',
       };
     }
   }
@@ -558,17 +553,15 @@ class AuthService {
     required String role, // 'CLIENT' or 'PROVIDER'
   }) async {
     try {
-      // تسجيل الدخول عبر Google
       final googleAccount = await GoogleAuthService.signInWithGoogle();
 
       if (googleAccount == null) {
         return AuthResult(
           success: false,
-          error: 'فشل تسجيل الدخول عبر Google',
+          error: 'Google sign-in failed',
         );
       }
 
-      // الحصول على بيانات المستخدم من Google
       final googleAuth = await googleAccount.authentication;
       final idToken = googleAuth.idToken;
       final accessToken = googleAuth.accessToken;
@@ -576,11 +569,10 @@ class AuthService {
       if (idToken == null || accessToken == null) {
         return AuthResult(
           success: false,
-          error: 'فشل الحصول على بيانات المصادقة',
+          error: 'Failed to get authentication data',
         );
       }
 
-      // إرسال البيانات إلى الـ backend
       final response = await ApiClient.post(
         ApiConfig.googleAuth,
         body: {
@@ -600,7 +592,6 @@ class AuthService {
         if (token != null && userData != null) {
           final user = User.fromJson(userData);
 
-          // حفظ البيانات
           await StorageService.saveAuthToken(token);
           await StorageService.saveUser(user);
           await StorageService.setLoggedIn(true);
@@ -608,19 +599,17 @@ class AuthService {
 
           return AuthResult(
             success: true,
-            message: response.message ?? 'تم تسجيل الدخول بنجاح',
+            message: 'Login successful',
             user: user,
           );
         }
       }
 
-      // التحقق من رسائل الأخطاء الخاصة بتعارض الأدوار
-      String errorMessage = response.error ?? 'فشل تسجيل الدخول';
+      String errorMessage = 'Login failed';
 
-      // إذا كانت الرسالة تحتوي على معلومات عن الدور الموجود
       if (response.rawResponse != null &&
           response.rawResponse!['existing_role'] != null) {
-        errorMessage = response.error ?? 'هذا الحساب مسجل بدور مختلف';
+        errorMessage = 'This account is registered with a different role';
       }
 
       return AuthResult(
@@ -630,7 +619,7 @@ class AuthService {
     } catch (e) {
       return AuthResult(
         success: false,
-        error: 'خطأ في الاتصال: \u200F${e.toString()}\u200F',
+        error: 'Connection error: ${e.toString()}',
       );
     }
   }

@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeProvider with ChangeNotifier {
-  bool _isDarkMode = true; // 🌙 DEFAULT: Dark Mode
+  bool _isDarkMode = false; // Light Mode Only
   static const String _themeKey = 'isDarkMode';
 
   bool get isDarkMode => _isDarkMode;
@@ -14,15 +14,12 @@ class ThemeProvider with ChangeNotifier {
 
   Future<void> _loadThemePreference() async {
     final prefs = await SharedPreferences.getInstance();
-    _isDarkMode = prefs.getBool(_themeKey) ?? true; // 🌙 DEFAULT: Dark Mode
+    _isDarkMode = false; // Light Mode Only — ignore saved preference
     notifyListeners();
   }
 
   Future<void> toggleTheme() async {
-    _isDarkMode = !_isDarkMode;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_themeKey, _isDarkMode);
-    notifyListeners();
+    // No-op: app is light mode only
   }
 
   ThemeData get lightTheme => ThemeData(

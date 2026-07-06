@@ -25,27 +25,21 @@ Future<void> main() async {
   // Ensure Flutter bindings are initialized
   WidgetsFlutterBinding.ensureInitialized();
 
-  // إخفاء جميع رسائل الأخطاء الحمراء في Production
+  // Hide red error screens in production
   if (kReleaseMode) {
-    // إلغاء عرض الأخطاء في الشاشة
     ErrorWidget.builder = (FlutterErrorDetails details) {
-      return Container(); // شاشة فارغة بدلاً من الأخطاء الحمراء
+      return Container();
     };
 
-    // إلغاء طباعة الأخطاء في Console
     FlutterError.onError = (FlutterErrorDetails details) {
-      // لا تفعل شيء - لا تطبع الخطأ
     };
 
-    // إلغاء الأخطاء غير المعالجة
     PlatformDispatcher.instance.onError = (error, stack) {
-      return true; // تم معالجة الخطأ - لا تطبعه
+      return true;
     };
   }
 
-  // ملاحظة: تهيئة Push Notifications تتم بعد Login في auth_screen.dart
-  // لأن إرسال التوكن للسيرفر يحتاج authentication
-  // ملاحظة: Notification handlers موجودين في CustomerHomeScreen و ProviderHomeScreen
+  // Note: Push Notifications are initialized after login in auth_screen.dart
 
   runApp(
     MultiProvider(
@@ -58,8 +52,7 @@ Future<void> main() async {
   );
 }
 
-// ملاحظة: تم دمج AuthCheckScreen مع SplashScreen
-// الآن SplashScreen تقوم بجميع عمليات التهيئة والتحقق
+// Note: AuthCheckScreen is merged with SplashScreen
 
 class AminaPlatformApp extends StatelessWidget {
   const AminaPlatformApp({super.key});
@@ -69,13 +62,10 @@ class AminaPlatformApp extends StatelessWidget {
     return Consumer2<ThemeProvider, LanguageProvider>(
       builder: (context, themeProvider, languageProvider, child) {
         return MaterialApp(
-          title: 'منصة أمينة - Amina Platform',
+          title: 'Amina Platform',
           debugShowCheckedModeBanner: false,
           theme: themeProvider.lightTheme,
-          darkTheme: themeProvider.darkTheme,
-          themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-          themeAnimationDuration: const Duration(milliseconds: 300), // أنيميشن سلس عند التبديل بين الثيمات
-          themeAnimationCurve: Curves.easeInOut, // منحنى سلس للأنيميشن
+          themeMode: ThemeMode.light,
           locale: const Locale('en'),
           supportedLocales: const [
             Locale('en'),
@@ -86,10 +76,9 @@ class AminaPlatformApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          // اتجاه النص يتحدد تلقائياً من locale عبر GlobalWidgetsLocalizations
           home: const ConnectivityWrapper(
             child: SplashScreen(),
-          ), // البداية بشاشة Splash مع فحص الاتصال
+          ),
           initialRoute: null,
           onGenerateRoute: (settings) {
         // Handle routes with parameters
@@ -236,7 +225,7 @@ class _AminaDashboardState extends State<AminaDashboard> {
               // Not logged in -> go to auth screen
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('الرجاء تسجيل الدخول أولاً')),
+                  const SnackBar(content: Text('Please login first')),
                 );
               }
               return;
@@ -283,27 +272,27 @@ class _AminaDashboardState extends State<AminaDashboard> {
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_outlined),
             activeIcon: Icon(Icons.dashboard),
-            label: 'الرئيسية',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.cleaning_services_outlined),
             activeIcon: Icon(Icons.cleaning_services),
-            label: 'الخدمات',
+            label: 'Services',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people_outline),
             activeIcon: Icon(Icons.people),
-            label: 'العاملات',
+            label: 'Workers',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.analytics_outlined),
             activeIcon: Icon(Icons.analytics),
-            label: 'التقارير',
+            label: 'Reports',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_outlined),
             activeIcon: Icon(Icons.settings),
-            label: 'الإعدادات',
+            label: 'Settings',
           ),
         ],
       ),
@@ -359,16 +348,16 @@ class DashboardHome extends StatelessWidget {
 
   Widget _buildServicesCard() {
     return _buildCard(
-      title: 'الخدمات الشائعة',
+      title: 'Popular Services',
       icon: Icons.cleaning_services,
       child: Column(
         children: [
-          _buildServiceItem('تنظيف منزلي شامل', '450 جنيه', Icons.clean_hands),
-          _buildServiceItem('رعاية أطفال', '300 جنيه', Icons.child_care),
-          _buildServiceItem('طبخ منزلي', '350 جنيه', Icons.restaurant),
-          _buildServiceItem('رعاية مسنين', '400 جنيه', Icons.accessible),
+          _buildServiceItem('Full House Cleaning', '450 EGP', Icons.clean_hands),
+          _buildServiceItem('Child Care', '300 EGP', Icons.child_care),
+          _buildServiceItem('Home Cooking', '350 EGP', Icons.restaurant),
+          _buildServiceItem('Elder Care', '400 EGP', Icons.accessible),
           const Spacer(),
-          _buildCardButton('عرض جميع الخدمات', Icons.arrow_back_ios_new),
+          _buildCardButton('View All Services', Icons.arrow_forward_ios),
         ],
       ),
     );
@@ -376,15 +365,15 @@ class DashboardHome extends StatelessWidget {
 
   Widget _buildWorkersCard() {
     return _buildCard(
-      title: 'أفضل العاملات',
+      title: 'Top Workers',
       icon: Icons.people,
       child: Column(
         children: [
-          _buildWorkerItem('فاطمة أحمد', 'تنظيف منزلي', '5.0', '342'),
-          _buildWorkerItem('مريم محمد', 'طبخ منزلي', '4.9', '278'),
-          _buildWorkerItem('سارة حسن', 'رعاية أطفال', '4.8', '195'),
+          _buildWorkerItem('Fatima Ahmed', 'House Cleaning', '5.0', '342'),
+          _buildWorkerItem('Mariam Mohamed', 'Home Cooking', '4.9', '278'),
+          _buildWorkerItem('Sara Hassan', 'Child Care', '4.8', '195'),
           const Spacer(),
-          _buildCardButton('إدارة العاملات', Icons.manage_accounts),
+          _buildCardButton('Manage Workers', Icons.manage_accounts),
         ],
       ),
     );
@@ -393,30 +382,30 @@ class DashboardHome extends StatelessWidget {
   Widget _buildRevenueCard() {
     final formatter = NumberFormat('#,###');
     return _buildCard(
-      title: 'الإيرادات',
+      title: 'Revenue',
       icon: Icons.account_balance_wallet,
       child: Column(
         children: [
           _buildRevenueItem(
-            'أرباح اليوم',
-            '${formatter.format(8500)} جنيه',
+            "Today's Earnings",
+            '${formatter.format(8500)} EGP',
             Icons.today,
             const Color(0xFF10B981),
           ),
           _buildRevenueItem(
-            'أرباح الأسبوع',
-            '${formatter.format(65000)} جنيه',
+            "Week's Earnings",
+            '${formatter.format(65000)} EGP',
             Icons.calendar_view_week,
             const Color(0xFF3B82F6),
           ),
           _buildRevenueItem(
-            'أرباح الشهر',
-            '${formatter.format(250000)} جنيه',
+            "Month's Earnings",
+            '${formatter.format(250000)} EGP',
             Icons.calendar_today,
             const Color(0xFF4F46E5),
           ),
           const Spacer(),
-          _buildCardButton('التقارير المالية', Icons.bar_chart),
+          _buildCardButton('Financial Reports', Icons.bar_chart),
         ],
       ),
     );
@@ -424,21 +413,21 @@ class DashboardHome extends StatelessWidget {
 
   Widget _buildLiveRequestsCard() {
     return _buildCard(
-      title: 'الطلبات المباشرة',
+      title: 'Live Requests',
       icon: Icons.notifications_active,
-      badge: '3 جديد',
+      badge: '3 new',
       child: Column(
         children: [
-          _buildRequestItem('ليلى أحمد', 'تنظيف منزلي', 'الزمالك، القاهرة'),
-          _buildRequestItem('أحمد محمد', 'رعاية أطفال', 'المعادي، القاهرة'),
+          _buildRequestItem('Laila Ahmed', 'House Cleaning', 'Zamalek, Cairo'),
+          _buildRequestItem('Ahmed Mohamed', 'Child Care', 'Maadi, Cairo'),
           const Spacer(),
           Row(
             children: [
-              Expanded(child: _buildCardButton('عرض الكل', Icons.list)),
+              Expanded(child: _buildCardButton('View All', Icons.list)),
               const SizedBox(width: 10),
               Expanded(
                 child: _buildCardButton(
-                  'إدارة',
+                  'Manage',
                   Icons.settings,
                   isPrimary: false,
                 ),
@@ -452,31 +441,31 @@ class DashboardHome extends StatelessWidget {
 
   Widget _buildRecentActivity() {
     return _buildCard(
-      title: 'النشاط الأخير',
+      title: 'Recent Activity',
       icon: Icons.history,
       child: Column(
         children: [
           _buildActivityItem(
-            'تم إكمال خدمة تنظيف',
-            'قبل 2 ساعة',
+            'Cleaning service completed',
+            '2 hours ago',
             Icons.check_circle,
             const Color(0xFF10B981),
           ),
           _buildActivityItem(
-            'طلب جديد',
-            'قبل 4 ساعات',
+            'New request',
+            '4 hours ago',
             Icons.add_circle,
             const Color(0xFF3B82F6),
           ),
           _buildActivityItem(
-            'تقييم جديد',
-            'قبل 6 ساعات',
+            'New rating',
+            '6 hours ago',
             Icons.star,
             const Color(0xFFF59E0B),
           ),
           _buildActivityItem(
-            'تحديث النظام',
-            'قبل يوم',
+            'System update',
+            '1 day ago',
             Icons.update,
             const Color(0xFF4F46E5),
           ),
@@ -666,7 +655,7 @@ class DashboardHome extends StatelessWidget {
                 ],
               ),
               Text(
-                '($reviews تقييم)',
+                '($reviews reviews)',
                 style: const TextStyle(color: Color(0xFF666666), fontSize: 10),
               ),
             ],
@@ -769,7 +758,7 @@ class DashboardHome extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: const Text(
-                  'قبول',
+                  'Accept',
                   style: TextStyle(
                     color: Color(0xFF10B981),
                     fontSize: 10,
@@ -785,7 +774,7 @@ class DashboardHome extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: const Text(
-                  'رفض',
+                  'Reject',
                   style: TextStyle(
                     color: Color(0xFFEF4444),
                     fontSize: 10,
@@ -874,7 +863,7 @@ class ServicesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('شاشة الخدمات'));
+    return const Center(child: Text('Services'));
   }
 }
 
@@ -883,7 +872,7 @@ class WorkersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('شاشة العاملات'));
+    return const Center(child: Text('Workers'));
   }
 }
 
@@ -892,7 +881,7 @@ class AnalyticsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('شاشة التقارير'));
+    return const Center(child: Text('Reports'));
   }
 }
 
@@ -903,31 +892,29 @@ class SettingsScreen extends StatelessWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('تسجيل الخروج'),
-        content: const Text('هل أنت متأكد أنك تريد تسجيل الخروج؟'),
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('إلغاء'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            child: const Text('تأكيد'),
+            child: const Text('Confirm'),
           ),
         ],
       ),
     );
 
     if (confirmed == true) {
-      // Call logout and navigate to auth screen
       final result = await AuthService.logout();
       if (context.mounted) {
-        // Remove all routes and go to auth
         Navigator.of(
           context,
         ).pushNamedAndRemoveUntil('/auth', (route) => false);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(result.message ?? 'تم تسجيل الخروج')),
+          SnackBar(content: Text(result.message ?? 'Logged out')),
         );
       }
     }
@@ -941,14 +928,14 @@ class SettingsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'الإعدادات',
+            'Settings',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
           Card(
             child: ListTile(
               leading: const Icon(Icons.person_outline),
-              title: const Text('الملف الشخصي'),
+              title: const Text('Profile'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () async {
                 final token = await StorageService.getAuthToken();
@@ -956,7 +943,7 @@ class SettingsScreen extends StatelessWidget {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('الرجاء تسجيل الدخول أولاً'),
+                        content: Text('Please login first'),
                       ),
                     );
                   }
@@ -977,7 +964,7 @@ class SettingsScreen extends StatelessWidget {
             child: ListTile(
               leading: const Icon(Icons.logout, color: Colors.redAccent),
               title: const Text(
-                'تسجيل الخروج',
+                'Logout',
                 style: TextStyle(color: Colors.redAccent),
               ),
               onTap: () => _confirmLogout(context),
