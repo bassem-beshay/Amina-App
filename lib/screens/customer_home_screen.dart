@@ -1630,6 +1630,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                       _loadUnreadNotificationsCount();
                     }
                   },
+                  customChild: _buildProfileNavAvatar(),
                 ),
               ],
             );
@@ -1711,6 +1712,72 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         ),
       ),
     );
+  }
+
+  /// بناء أفاتار البروفايل للشريط السفلي
+  Widget _buildProfileNavAvatar() {
+    String? profilePicUrl;
+    if (_userData != null) {
+      profilePicUrl = _userData!['profile_picture_url'] as String?;
+      if (profilePicUrl == null || profilePicUrl.isEmpty) {
+        profilePicUrl = _userData!['profile_picture'] as String?;
+      }
+    }
+
+    String? imageUrl;
+    if (profilePicUrl != null && profilePicUrl.isNotEmpty) {
+      imageUrl = profilePicUrl;
+      if (!imageUrl.startsWith('http')) {
+        imageUrl = '${ApiConfig.baseUrl}$imageUrl';
+      }
+    }
+
+    const double size = 24;
+    const color = Color(0xFF9DB2CE);
+
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: color, width: 1.5),
+      ),
+      child: ClipOval(
+        child: imageUrl != null
+            ? CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                width: size,
+                height: size,
+                placeholder: (context, url) =>
+                    const Icon(Icons.person, size: 14, color: color),
+                errorWidget: (context, url, error) =>
+                    _buildProfileFallback(color),
+              )
+            : _buildProfileFallback(color),
+      ),
+    );
+  }
+
+  Widget _buildProfileFallback(Color color) {
+    final hasName = _userData != null &&
+        _userData!['first_name'] != null &&
+        (_userData!['first_name'] as String).isNotEmpty;
+    if (hasName) {
+      return Container(
+        color: Colors.white,
+        alignment: Alignment.center,
+        child: Text(
+          (_userData!['first_name'] as String)[0].toUpperCase(),
+          style: TextStyle(
+            color: color,
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      );
+    }
+    return Icon(Icons.person, size: 14, color: color);
   }
 
   Widget _buildSearchBar() {

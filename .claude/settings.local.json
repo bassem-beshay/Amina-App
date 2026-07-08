@@ -36,7 +36,19 @@
       "Bash(adb:*)",
       "Bash(flutter run:*)",
       "Bash(xargs grep:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(curl:*)",
+      "WebFetch(domain:amina.bdcbiz.com)",
+      "Bash(pip install:*)",
+      "Bash(python.exe:*)",
+      "Bash(pg_isready:*)",
+      "Bash(where psql:*)",
+      "Bash(\"/c/Program Files/PostgreSQL/17/bin/psql.exe\":*)",
+      "Bash(PGPASSWORD=root \"/c/Program Files/PostgreSQL/17/bin/psql.exe\":*)",
+      "Bash(PGPASSWORD=postgres \"/c/Program Files/PostgreSQL/17/bin/psql.exe\":*)",
+      "Bash(git pull:*)"
     ],
     "deny": [],
     "ask": []

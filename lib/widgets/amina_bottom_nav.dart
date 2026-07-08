@@ -7,6 +7,7 @@ class AminaNavItem {
   final String label;
   final VoidCallback onTap;
   final int badge;
+  final Widget? customChild; // optional custom widget (e.g. profile avatar)
 
   const AminaNavItem({
     required this.icon,
@@ -14,6 +15,7 @@ class AminaNavItem {
     required this.label,
     required this.onTap,
     this.badge = 0,
+    this.customChild,
   });
 }
 
@@ -98,7 +100,7 @@ class AminaBottomNav extends StatelessWidget {
                                 // floating bubble, so keep an empty slot here.
                                 active
                                     ? const SizedBox(height: 24)
-                                    : _iconWithBadge(item, inactiveColor),
+                                    : item.customChild ?? _iconWithBadge(item, inactiveColor),
                                 const SizedBox(height: 5),
                                 Text(
                                   item.label,
