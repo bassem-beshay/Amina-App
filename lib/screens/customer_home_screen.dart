@@ -1580,7 +1580,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     return provider_pkg.Consumer<LanguageProvider>(
       builder: (context, languageProvider, child) => Container(
         key: ValueKey(languageProvider.locale.languageCode),
-      height: 62,
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF2D2D2D) : Colors.white,
         boxShadow: [
@@ -1599,7 +1598,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
           children: [
             // الأزرار العادية
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -1749,7 +1748,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
       onTap: onTap,
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -1758,7 +1757,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
               children: [
                 Icon(
                   isActive ? activeIcon : icon,
-                  size: 23,
+                  size: 22,
                   color: color,
                 ),
                 if (badgeCount > 0)
@@ -1788,9 +1787,11 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   ),
               ],
             ),
-            const SizedBox(height: 3),
+            const SizedBox(height: 2),
             Text(
               label,
+              maxLines: 1,
+              overflow: TextOverflow.visible,
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
