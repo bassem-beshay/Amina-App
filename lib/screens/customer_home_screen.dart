@@ -31,6 +31,7 @@ import 'package:geolocator/geolocator.dart';
 import '../widgets/connectivity_button.dart';
 import 'package:geocoding/geocoding.dart';
 import '../mixins/connectivity_aware_mixin.dart';
+import '../widgets/amina_bottom_nav.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   const CustomerHomeScreen({super.key});
@@ -1575,158 +1576,66 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
 
   /// شريط التنقل السفلي الاحترافي
   Widget _buildBottomNavBar() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return provider_pkg.Consumer<LanguageProvider>(
-      builder: (context, languageProvider, child) => Container(
-        key: ValueKey(languageProvider.locale.languageCode),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF2D2D2D) : Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 16,
-            offset: const Offset(0, -3),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.center,
-          children: [
-            // الأزرار العادية
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // 1. زر الرئيسية
-                  _buildBottomNavItem(
-                    icon: Icons.home_outlined,
-                    activeIcon: Icons.home,
-                    label: AppLocalizations.of(context)?.home ?? 'الرئيسية',
-                    isDark: isDark,
-                    isActive: true,
-                    onTap: () {
-                      _scrollController.animateTo(
-                        0,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                  ),
-
-                  // 2. زر الشات
-                  ValueListenableBuilder<int>(
-                    valueListenable: _unreadMessagesCount,
-                    builder: (context, count, child) {
-                      return _buildBottomNavItem(
-                        icon: Icons.chat_bubble_outline_rounded,
-                        activeIcon: Icons.chat_bubble_rounded,
-                        label: AppLocalizations.of(context)?.conversations ?? 'المحادثات',
-                        isDark: isDark,
-                        badgeCount: count,
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ConversationsListScreen(),
-                            ),
-                          );
-                          _loadUnreadMessagesCount();
-                        },
-                      );
-                    },
-                  ),
-
-                  // 3. مساحة فارغة للزر المركزي
-                  const SizedBox(width: 56),
-
-                  // 4. زر الحجوزات
-                  _buildBottomNavItem(
-                    icon: Icons.receipt_long_outlined,
-                    activeIcon: Icons.receipt_long,
-                    label: AppLocalizations.of(context)?.myBookings ?? 'حجوزاتي',
-                    isDark: isDark,
-                    onTap: () async {
+      builder: (context, languageProvider, child) {
+        return ValueListenableBuilder<int>(
+          valueListenable: _unreadMessagesCount,
+          builder: (context, unread, _) {
+            return AminaBottomNav(
+              key: ValueKey(languageProvider.locale.languageCode),
+              currentIndex: 0,
+              items: [
+                AminaNavItem(
+                  icon: Icons.home_outlined,
+                  activeIcon: Icons.home_rounded,
+                  label: 'Home',
+                  onTap: () {
+                    _scrollController.animateTo(
+                      0,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                ),
+                AminaNavItem(
+                  icon: Icons.chat_bubble_outline_rounded,
+                  activeIcon: Icons.chat_bubble_rounded,
+                  label: 'Chat',
+                  badge: unread,
+                  onTap: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ConversationsListScreen(),
+                      ),
+                    );
+                    _loadUnreadMessagesCount();
+                  },
+                ),
+                AminaNavItem(
+                  icon: Icons.person_outline,
+                  activeIcon: Icons.person,
+                  label: 'Profile',
+                  onTap: () async {
+                    final token = ApiClient.authToken;
+                    if (token != null && token.isNotEmpty) {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ClientBookingsScreen(),
+                          builder: (context) => ProfileScreen(token: token),
                         ),
                       );
-                      if (!mounted) return;
                       await _loadUserData();
                       await _loadData();
                       _loadUnreadNotificationsCount();
-                    },
-                  ),
-
-                  // 5. زر البروفايل
-                  _buildBottomNavItem(
-                    icon: Icons.person_outline,
-                    activeIcon: Icons.person,
-                    label: AppLocalizations.of(context)?.profile ?? 'حسابي',
-                    isDark: isDark,
-                    onTap: () async {
-                      final token = ApiClient.authToken;
-                      if (token != null && token.isNotEmpty) {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfileScreen(token: token),
-                          ),
-                        );
-                        await _loadUserData();
-                        await _loadData();
-                        _loadUnreadNotificationsCount();
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-            // الزر المركزي البارز (الزائد)
-            Positioned(
-              top: -12,
-              child: GestureDetector(
-                onTap: () {
-                  _scrollToAvailableOffers();
-                },
-                child: Container(
-                  width: 56,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF8B5CF6).withOpacity(0.35),
-                        blurRadius: 12,
-                        spreadRadius: 0,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.add_rounded,
-                    size: 28,
-                    color: Colors.white,
-                  ),
+                    }
+                  },
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 
