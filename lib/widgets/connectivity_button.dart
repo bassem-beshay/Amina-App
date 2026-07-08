@@ -290,7 +290,7 @@ Future<void> checkConnectivityBeforeAction(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const CircularProgressIndicator(
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                     ),
                     if (loadingMessage != null) ...[
                       const SizedBox(height: 16),

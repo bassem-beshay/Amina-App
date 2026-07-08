@@ -182,12 +182,12 @@ class _ClientServiceConfirmationScreenState
                                 width: 48,
                                 height: 48,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF4F46E5).withOpacity(0.1),
+                                  color: const Color(0xFF8B5CF6).withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: const Icon(
                                   Icons.cleaning_services,
-                                  color: Color(0xFF4F46E5),
+                                  color: Color(0xFF8B5CF6),
                                   size: 24,
                                 ),
                               ),

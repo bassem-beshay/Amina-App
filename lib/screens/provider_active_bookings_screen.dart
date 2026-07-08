@@ -66,7 +66,7 @@ class _ProviderActiveBookingsScreenState
       child: Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF4F46E5),
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
         title: Text(
           AppLocalizations.of(context)?.activeBookings ?? 'الحجوزات النشطة',
@@ -250,7 +250,7 @@ class _ProviderActiveBookingsScreenState
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(
-                        colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+                        colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
                       ),
                     ),
                     child: Icon(
@@ -310,7 +310,7 @@ class _ProviderActiveBookingsScreenState
             Container(
               padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Color(0xFF4F46E5).withOpacity(0.1),
+                color: Color(0xFF8B5CF6).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -321,7 +321,7 @@ class _ProviderActiveBookingsScreenState
                       Icon(
                         Icons.payments_outlined,
                         size: 20,
-                        color: Color(0xFF4F46E5),
+                        color: Color(0xFF8B5CF6),
                       ),
                       SizedBox(width: 6),
                       Text(
@@ -339,7 +339,7 @@ class _ProviderActiveBookingsScreenState
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                     ),
                   ),
                 ],

@@ -45,18 +45,18 @@ class ProviderRequestDetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
         title: Text(
           AppLocalizations.of(context)?.requestDetails ?? 'تفاصيل الطلب',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -72,7 +72,7 @@ class ProviderRequestDetailScreen extends StatelessWidget {
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+                  colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
                 ),
               ),
               child: Column(
@@ -300,7 +300,7 @@ class ProviderRequestDetailScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () => _showOfferDialog(context),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4F46E5),
+                    backgroundColor: const Color(0xFF8B5CF6),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -388,12 +388,12 @@ class ProviderRequestDetailScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4F46E5).withOpacity( 0.1),
+                  color: const Color(0xFF8B5CF6).withOpacity( 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
                   icon,
-                  color: const Color(0xFF4F46E5),
+                  color: const Color(0xFF8B5CF6),
                   size: 20,
                 ),
               ),
@@ -629,7 +629,7 @@ class ProviderRequestDetailScreen extends StatelessWidget {
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4F46E5),
+              backgroundColor: const Color(0xFF8B5CF6),
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),

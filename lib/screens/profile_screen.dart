@@ -232,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF4F46E5),
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
         title: Text(
           AppLocalizations.of(context)?.profile ?? 'Profile',
@@ -1600,7 +1600,7 @@ class _ProfileScreenState extends State<ProfileScreen> with ConnectivityAwareMix
     if (titleLower.contains('cleaning')) return const Color(0xFF10B981);
     if (titleLower.contains('cooking')) return const Color(0xFFF59E0B);
     if (titleLower.contains('child') || titleLower.contains('kids')) return const Color(0xFF3B82F6);
-    if (titleLower.contains('elder')) return const Color(0xFF4F46E5);
+    if (titleLower.contains('elder')) return const Color(0xFF8B5CF6);
     if (titleLower.contains('laundry')) return const Color(0xFFEC4899);
     if (titleLower.contains('ironing')) return const Color(0xFF06B6D4);
     return const Color(0xFF3B82F6);

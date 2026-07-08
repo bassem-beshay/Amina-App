@@ -243,10 +243,10 @@ class _PaymentFailureScreenState extends State<PaymentFailureScreen> {
                           widget.onRetry!();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF4F46E5),
+                          backgroundColor: const Color(0xFF8B5CF6),
                           foregroundColor: Colors.white,
                           elevation: 2,
-                          shadowColor: const Color(0xFF4F46E5).withOpacity(0.4),
+                          shadowColor: const Color(0xFF8B5CF6).withOpacity(0.4),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -302,14 +302,14 @@ class _PaymentFailureScreenState extends State<PaymentFailureScreen> {
                         Icon(
                           Icons.support_agent_rounded,
                           size: 20,
-                          color: Color(0xFF4F46E5),
+                          color: Color(0xFF8B5CF6),
                         ),
                         SizedBox(width: 8),
                         Text(
                           'تواصل مع الدعم الفني',
                           style: TextStyle(
                             fontSize: 15,
-                            color: Color(0xFF4F46E5),
+                            color: Color(0xFF8B5CF6),
                             fontWeight: FontWeight.w600,
                           ),
                         ),

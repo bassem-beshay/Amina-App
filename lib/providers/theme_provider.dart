@@ -25,11 +25,11 @@ class ThemeProvider with ChangeNotifier {
   ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
-        primaryColor: const Color(0xFF4F46E5), // Deep Indigo
+        primaryColor: const Color(0xFF8B5CF6), // Deep Indigo
         scaffoldBackgroundColor: const Color(0xFFF9FAFB), // Very Light Gray
         fontFamily: GoogleFonts.cairo().fontFamily,
         colorScheme: const ColorScheme.light(
-          primary: Color(0xFF4F46E5), // Deep Indigo
+          primary: Color(0xFF8B5CF6), // Deep Indigo
           secondary: Color(0xFF10B981), // Emerald
           tertiary: Color(0xFF0EA5E9), // Sky Blue
           surface: Colors.white,
@@ -39,16 +39,16 @@ class ThemeProvider with ChangeNotifier {
           error: Color(0xFFEF4444), // Red
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: Color(0xFF0F172A),
+          backgroundColor: Color(0xFF8B5CF6),
+          foregroundColor: Colors.white,
           elevation: 0,
           scrolledUnderElevation: 0,
           centerTitle: true,
-          iconTheme: IconThemeData(color: Color(0xFF0F172A)),
+          iconTheme: IconThemeData(color: Colors.white),
           titleTextStyle: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF0F172A),
+            color: Colors.white,
           ),
         ),
         textTheme: const TextTheme(
@@ -75,7 +75,7 @@ class ThemeProvider with ChangeNotifier {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Color(0xFF4F46E5), width: 1.5),
+            borderSide: const BorderSide(color: Color(0xFF8B5CF6), width: 1.5),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
@@ -84,7 +84,7 @@ class ThemeProvider with ChangeNotifier {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF4F46E5),
+            backgroundColor: const Color(0xFF8B5CF6),
             foregroundColor: Colors.white,
             elevation: 0,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
@@ -94,7 +94,7 @@ class ThemeProvider with ChangeNotifier {
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-            foregroundColor: const Color(0xFF4F46E5),
+            foregroundColor: const Color(0xFF8B5CF6),
             side: const BorderSide(color: Color(0xFFE2E8F0)),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

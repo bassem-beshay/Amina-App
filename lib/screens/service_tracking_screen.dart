@@ -40,25 +40,25 @@ class _ServiceTrackingScreenState extends State<ServiceTrackingScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
         centerTitle: true,
         title: Text(
           'Service Tracking',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: RefreshIndicator(
         onRefresh: _refreshData,
-        color: const Color(0xFF4F46E5),
+        color: const Color(0xFF8B5CF6),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
@@ -249,7 +249,7 @@ class _ServiceTrackingScreenState extends State<ServiceTrackingScreen> {
                       child: Container(
                         height: 2,
                         color: isCompleted
-                            ? const Color(0xFF4F46E5)
+                            ? const Color(0xFF8B5CF6)
                             : const Color(0xFFE5E7EB),
                       ),
                     ),
@@ -259,11 +259,11 @@ class _ServiceTrackingScreenState extends State<ServiceTrackingScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: isCompleted
-                          ? const Color(0xFF4F46E5)
+                          ? const Color(0xFF8B5CF6)
                           : Colors.white,
                       border: Border.all(
                         color: isCompleted
-                            ? const Color(0xFF4F46E5)
+                            ? const Color(0xFF8B5CF6)
                             : const Color(0xFFE5E7EB),
                         width: 2,
                       ),
@@ -281,7 +281,7 @@ class _ServiceTrackingScreenState extends State<ServiceTrackingScreen> {
                       child: Container(
                         height: 2,
                         color: isCompleted && index < currentIndex
-                            ? const Color(0xFF4F46E5)
+                            ? const Color(0xFF8B5CF6)
                             : const Color(0xFFE5E7EB),
                       ),
                     ),
@@ -339,7 +339,7 @@ class _ServiceTrackingScreenState extends State<ServiceTrackingScreen> {
             icon: Icons.cleaning_services,
             label: 'Service',
             value: _serviceName,
-            iconColor: Color(0xFF4F46E5),
+            iconColor: Color(0xFF8B5CF6),
           ),
 
           Divider(height: 24),
@@ -397,12 +397,12 @@ class _ServiceTrackingScreenState extends State<ServiceTrackingScreen> {
             height: 60,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFF4F46E5).withOpacity(0.1),
+              color: const Color(0xFF8B5CF6).withOpacity(0.1),
             ),
             child: const Icon(
               Icons.person,
               size: 32,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           ),
 
@@ -609,7 +609,7 @@ class _ServiceTrackingScreenState extends State<ServiceTrackingScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Rating screen...'),
-                backgroundColor: Color(0xFF4F46E5),
+                backgroundColor: Color(0xFF8B5CF6),
               ),
             );
           },
@@ -622,7 +622,7 @@ class _ServiceTrackingScreenState extends State<ServiceTrackingScreen> {
             ),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF4F46E5),
+            backgroundColor: Color(0xFF8B5CF6),
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(vertical: 16),
             shape: RoundedRectangleBorder(
@@ -756,7 +756,7 @@ class _ServiceTrackingScreenState extends State<ServiceTrackingScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Issue reported - We will contact you soon'),
-                  backgroundColor: Color(0xFF4F46E5),
+                  backgroundColor: Color(0xFF8B5CF6),
                 ),
               );
             },

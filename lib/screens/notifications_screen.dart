@@ -115,7 +115,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(message),
-            backgroundColor: const Color(0xFF4F46E5),
+            backgroundColor: const Color(0xFF8B5CF6),
             duration: const Duration(seconds: 2),
           ),
         );
@@ -239,19 +239,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       child: Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: isDark ? const Color(0xFF4F46E5) : Colors.white,
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
         centerTitle: true,
         title: Text(
           AppLocalizations.of(context)?.notifications ?? 'الإشعارات',
           style: TextStyle(
-            color: isDark ? Colors.white : Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: isDark ? Colors.white : Theme.of(context).colorScheme.onSurface),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () async {
             // Get user role to determine home route
             final user = await AuthService.getCurrentUser();
@@ -274,7 +274,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: isDark ? Colors.white : const Color(0xFF4F46E5),
+                    color: Colors.white,
                     width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(8),
@@ -289,7 +289,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   child: Text(
                     AppLocalizations.of(context)?.markAllAsRead ?? 'تحديد كمقروء',
                     style: TextStyle(
-                      color: isDark ? Colors.white : const Color(0xFF4F46E5),
+                      color: Colors.white,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
@@ -302,14 +302,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                color: Color(0xFF4F46E5),
+                color: Color(0xFF8B5CF6),
               ),
             )
           : _notifications.isEmpty
               ? _buildEmptyState()
               : RefreshIndicator(
                   onRefresh: _loadNotifications,
-                  color: const Color(0xFF4F46E5),
+                  color: const Color(0xFF8B5CF6),
                   child: ListView.builder(
                     padding: const EdgeInsets.all(20),
                     itemCount: _notifications.length,
@@ -332,13 +332,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: const Color(0xFF4F46E5).withOpacity( 0.1),
+              color: const Color(0xFF8B5CF6).withOpacity( 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.notifications_off_outlined,
               size: 60,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           ),
           const SizedBox(height: 24),
@@ -375,12 +375,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       decoration: BoxDecoration(
         color: isDark
             ? Colors.grey[900]
-            : (notification.isRead ? Colors.white : const Color(0xFF4F46E5).withOpacity( 0.05)),
+            : (notification.isRead ? Colors.white : const Color(0xFF8B5CF6).withOpacity( 0.05)),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: notification.isRead
               ? Colors.grey.withOpacity( 0.2)
-              : const Color(0xFF4F46E5).withOpacity( 0.3),
+              : const Color(0xFF8B5CF6).withOpacity( 0.3),
           width: 1,
         ),
         boxShadow: [
@@ -406,7 +406,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF4F46E5).withOpacity( 0.1),
+                    color: const Color(0xFF8B5CF6).withOpacity( 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
@@ -459,7 +459,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     height: 10,
                     margin: const EdgeInsets.only(top: 4),
                     decoration: const BoxDecoration(
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                       shape: BoxShape.circle,
                     ),
                   ),

@@ -128,7 +128,7 @@ class RequestDetailsBottomSheet extends StatelessWidget {
                         gradient: LinearGradient(
                           colors: [
                             Color(0xFF10B981),
-                            Color(0xFF4F46E5),
+                            Color(0xFF8B5CF6),
                           ],
                         ),
                       ),

@@ -164,16 +164,16 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF8B5CF6),
       elevation: 0,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+        icon: Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () => Navigator.pop(context),
       ),
       title: Text(
         AppLocalizations.of(context)?.confirmBooking ?? 'Confirm Booking',
         style: TextStyle(
-          color: Theme.of(context).colorScheme.onSurface,
+          color: Colors.white,
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
@@ -257,9 +257,9 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
             height: 70,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFF4F46E5), width: 2),
+              border: Border.all(color: const Color(0xFF8B5CF6), width: 2),
               gradient: const LinearGradient(
-                colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+                colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
               ),
             ),
             child: Center(
@@ -392,12 +392,12 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: const Color(0xFF4F46E5).withOpacity( 0.1),
+            color: const Color(0xFF8B5CF6).withOpacity( 0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(
             icon,
-            color: const Color(0xFF4F46E5),
+            color: const Color(0xFF8B5CF6),
             size: 20,
           ),
         ),
@@ -466,7 +466,7 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
                   );
                 },
                 style: TextButton.styleFrom(
-                  foregroundColor: Color(0xFF4F46E5),
+                  foregroundColor: Color(0xFF8B5CF6),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -483,17 +483,17 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF4F46E5).withOpacity( 0.05),
+              color: const Color(0xFF8B5CF6).withOpacity( 0.05),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: const Color(0xFF4F46E5).withOpacity( 0.2),
+                color: const Color(0xFF8B5CF6).withOpacity( 0.2),
               ),
             ),
             child: Row(
               children: [
                 const Icon(
                   Icons.location_on,
-                  color: Color(0xFF4F46E5),
+                  color: Color(0xFF8B5CF6),
                   size: 24,
                 ),
                 const SizedBox(width: 12),
@@ -559,7 +559,7 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Color(0xFF4F46E5), width: 2),
+                borderSide: const BorderSide(color: Color(0xFF8B5CF6), width: 2),
               ),
               contentPadding: const EdgeInsets.all(16),
             ),
@@ -678,7 +678,7 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen> {
         barrierDismissible: false,
         builder: (context) => const Center(
           child: CircularProgressIndicator(
-            color: Color(0xFF4F46E5),
+            color: Color(0xFF8B5CF6),
           ),
         ),
       );

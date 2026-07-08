@@ -49,7 +49,7 @@ class _DraggableChatFABState extends State<DraggableChatFAB> {
             final hasUnread = count > 0;
             final backgroundColor = hasUnread
                 ? const Color(0xFFEF4444) // أحمر عند وجود رسائل
-                : const Color(0xFF4F46E5); // بنفسجي بدون رسائل
+                : const Color(0xFF8B5CF6); // بنفسجي بدون رسائل
 
             return Material(
               color: Colors.transparent,

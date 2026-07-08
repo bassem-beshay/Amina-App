@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../models/service_model.dart';
 import '../services/service_service.dart';
@@ -112,14 +113,14 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Color(0xFF4F46E5),
-                          Color(0xFF4338CA),
+                          Color(0xFF8B5CF6),
+                          Color(0xFF7C3AED),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF4F46E5).withOpacity(0.3),
+                          color: const Color(0xFF8B5CF6).withOpacity(0.3),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -192,14 +193,14 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
       'تنظيف منزلي': {'icon': Icons.cleaning_services, 'color': const Color(0xFF10B981)},
       'طبخ': {'icon': Icons.restaurant, 'color': const Color(0xFFF59E0B)},
       'رعاية أطفال': {'icon': Icons.child_care, 'color': const Color(0xFF3B82F6)},
-      'رعاية مسنين': {'icon': Icons.accessible, 'color': const Color(0xFF4F46E5)},
+      'رعاية مسنين': {'icon': Icons.accessible, 'color': const Color(0xFF8B5CF6)},
       'غسيل ملابس': {'icon': Icons.local_laundry_service, 'color': const Color(0xFFEC4899)},
       'كي ملابس': {'icon': Icons.checkroom, 'color': const Color(0xFF06B6D4)},
     };
 
     final iconData = categoryIcons[category.name];
     final icon = iconData?['icon'] as IconData? ?? Icons.category;
-    final color = iconData?['color'] as Color? ?? const Color(0xFF4F46E5);
+    final color = iconData?['color'] as Color? ?? const Color(0xFF8B5CF6);
 
     return GestureDetector(
       onTap: () {
@@ -381,7 +382,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Color(0xFF4F46E5), Color(0xFF4338CA)],
+                  colors: [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
                 ),
               ),
               child: Row(
@@ -440,7 +441,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
               // التاريخ
               Row(
                 children: [
-                  const Icon(Icons.calendar_today, size: 20, color: Color(0xFF4F46E5)),
+                  const Icon(Icons.calendar_today, size: 20, color: Color(0xFF8B5CF6)),
                   const SizedBox(width: 8),
                   Text(
                     AppLocalizations.of(context)?.bookingDate ?? 'تاريخ الحجز',
@@ -459,7 +460,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                   color: isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: const Color(0xFF4F46E5).withOpacity(0.3),
+                    color: const Color(0xFF8B5CF6).withOpacity(0.3),
                     width: 1,
                   ),
                 ),
@@ -468,12 +469,12 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4F46E5).withOpacity(0.1),
+                        color: const Color(0xFF8B5CF6).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Icon(
                         Icons.calendar_month,
-                        color: Color(0xFF4F46E5),
+                        color: Color(0xFF8B5CF6),
                         size: 20,
                       ),
                     ),
@@ -513,7 +514,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                         ),
                       ),
                     ),
-                    const Icon(Icons.arrow_drop_down, color: Color(0xFF4F46E5)),
+                    const Icon(Icons.arrow_drop_down, color: Color(0xFF8B5CF6)),
                   ],
                 ),
               ),
@@ -522,7 +523,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
               // الوقت
               Row(
                 children: [
-                  const Icon(Icons.access_time, size: 20, color: Color(0xFF4F46E5)),
+                  const Icon(Icons.access_time, size: 20, color: Color(0xFF8B5CF6)),
                   const SizedBox(width: 8),
                   Text(
                     AppLocalizations.of(context)?.bookingTime ?? 'وقت الحجز',
@@ -541,7 +542,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                   color: isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: const Color(0xFF4F46E5).withOpacity(0.3),
+                    color: const Color(0xFF8B5CF6).withOpacity(0.3),
                     width: 1,
                   ),
                 ),
@@ -550,12 +551,12 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4F46E5).withOpacity(0.1),
+                        color: const Color(0xFF8B5CF6).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Icon(
                         Icons.schedule,
-                        color: Color(0xFF4F46E5),
+                        color: Color(0xFF8B5CF6),
                         size: 20,
                       ),
                     ),
@@ -593,7 +594,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                         ),
                       ),
                     ),
-                    const Icon(Icons.arrow_drop_down, color: Color(0xFF4F46E5)),
+                    const Icon(Icons.arrow_drop_down, color: Color(0xFF8B5CF6)),
                   ],
                 ),
               ),
@@ -602,7 +603,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
               // المدة
               Row(
                 children: [
-                  const Icon(Icons.timer, size: 20, color: Color(0xFF4F46E5)),
+                  const Icon(Icons.timer, size: 20, color: Color(0xFF8B5CF6)),
                   const SizedBox(width: 8),
                   Text(
                     AppLocalizations.of(context)?.serviceDuration ?? 'مدة الخدمة (ساعات)',
@@ -628,7 +629,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
               // العنوان المحفوظ
               Row(
                 children: [
-                  const Icon(Icons.location_on, size: 20, color: Color(0xFF4F46E5)),
+                  const Icon(Icons.location_on, size: 20, color: Color(0xFF8B5CF6)),
                   const SizedBox(width: 8),
                   Text(
                     AppLocalizations.of(context)?.selectAddress ?? 'اختر العنوان',
@@ -647,7 +648,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                 const Center(
                   child: Padding(
                     padding: EdgeInsets.all(20),
-                    child: CircularProgressIndicator(color: Color(0xFF4F46E5)),
+                    child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
                   ),
                 )
               else if (savedAddresses.isEmpty)
@@ -685,7 +686,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                     ? () => Navigator.pop(context, true)
                     : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4F46E5),
+                    backgroundColor: const Color(0xFF8B5CF6),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -755,7 +756,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(
-        child: CircularProgressIndicator(color: Color(0xFF4F46E5)),
+        child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
       ),
     );
 
@@ -867,53 +868,32 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
       'تنظيف منزلي': {'icon': Icons.cleaning_services, 'color': const Color(0xFF10B981)},
       'طبخ': {'icon': Icons.restaurant, 'color': const Color(0xFFF59E0B)},
       'رعاية أطفال': {'icon': Icons.child_care, 'color': const Color(0xFF3B82F6)},
-      'رعاية مسنين': {'icon': Icons.accessible, 'color': const Color(0xFF4F46E5)},
+      'رعاية مسنين': {'icon': Icons.accessible, 'color': const Color(0xFF8B5CF6)},
       'غسيل ملابس': {'icon': Icons.local_laundry_service, 'color': const Color(0xFFEC4899)},
       'كي ملابس': {'icon': Icons.checkroom, 'color': const Color(0xFF06B6D4)},
     };
 
     final currentIconData = categoryIcons[_selectedCategory?.name];
     final currentIcon = currentIconData?['icon'] as IconData? ?? Icons.category;
-    final currentColor = currentIconData?['color'] as Color? ?? const Color(0xFF4F46E5);
+    final currentColor = currentIconData?['color'] as Color? ?? const Color(0xFF8B5CF6);
 
     return Scaffold(
       backgroundColor: isDark ? const Color(0xFF1F2937) : const Color(0xFFF8F9FA),
       appBar: AppBar(
-        backgroundColor: isDark ? const Color(0xFF111827) : Colors.white,
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
+        centerTitle: true,
         title: Text(
           _selectedCategory?.name ?? AppLocalizations.of(context)?.services ?? 'Services',
-          style: TextStyle(
-            color: isDark ? Colors.white : const Color(0xFF1F2937),
-            fontSize: 22,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: currentColor.withOpacity(isDark ? 0.2 : 0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(Icons.arrow_back, color: currentColor, size: 20),
-          ),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(
-            height: 1,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  currentColor.withOpacity(0.3),
-                  currentColor.withOpacity(0.1),
-                  Colors.transparent,
-                ],
-              ),
-            ),
-          ),
         ),
       ),
       body: _buildServicesContent(),
@@ -960,7 +940,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
     if (_isLoading) {
       return const Center(
         child: CircularProgressIndicator(
-          color: Color(0xFF4F46E5),
+          color: Color(0xFF8B5CF6),
         ),
       );
     }
@@ -977,8 +957,8 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    const Color(0xFF4F46E5).withOpacity(isDark ? 0.2 : 0.1),
-                    const Color(0xFF4F46E5).withOpacity(isDark ? 0.1 : 0.05),
+                    const Color(0xFF8B5CF6).withOpacity(isDark ? 0.2 : 0.1),
+                    const Color(0xFF8B5CF6).withOpacity(isDark ? 0.1 : 0.05),
                   ],
                 ),
                 shape: BoxShape.circle,
@@ -1022,297 +1002,208 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
   }
 
   Widget _buildServiceCard(Service service) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    const kPrimary = Color(0xFF8B5CF6);
+    const kNavGray = Color(0xFF7D7F88);
+    const kPriceDark = Color(0xFF1A1E25);
 
-    // Get category color for this service
-    final categoryIcons = {
-      'تنظيف منزلي': const Color(0xFF10B981),
-      'طبخ': const Color(0xFFF59E0B),
-      'رعاية أطفال': const Color(0xFF3B82F6),
-      'رعاية مسنين': const Color(0xFF4F46E5),
-      'غسيل ملابس': const Color(0xFFEC4899),
-      'كي ملابس': const Color(0xFF06B6D4),
-    };
+    final title = service.nameEn.isNotEmpty ? service.nameEn : service.name;
+    final category = service.category.nameEn.isNotEmpty
+        ? service.category.nameEn
+        : service.category.name;
 
-    final categoryColor = categoryIcons[service.category.name] ?? const Color(0xFF4F46E5);
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF374151) : Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: categoryColor.withOpacity(isDark ? 0.15 : 0.08),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-            spreadRadius: 0,
-          ),
-          BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.2 : 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header with gradient
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    categoryColor.withOpacity(0.1),
-                    categoryColor.withOpacity(0.05),
-                  ],
-                ),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: GestureDetector(
+          onTap: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ServiceDetailScreen(service: service),
               ),
-              child: Row(
-                children: [
-                  // Service Image
-                  _buildServiceImage(service, categoryColor),
-                  const SizedBox(width: 16),
-                  // Service Info
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _getServiceName(service),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: isDark ? Colors.white : const Color(0xFF1F2937),
-                            height: 1.3,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: categoryColor.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: categoryColor.withOpacity(0.2),
-                              width: 1,
+            );
+            if (result == true && mounted) Navigator.pop(context, true);
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(15)),
+                  child: _offerImageTop(service),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              title,
+                              style: GoogleFonts.inter(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                                height: 1.3,
+                              ),
                             ),
                           ),
-                          child: Text(
-                            service.category.name,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: categoryColor,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [],
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Price Badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xFF10B981),
-                          Color(0xFF059669),
+                          const SizedBox(width: 8),
+                          const Icon(Icons.favorite_border,
+                              size: 18, color: kNavGray),
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFF10B981).withOpacity(0.3),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          '${service.basePrice.toStringAsFixed(0)}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            height: 1,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          AppLocalizations.of(context)?.egp ?? 'جنيه',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.white.withOpacity(0.9),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Description section
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.description_outlined, size: 16, color: isDark ? Colors.grey[400] : Colors.grey[600]),
-                      const SizedBox(width: 6),
+                      const SizedBox(height: 8),
                       Text(
-                        AppLocalizations.of(context)?.description ?? 'الوصف',
-                        style: TextStyle(
+                        category,
+                        style: GoogleFonts.inter(
                           fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.grey[300] : Colors.grey[800],
+                          fontWeight: FontWeight.w400,
+                          color: kNavGray,
+                          letterSpacing: 0.13,
+                          height: 1.3,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    service.description,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: isDark ? Colors.grey[400] : Colors.grey[700],
-                      height: 1.6,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 12),
-                  // Duration info
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: isDark ? Colors.grey[800] : Colors.grey[100],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                      const SizedBox(height: 8),
+                      RichText(
+                        text: TextSpan(
                           children: [
-                            Icon(Icons.access_time, size: 14, color: isDark ? Colors.grey[400] : Colors.grey[700]),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${service.estimatedDuration > 0 ? service.estimatedDuration : 8} ${AppLocalizations.of(context)?.hour ?? 'ساعة'}',
-                              style: TextStyle(
+                            TextSpan(
+                              text: '${service.basePrice.toStringAsFixed(0)}EGP',
+                              style: GoogleFonts.inter(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: kPriceDark,
+                                height: 1.3,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '  / ${_unitLabelEn(service)}',
+                              style: GoogleFonts.inter(
                                 fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: isDark ? Colors.grey[300] : Colors.grey[700],
+                                fontWeight: FontWeight.w400,
+                                color: kNavGray,
+                                height: 1.3,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: isDark ? Colors.grey[800] : Colors.grey[100],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          '${AppLocalizations.of(context)?.translate('perUnit').replaceAll('{unit}', service.unitLabel) ?? 'لكل \u200F${service.unitLabel}\u200F'}',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: isDark ? Colors.grey[300] : Colors.grey[700],
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 40,
+                        child: ConnectivityButton(
+                          onPressed: () async {
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ServiceDetailScreen(service: service),
+                              ),
+                            );
+                            if (result == true && mounted) {
+                              Navigator.pop(context, true);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: kPrimary,
+                            elevation: 0,
+                            padding: EdgeInsets.zero,
+                            minimumSize: const Size.fromHeight(40),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            side: const BorderSide(color: kPrimary, width: 1),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            'Book Now',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: kPrimary,
+                              letterSpacing: 0.18,
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-
-            // Action Button
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      categoryColor,
-                      categoryColor.withOpacity(0.8),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: [
-                    BoxShadow(
-                      color: categoryColor.withOpacity(0.3),
-                      blurRadius: 12,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
                 ),
-                child: ConnectivityButton(
-                  onPressed: () async {
-                    // Navigate to service detail screen
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ServiceDetailScreen(service: service),
-                      ),
-                    );
-                    // If booking was successful, refresh and go back
-                    if (result == true && mounted) {
-                      Navigator.pop(context, true);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    foregroundColor: Colors.white,
-                    shadowColor: Colors.transparent,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.calendar_today_rounded, size: 18),
-                      const SizedBox(width: 8),
-                      Text(
-                        AppLocalizations.of(context)?.viewDetails ?? 'عرض التفاصيل',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  Widget _offerImageTop(Service service) {
+    String? imageUrl = service.image;
+    if (imageUrl != null && imageUrl.isNotEmpty && !imageUrl.startsWith('http')) {
+      imageUrl = '${ApiConfig.baseUrl}$imageUrl';
+    }
+    if (imageUrl != null && imageUrl.isNotEmpty) {
+      return CachedNetworkImage(
+        imageUrl: imageUrl,
+        height: 149,
+        width: double.infinity,
+        fit: BoxFit.cover,
+        placeholder: (context, url) =>
+            Container(height: 149, color: const Color(0xFFEDEAFB)),
+        errorWidget: (context, url, error) => _offerImageTopFallback(),
+      );
+    }
+    return _offerImageTopFallback();
+  }
+
+  Widget _offerImageTopFallback() {
+    return Container(
+      height: 149,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFFA78BFA), Color(0xFF8B5CF6)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: const Center(
+        child: Icon(Icons.home_repair_service, size: 48, color: Colors.white70),
+      ),
+    );
+  }
+
+  String _unitLabelEn(Service service) {
+    switch (service.unit) {
+      case 'HOUR':
+        return 'For Every Hour';
+      case 'DAY':
+        return 'For Every Day';
+      case 'TASK':
+        return 'For Every Task';
+      default:
+        return service.unit;
+    }
   }
 
   // Helper method to get service name based on current language
@@ -1521,7 +1412,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
         color: isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xFF4F46E5).withOpacity(0.3),
+          color: const Color(0xFF8B5CF6).withOpacity(0.3),
           width: 1,
         ),
       ),
@@ -1530,13 +1421,13 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFF4F46E5).withOpacity(0.1),
+              color: const Color(0xFF8B5CF6).withOpacity(0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.location_off,
               size: 48,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           ),
           const SizedBox(height: 16),
@@ -1559,7 +1450,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
           ConnectivityIconButton(
             onPressed: () => _showAddAddressDialog(setModalState, savedAddresses, setSelectedAddress),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4F46E5),
+              backgroundColor: const Color(0xFF8B5CF6),
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
               shape: RoundedRectangleBorder(
@@ -1608,13 +1499,13 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: isSelected
-                  ? const Color(0xFF4F46E5).withOpacity(0.1)
+                  ? const Color(0xFF8B5CF6).withOpacity(0.1)
                   : (isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6)),
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: isSelected
-                    ? const Color(0xFF4F46E5)
-                    : const Color(0xFF4F46E5).withOpacity(0.3),
+                    ? const Color(0xFF8B5CF6)
+                    : const Color(0xFF8B5CF6).withOpacity(0.3),
                 width: isSelected ? 2 : 1,
               ),
             ),
@@ -1624,12 +1515,12 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF4F46E5).withOpacity(0.15),
+                    color: const Color(0xFF8B5CF6).withOpacity(0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     isDefault ? Icons.home : Icons.location_on,
-                    color: const Color(0xFF4F46E5),
+                    color: const Color(0xFF8B5CF6),
                     size: 24,
                   ),
                 ),
@@ -1646,7 +1537,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: isSelected ? const Color(0xFF4F46E5) : null,
+                              color: isSelected ? const Color(0xFF8B5CF6) : null,
                             ),
                           ),
                           if (isDefault) ...[
@@ -1705,7 +1596,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                   Container(
                     padding: const EdgeInsets.all(4),
                     decoration: const BoxDecoration(
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -1729,8 +1620,8 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
       OutlinedButton.icon(
         onPressed: () => _showAddAddressDialog(setModalState, addresses, setSelectedAddress),
         style: OutlinedButton.styleFrom(
-          foregroundColor: const Color(0xFF4F46E5),
-          side: const BorderSide(color: Color(0xFF4F46E5), width: 1.5),
+          foregroundColor: const Color(0xFF8B5CF6),
+          side: const BorderSide(color: Color(0xFF8B5CF6), width: 1.5),
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
@@ -1780,12 +1671,12 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF4F46E5).withOpacity(0.1),
+                      color: const Color(0xFF8B5CF6).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
                       Icons.add_location_alt,
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                       size: 24,
                     ),
                   ),
@@ -1809,13 +1700,13 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)?.addressLabelOptional ?? 'تسمية العنوان (اختياري)',
                         hintText: AppLocalizations.of(context)?.exampleHomeWork ?? 'مثل: المنزل، العمل، إلخ',
-                        prefixIcon: const Icon(Icons.label, color: Color(0xFF4F46E5)),
+                        prefixIcon: const Icon(Icons.label, color: Color(0xFF8B5CF6)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: Color(0xFF4F46E5), width: 2),
+                          borderSide: const BorderSide(color: Color(0xFF8B5CF6), width: 2),
                         ),
                       ),
                     ),
@@ -1885,7 +1776,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                               }
                             },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF4F46E5),
+                        backgroundColor: const Color(0xFF8B5CF6),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
@@ -1991,7 +1882,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                             context: context,
                             barrierDismissible: false,
                             builder: (context) => const Center(
-                              child: CircularProgressIndicator(color: Color(0xFF4F46E5)),
+                              child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
                             ),
                           );
 
@@ -2045,7 +1936,7 @@ class _CategoryServicesScreenState extends State<CategoryServicesScreen> with Co
                         }
                       : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4F46E5),
+                    backgroundColor: const Color(0xFF8B5CF6),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

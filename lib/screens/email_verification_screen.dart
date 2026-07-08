@@ -210,7 +210,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF4F46E5)),
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF8B5CF6)),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -227,13 +227,13 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4F46E5).withOpacity(0.1),
+                  color: const Color(0xFF8B5CF6).withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.mail_outline,
                   size: 40,
-                  color: Color(0xFF4F46E5),
+                  color: Color(0xFF8B5CF6),
                 ),
               ),
 
@@ -269,7 +269,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF4F46E5),
+                  color: Color(0xFF8B5CF6),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -322,7 +322,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: const BorderSide(
-                              color: Color(0xFF4F46E5),
+                              color: Color(0xFF8B5CF6),
                               width: 2,
                             ),
                           ),
@@ -368,7 +368,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                 child: ConnectivityButton(
                   onPressed: _isVerifying ? null : _verifyCode,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4F46E5),
+                    backgroundColor: const Color(0xFF8B5CF6),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -423,7 +423,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                             style: TextStyle(
                               color: _resendCooldown > 0
                                   ? Colors.grey[400]
-                                  : const Color(0xFF4F46E5),
+                                  : const Color(0xFF8B5CF6),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),

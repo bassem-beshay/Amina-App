@@ -52,7 +52,7 @@ class _ClientOffersStreamScreenState extends State<ClientOffersStreamScreen> {
               AppLocalizations.of(context)?.translate('offersReceived') ?? 'العروض المقدمة',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
+                color: Colors.white,
               ),
             ),
             const SizedBox(width: 8),
@@ -82,9 +82,9 @@ class _ClientOffersStreamScreenState extends State<ClientOffersStreamScreen> {
             ),
           ],
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
-        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: RefreshIndicator(
         onRefresh: () => _streamService.refresh(),
@@ -96,7 +96,7 @@ class _ClientOffersStreamScreenState extends State<ClientOffersStreamScreen> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: Color(0xFF4F46E5),
+                  color: Color(0xFF8B5CF6),
                 ),
               );
             }
@@ -133,7 +133,7 @@ class _ClientOffersStreamScreenState extends State<ClientOffersStreamScreen> {
                     ElevatedButton(
                       onPressed: () => _streamService.refresh(),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF4F46E5),
+                        backgroundColor: const Color(0xFF8B5CF6),
                       ),
                       child: const Text('إعادة المحاولة'),
                     ),
@@ -243,7 +243,7 @@ class _ClientOffersStreamScreenState extends State<ClientOffersStreamScreen> {
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4F46E5),
+              backgroundColor: const Color(0xFF8B5CF6),
             ),
             child: const Text('قبول العرض'),
           ),
@@ -259,7 +259,7 @@ class _ClientOffersStreamScreenState extends State<ClientOffersStreamScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(
-        child: CircularProgressIndicator(color: Color(0xFF4F46E5)),
+        child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
       ),
     );
 
@@ -326,7 +326,7 @@ class OfferCard extends StatelessWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: isNew && isPending
-            ? Border.all(color: const Color(0xFF4F46E5), width: 2)
+            ? Border.all(color: const Color(0xFF8B5CF6), width: 2)
             : null,
         boxShadow: [
           BoxShadow(
@@ -349,10 +349,10 @@ class OfferCard extends StatelessWidget {
                 Row(
                   children: [
                     CircleAvatar(
-                      backgroundColor: const Color(0xFF4F46E5).withOpacity( 0.1),
+                      backgroundColor: const Color(0xFF8B5CF6).withOpacity( 0.1),
                       child: const Icon(
                         Icons.person,
-                        color: Color(0xFF4F46E5),
+                        color: Color(0xFF8B5CF6),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -402,7 +402,7 @@ class OfferCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFF4F46E5).withOpacity( 0.1),
+                color: const Color(0xFF8B5CF6).withOpacity( 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -424,7 +424,7 @@ class OfferCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF4F46E5),
+                          color: Color(0xFF8B5CF6),
                         ),
                       ),
                     ],
@@ -440,7 +440,7 @@ class OfferCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF4F46E5),
+                        color: Color(0xFF8B5CF6),
                       ),
                     ),
                   ),
@@ -542,7 +542,7 @@ class OfferCard extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: onAccept,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4F46E5),
+                    backgroundColor: const Color(0xFF8B5CF6),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

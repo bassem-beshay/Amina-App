@@ -401,7 +401,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
               backgroundColor: isDark
                   ? const Color(0xFF1F2937)
                   : Colors.white,
-              selectedItemColor: const Color(0xFF4F46E5),
+              selectedItemColor: const Color(0xFF8B5CF6),
               unselectedItemColor: isDark
                   ? Colors.grey[500]
                   : Colors.grey[600],
@@ -423,7 +423,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       color: _currentIndex == 0
-                          ? const Color(0xFF4F46E5).withOpacity(0.12)
+                          ? const Color(0xFF8B5CF6).withOpacity(0.12)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -441,7 +441,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       color: _currentIndex == 1
-                          ? const Color(0xFF4F46E5).withOpacity(0.12)
+                          ? const Color(0xFF8B5CF6).withOpacity(0.12)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -501,7 +501,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       color: _currentIndex == 2
-                          ? const Color(0xFF4F46E5).withOpacity(0.12)
+                          ? const Color(0xFF8B5CF6).withOpacity(0.12)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -519,7 +519,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
                       color: _currentIndex == 3
-                          ? const Color(0xFF4F46E5).withOpacity(0.12)
+                          ? const Color(0xFF8B5CF6).withOpacity(0.12)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -720,7 +720,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
-            ? [const Color(0xFF4F46E5), const Color(0xFF4338CA)]
+            ? [const Color(0xFF8B5CF6), const Color(0xFF7C3AED)]
             : [Colors.white, const Color(0xFFFAFAFA)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -761,12 +761,12 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: isDark ? Colors.white.withOpacity(0.9) : const Color(0xFF4F46E5),
+                    color: isDark ? Colors.white.withOpacity(0.9) : const Color(0xFF8B5CF6),
                     width: 2.5,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF4F46E5).withOpacity(0.25),
+                      color: const Color(0xFF8B5CF6).withOpacity(0.25),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -874,7 +874,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                       child: Icon(
                         Icons.notifications_outlined,
                         size: 24,
-                        color: isDark ? Colors.white : const Color(0xFF4F46E5),
+                        color: isDark ? Colors.white : const Color(0xFF8B5CF6),
                       ),
                     ),
                     ValueListenableBuilder<int>(
@@ -894,7 +894,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                               color: const Color(0xFFEF4444),
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: isDark ? const Color(0xFF4F46E5) : Colors.white,
+                                color: isDark ? const Color(0xFF8B5CF6) : Colors.white,
                                 width: 2,
                               ),
                             ),
@@ -1072,7 +1072,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFF10B981), Color(0xFF4F46E5)],
+                          colors: [Color(0xFF10B981), Color(0xFF8B5CF6)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -1232,7 +1232,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                         gradient: LinearGradient(
                           colors: [
                             const Color(0xFF10B981).withOpacity(0.08),
-                            const Color(0xFF4F46E5).withOpacity(0.12),
+                            const Color(0xFF8B5CF6).withOpacity(0.12),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -1259,7 +1259,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               gradient: const LinearGradient(
-                                colors: [Color(0xFF10B981), Color(0xFF4F46E5)],
+                                colors: [Color(0xFF10B981), Color(0xFF8B5CF6)],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
@@ -1415,7 +1415,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                             gradient: LinearGradient(
                               colors: [
                                 const Color(0xFF10B981).withOpacity(0.2),
-                                const Color(0xFF4F46E5).withOpacity(0.15),
+                                const Color(0xFF8B5CF6).withOpacity(0.15),
                               ],
                             ),
                             borderRadius: BorderRadius.circular(12),
@@ -1505,7 +1505,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                             gradient: const LinearGradient(
                               colors: [
                                 Color(0xFF10B981),
-                                Color(0xFF4F46E5),
+                                Color(0xFF8B5CF6),
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -1518,7 +1518,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                 spreadRadius: 0,
                               ),
                               BoxShadow(
-                                color: const Color(0xFF4F46E5).withOpacity(0.3),
+                                color: const Color(0xFF8B5CF6).withOpacity(0.3),
                                 blurRadius: 12,
                                 offset: const Offset(0, 4),
                                 spreadRadius: 0,
@@ -1583,7 +1583,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
         gradient: LinearGradient(
           colors: [
             const Color(0xFF10B981),
-            const Color(0xFF4F46E5),
+            const Color(0xFF8B5CF6),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -1844,7 +1844,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                 padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
                                   gradient: const LinearGradient(
-                                    colors: [Color(0xFF10B981), Color(0xFF4F46E5)],
+                                    colors: [Color(0xFF10B981), Color(0xFF8B5CF6)],
                                   ),
                                   borderRadius: BorderRadius.circular(16),
                                   boxShadow: [
@@ -1884,7 +1884,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                               gradient: LinearGradient(
                                 colors: [
                                   const Color(0xFF10B981).withOpacity(0.08),
-                                  const Color(0xFF4F46E5).withOpacity(0.08),
+                                  const Color(0xFF8B5CF6).withOpacity(0.08),
                                 ],
                               ),
                               borderRadius: BorderRadius.circular(20),
@@ -1929,7 +1929,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                                       gradient: LinearGradient(
                                                         colors: [
                                                           const Color(0xFF10B981).withOpacity(0.3),
-                                                          const Color(0xFF4F46E5).withOpacity(0.3),
+                                                          const Color(0xFF8B5CF6).withOpacity(0.3),
                                                         ],
                                                       ),
                                                     ),
@@ -1961,7 +1961,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                                   gradient: LinearGradient(
                                                     colors: [
                                                       const Color(0xFF10B981).withOpacity(0.3),
-                                                      const Color(0xFF4F46E5).withOpacity(0.3),
+                                                      const Color(0xFF8B5CF6).withOpacity(0.3),
                                                     ],
                                                   ),
                                                 ),
@@ -2091,7 +2091,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                               gradient: LinearGradient(
                                                 colors: [
                                                   const Color(0xFF10B981).withOpacity(0.2),
-                                                  const Color(0xFF4F46E5).withOpacity(0.2),
+                                                  const Color(0xFF8B5CF6).withOpacity(0.2),
                                                 ],
                                               ),
                                             ),
@@ -2113,7 +2113,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                               gradient: LinearGradient(
                                                 colors: [
                                                   const Color(0xFF10B981).withOpacity(0.2),
-                                                  const Color(0xFF4F46E5).withOpacity(0.2),
+                                                  const Color(0xFF8B5CF6).withOpacity(0.2),
                                                 ],
                                               ),
                                             ),
@@ -2335,7 +2335,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             color: priceAction == 'accept'
-                                                ? const Color(0xFF4F46E5)
+                                                ? const Color(0xFF8B5CF6)
                                                 : (isDark ? Colors.grey[400] : Colors.grey[600]),
                                           ),
                                         ),
@@ -2929,7 +2929,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                       decoration: BoxDecoration(
                                         gradient: const LinearGradient(
-                                          colors: [Color(0xFF10B981), Color(0xFF4F46E5)],
+                                          colors: [Color(0xFF10B981), Color(0xFF8B5CF6)],
                                         ),
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [
@@ -2999,7 +2999,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                 gradient: LinearGradient(
                                   colors: [
                                     const Color(0xFF10B981).withOpacity(0.12),
-                                    const Color(0xFF4F46E5).withOpacity(0.12),
+                                    const Color(0xFF8B5CF6).withOpacity(0.12),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(20),
@@ -3017,7 +3017,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       gradient: const LinearGradient(
-                                        colors: [Color(0xFF10B981), Color(0xFF4F46E5)],
+                                        colors: [Color(0xFF10B981), Color(0xFF8B5CF6)],
                                       ),
                                       border: Border.all(color: Colors.white, width: 3),
                                       boxShadow: [
@@ -3128,7 +3128,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
 
                           _buildDetailCard(
                             icon: Icons.access_time_rounded,
-                            iconColor: const Color(0xFF4F46E5),
+                            iconColor: const Color(0xFF8B5CF6),
                             title: AppLocalizations.of(context)?.time ?? 'الوقت',
                             value: request.bookingTime,
                             isDark: isDark,
@@ -3370,7 +3370,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
           child: const Center(
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           ),
         ),
@@ -3382,7 +3382,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
             child: const Icon(
               Icons.person_rounded,
               size: 32,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           );
         },
@@ -3397,7 +3397,7 @@ class _ProviderHomeScreenState extends State<ProviderHomeScreen>
       child: const Icon(
         Icons.person_rounded,
         size: 32,
-        color: Color(0xFF4F46E5),
+        color: Color(0xFF8B5CF6),
       ),
     );
   }

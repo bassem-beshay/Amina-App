@@ -85,17 +85,17 @@ class _OfferConfirmationScreenState extends State<OfferConfirmationScreen> {
           AppLocalizations.of(context)?.confirmOffer ?? 'تأكيد العرض',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
           ),
         ),
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF4F46E5)
+            ? const Color(0xFF8B5CF6)
             : Colors.white,
         elevation: 0,
         iconTheme: IconThemeData(
           color: Theme.of(context).brightness == Brightness.dark
               ? Colors.white
-              : Theme.of(context).colorScheme.onSurface,
+              : Colors.white,
         ),
       ),
       body: SafeArea(
@@ -113,13 +113,13 @@ class _OfferConfirmationScreenState extends State<OfferConfirmationScreen> {
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF4F46E5).withOpacity(0.1),
+                          color: const Color(0xFF8B5CF6).withOpacity(0.1),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
                           Icons.shopping_bag_outlined,
                           size: 50,
-                          color: Color(0xFF4F46E5),
+                          color: Color(0xFF8B5CF6),
                         ),
                       ),
                     ),
@@ -273,14 +273,14 @@ class _OfferConfirmationScreenState extends State<OfferConfirmationScreen> {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+          colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF4F46E5).withOpacity(0.3),
+            color: const Color(0xFF8B5CF6).withOpacity(0.3),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
@@ -355,7 +355,7 @@ class _OfferConfirmationScreenState extends State<OfferConfirmationScreen> {
             children: [
               const Icon(
                 Icons.info_outline,
-                color: Color(0xFF4F46E5),
+                color: Color(0xFF8B5CF6),
                 size: 24,
               ),
               const SizedBox(width: 12),
@@ -417,7 +417,7 @@ class _OfferConfirmationScreenState extends State<OfferConfirmationScreen> {
         Icon(
           icon,
           size: 20,
-          color: const Color(0xFF4F46E5),
+          color: const Color(0xFF8B5CF6),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -515,9 +515,9 @@ class _OfferConfirmationScreenState extends State<OfferConfirmationScreen> {
             height: 70,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFF4F46E5), width: 2),
+              border: Border.all(color: const Color(0xFF8B5CF6), width: 2),
               gradient: const LinearGradient(
-                colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+                colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
               ),
             ),
             child: Center(
@@ -611,7 +611,7 @@ class _OfferConfirmationScreenState extends State<OfferConfirmationScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(
-        child: CircularProgressIndicator(color: Color(0xFF4F46E5)),
+        child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
       ),
     );
 

@@ -76,16 +76,16 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'تفاصيل العميل',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -134,7 +134,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                   height: 100,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFF4F46E5), width: 3),
+                    border: Border.all(color: const Color(0xFF8B5CF6), width: 3),
                   ),
                   child: ClipOval(
                     child: _buildProfileImage(profilePicture),
@@ -189,7 +189,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                 if (_isLoadingRatings)
                   const CircularProgressIndicator(
                     strokeWidth: 2,
-                    color: Color(0xFF4F46E5),
+                    color: Color(0xFF8B5CF6),
                   )
                 else if (_totalRatings > 0) ...[
                   Row(
@@ -242,17 +242,17 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF4F46E5).withOpacity(0.1),
+                        color: const Color(0xFF8B5CF6).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: const Color(0xFF4F46E5).withOpacity(0.3),
+                          color: const Color(0xFF8B5CF6).withOpacity(0.3),
                         ),
                       ),
                       child: Text(
                         service,
                         style: const TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF4F46E5),
+                          color: Color(0xFF8B5CF6),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -338,7 +338,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
           return const Center(
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           );
         },
@@ -355,7 +355,7 @@ class _ClientDetailsScreenState extends State<ClientDetailsScreen> {
       height: 100,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+          colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
         ),
       ),
       child: Center(

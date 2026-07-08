@@ -137,7 +137,7 @@ class _ServiceInProgressScreenState extends State<ServiceInProgressScreen> {
                             icon: Icons.cleaning_services,
                             label: 'Service',
                             value: serviceName,
-                            color: Color(0xFF4F46E5),
+                            color: Color(0xFF8B5CF6),
                           ),
                           SizedBox(height: 16),
 
@@ -241,7 +241,7 @@ class _ServiceInProgressScreenState extends State<ServiceInProgressScreen> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF4F46E5),
+                        backgroundColor: const Color(0xFF8B5CF6),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
@@ -338,7 +338,7 @@ class _ServiceInProgressScreenState extends State<ServiceInProgressScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Row(
           children: [
-            Icon(Icons.check_circle, color: Color(0xFF4F46E5), size: 28),
+            Icon(Icons.check_circle, color: Color(0xFF8B5CF6), size: 28),
             SizedBox(width: 12),
             Text('Complete Service'),
           ],
@@ -355,7 +355,7 @@ class _ServiceInProgressScreenState extends State<ServiceInProgressScreen> {
           ConnectivityButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF4F46E5),
+              backgroundColor: Color(0xFF8B5CF6),
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
             child: Text('Confirm Completion'),
@@ -395,7 +395,7 @@ class _ServiceInProgressScreenState extends State<ServiceInProgressScreen> {
                 ),
               ],
             ),
-            backgroundColor: Color(0xFF4F46E5),
+            backgroundColor: Color(0xFF8B5CF6),
             behavior: SnackBarBehavior.floating,
           ),
         );

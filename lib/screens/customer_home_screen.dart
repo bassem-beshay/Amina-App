@@ -588,7 +588,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                 padding: const EdgeInsets.all(20),
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF4F46E5), Color(0xFF4338CA)],
+                    colors: [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -656,12 +656,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF4F46E5).withOpacity(0.1),
+                              color: const Color(0xFF8B5CF6).withOpacity(0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(
                               Icons.calendar_today,
-                              color: Color(0xFF4F46E5),
+                              color: Color(0xFF8B5CF6),
                               size: 20,
                             ),
                           ),
@@ -715,7 +715,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               ),
                               const Icon(
                                 Icons.arrow_drop_down,
-                                color: Color(0xFF4F46E5),
+                                color: Color(0xFF8B5CF6),
                               ),
                             ],
                           ),
@@ -730,12 +730,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF4F46E5).withOpacity(0.1),
+                              color: const Color(0xFF8B5CF6).withOpacity(0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(
                               Icons.access_time,
-                              color: Color(0xFF4F46E5),
+                              color: Color(0xFF8B5CF6),
                               size: 20,
                             ),
                           ),
@@ -787,7 +787,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               ),
                               const Icon(
                                 Icons.arrow_drop_down,
-                                color: Color(0xFF4F46E5),
+                                color: Color(0xFF8B5CF6),
                               ),
                             ],
                           ),
@@ -802,12 +802,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF4F46E5).withOpacity(0.1),
+                              color: const Color(0xFF8B5CF6).withOpacity(0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(
                               Icons.timelapse,
-                              color: Color(0xFF4F46E5),
+                              color: Color(0xFF8B5CF6),
                               size: 20,
                             ),
                           ),
@@ -877,12 +877,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF4F46E5).withOpacity(0.1),
+                              color: const Color(0xFF8B5CF6).withOpacity(0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(
                               Icons.location_on,
-                              color: Color(0xFF4F46E5),
+                              color: Color(0xFF8B5CF6),
                               size: 20,
                             ),
                           ),
@@ -903,24 +903,24 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                         const Center(
                           child: Padding(
                             padding: EdgeInsets.all(20),
-                            child: CircularProgressIndicator(color: Color(0xFF4F46E5)),
+                            child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
                           ),
                         )
                       else if (savedAddresses.isEmpty)
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF4F46E5).withOpacity(0.05),
+                            color: const Color(0xFF8B5CF6).withOpacity(0.05),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: const Color(0xFF4F46E5).withOpacity(0.3),
+                              color: const Color(0xFF8B5CF6).withOpacity(0.3),
                             ),
                           ),
                           child: Column(
                             children: [
                               const Icon(
                                 Icons.location_off,
-                                color: Color(0xFF4F46E5),
+                                color: Color(0xFF8B5CF6),
                                 size: 48,
                               ),
                               const SizedBox(height: 12),
@@ -959,13 +959,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? const Color(0xFF4F46E5).withOpacity(0.05)
+                                    ? const Color(0xFF8B5CF6).withOpacity(0.05)
                                     : Colors.transparent,
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
                                   color: isSelected
-                                      ? const Color(0xFF4F46E5)
-                                      : const Color(0xFF4F46E5).withOpacity(0.3),
+                                      ? const Color(0xFF8B5CF6)
+                                      : const Color(0xFF8B5CF6).withOpacity(0.3),
                                   width: isSelected ? 2 : 1,
                                 ),
                               ),
@@ -974,12 +974,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                                   Container(
                                     padding: const EdgeInsets.all(12),
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFF4F46E5).withOpacity(0.2),
+                                      color: const Color(0xFF8B5CF6).withOpacity(0.2),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: const Icon(
                                       Icons.home,
-                                      color: Color(0xFF4F46E5),
+                                      color: Color(0xFF8B5CF6),
                                       size: 24,
                                     ),
                                   ),
@@ -1031,7 +1031,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                                   if (isSelected)
                                     const Icon(
                                       Icons.check_circle,
-                                      color: Color(0xFF4F46E5),
+                                      color: Color(0xFF8B5CF6),
                                       size: 24,
                                     )
                                   else
@@ -1066,7 +1066,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                 child: ConnectivityButton(
                   onPressed: () => Navigator.pop(context, true),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4F46E5),
+                    backgroundColor: const Color(0xFF8B5CF6),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -1124,7 +1124,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
       context: context,
       barrierDismissible: false,
       builder: (context) => const Center(
-        child: CircularProgressIndicator(color: Color(0xFF4F46E5)),
+        child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
       ),
     );
 
@@ -1274,7 +1274,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         ),
         title: Row(
           children: [
-            const Icon(Icons.exit_to_app, color: Color(0xFF4F46E5)),
+            const Icon(Icons.exit_to_app, color: Color(0xFF8B5CF6)),
             const SizedBox(width: 12),
             Text(AppLocalizations.of(context)?.confirmExit ?? 'تأكيد الخروج'),
           ],
@@ -1291,7 +1291,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
           ConnectivityButton(
             onPressed: () => SystemNavigator.pop(),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4F46E5),
+              backgroundColor: const Color(0xFF8B5CF6),
               foregroundColor: Colors.white,
             ),
             child: Text(AppLocalizations.of(context)?.exit ?? 'خروج'),
@@ -1701,14 +1701,14 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   height: 56,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF4F46E5), Color(0xFF4338CA)],
+                      colors: [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF4F46E5).withOpacity(0.35),
+                        color: const Color(0xFF8B5CF6).withOpacity(0.35),
                         blurRadius: 12,
                         spreadRadius: 0,
                         offset: const Offset(0, 3),
@@ -1741,7 +1741,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     bool isActive = false,
   }) {
     final color = isActive
-        ? const Color(0xFF4F46E5)
+        ? const Color(0xFF8B5CF6)
         : (isDark ? Colors.grey[400] : Colors.grey[600]);
 
     return InkWell(
@@ -2412,7 +2412,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(
             strokeWidth: 2,
-            color: Color(0xFF4F46E5),
+            color: Color(0xFF8B5CF6),
           ),
         ),
         errorWidget: (context, url, error) {
@@ -2468,7 +2468,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         placeholder: (context, url) => const Center(
           child: CircularProgressIndicator(
             strokeWidth: 2,
-            color: Color(0xFF4F46E5),
+            color: Color(0xFF8B5CF6),
           ),
         ),
         errorWidget: (context, url, error) {
@@ -2488,7 +2488,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
       height: 60,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+          colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
         ),
       ),
       child: Center(
@@ -2540,7 +2540,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
               child: const Center(
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  color: Color(0xFF4F46E5),
+                  color: Color(0xFF8B5CF6),
                 ),
               ),
             ),
@@ -2605,7 +2605,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         color: isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xFF4F46E5).withOpacity(0.3),
+          color: const Color(0xFF8B5CF6).withOpacity(0.3),
           width: 1,
         ),
       ),
@@ -2614,13 +2614,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFF4F46E5).withOpacity(0.1),
+              color: const Color(0xFF8B5CF6).withOpacity(0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.location_off,
               size: 48,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           ),
           const SizedBox(height: 16),
@@ -2643,7 +2643,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
           ConnectivityIconButton(
             onPressed: () => _showAddAddressDialog(setModalState, savedAddresses, setSelectedAddress),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4F46E5),
+              backgroundColor: const Color(0xFF8B5CF6),
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
               shape: RoundedRectangleBorder(
@@ -2692,13 +2692,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: isSelected
-                  ? const Color(0xFF4F46E5).withOpacity(0.1)
+                  ? const Color(0xFF8B5CF6).withOpacity(0.1)
                   : (isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6)),
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: isSelected
-                    ? const Color(0xFF4F46E5)
-                    : const Color(0xFF4F46E5).withOpacity(0.3),
+                    ? const Color(0xFF8B5CF6)
+                    : const Color(0xFF8B5CF6).withOpacity(0.3),
                 width: isSelected ? 2 : 1,
               ),
             ),
@@ -2708,12 +2708,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF4F46E5).withOpacity(0.15),
+                    color: const Color(0xFF8B5CF6).withOpacity(0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
                     isDefault ? Icons.home : Icons.location_on,
-                    color: const Color(0xFF4F46E5),
+                    color: const Color(0xFF8B5CF6),
                     size: 24,
                   ),
                 ),
@@ -2730,7 +2730,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: isSelected ? const Color(0xFF4F46E5) : null,
+                              color: isSelected ? const Color(0xFF8B5CF6) : null,
                             ),
                           ),
                           if (isDefault) ...[
@@ -2789,7 +2789,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   Container(
                     padding: const EdgeInsets.all(4),
                     decoration: const BoxDecoration(
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -2813,8 +2813,8 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
       OutlinedButton.icon(
         onPressed: () => _showAddAddressDialog(setModalState, addresses, setSelectedAddress),
         style: OutlinedButton.styleFrom(
-          foregroundColor: const Color(0xFF4F46E5),
-          side: const BorderSide(color: Color(0xFF4F46E5), width: 1.5),
+          foregroundColor: const Color(0xFF8B5CF6),
+          side: const BorderSide(color: Color(0xFF8B5CF6), width: 1.5),
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
@@ -2864,12 +2864,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF4F46E5).withOpacity(0.1),
+                      color: const Color(0xFF8B5CF6).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
                       Icons.add_location_alt,
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                       size: 24,
                     ),
                   ),
@@ -2893,13 +2893,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)?.addressLabelOptionalHint ?? 'تسمية العنوان (اختياري)',
                         hintText: AppLocalizations.of(context)?.exampleHomeWorkHint ?? 'مثل: المنزل، العمل، إلخ',
-                        prefixIcon: const Icon(Icons.label, color: Color(0xFF4F46E5)),
+                        prefixIcon: const Icon(Icons.label, color: Color(0xFF8B5CF6)),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: Color(0xFF4F46E5), width: 2),
+                          borderSide: const BorderSide(color: Color(0xFF8B5CF6), width: 2),
                         ),
                       ),
                     ),
@@ -2969,7 +2969,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               }
                             },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF4F46E5),
+                        backgroundColor: const Color(0xFF8B5CF6),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
@@ -3077,7 +3077,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                             context: context,
                             barrierDismissible: false,
                             builder: (context) => const Center(
-                              child: CircularProgressIndicator(color: Color(0xFF4F46E5)),
+                              child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
                             ),
                           );
 
@@ -3131,7 +3131,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                         }
                       : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4F46E5),
+                    backgroundColor: const Color(0xFF8B5CF6),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

@@ -555,11 +555,11 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
             end: Alignment.bottomCenter,
             colors: themeProvider.isDarkMode
                 ? [
-                    const Color(0xFF4F46E5).withOpacity(0.1),
+                    const Color(0xFF8B5CF6).withOpacity(0.1),
                     const Color(0xFF121212),
                   ]
                 : [
-                    const Color(0xFF4F46E5).withOpacity(0.05),
+                    const Color(0xFF8B5CF6).withOpacity(0.05),
                     Colors.white,
                   ],
           ),
@@ -580,7 +580,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                         child: Card(
                       elevation: 8,
                       color: theme.colorScheme.surface,
-                      shadowColor: const Color(0xFF4F46E5).withOpacity(0.2),
+                      shadowColor: const Color(0xFF8B5CF6).withOpacity(0.2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
                       ),
@@ -620,7 +620,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                                   end: Alignment.bottomRight,
                                                   colors: [
                                                     Color(0xFF818CF8),
-                                                    Color(0xFF4F46E5),
+                                                    Color(0xFF8B5CF6),
                                                   ],
                                                 ),
                                                 borderRadius:
@@ -628,7 +628,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                                 boxShadow: [
                                                   BoxShadow(
                                                     color:
-                                                        const Color(0xFF4F46E5)
+                                                        const Color(0xFF8B5CF6)
                                                             .withOpacity(0.3 *
                                                                 _pulseAnimation
                                                                     .value),
@@ -678,7 +678,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                   style:
                                       theme.textTheme.headlineSmall?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: const Color(0xFF4F46E5),
+                                    color: const Color(0xFF8B5CF6),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -731,12 +731,12 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                       Container(
                                         padding: const EdgeInsets.all(12),
                                         decoration: BoxDecoration(
-                                          color: const Color(0xFF4F46E5).withOpacity(0.05),
+                                          color: const Color(0xFF8B5CF6).withOpacity(0.05),
                                           borderRadius: BorderRadius.circular(12),
                                         ),
                                         child: Row(
                                           children: [
-                                            const Icon(Icons.phone, color: Color(0xFF4F46E5)),
+                                            const Icon(Icons.phone, color: Color(0xFF8B5CF6)),
                                             const SizedBox(width: 8),
                                             Expanded(
                                               child: Text(

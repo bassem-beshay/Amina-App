@@ -115,8 +115,8 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                                 shape: BoxShape.circle,
                                 gradient: RadialGradient(
                                   colors: [
-                                    const Color(0xFF4F46E5).withOpacity(0.3),
-                                    const Color(0xFF4F46E5).withOpacity(0.1),
+                                    const Color(0xFF8B5CF6).withOpacity(0.3),
+                                    const Color(0xFF8B5CF6).withOpacity(0.1),
                                     Colors.transparent,
                                   ],
                                   stops: const [0.0, 0.6, 1.0],
@@ -133,14 +133,14 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                   colors: [
-                                    const Color(0xFF4F46E5).withOpacity(0.2),
+                                    const Color(0xFF8B5CF6).withOpacity(0.2),
                                     const Color(0xFF10B981).withOpacity(0.2),
                                     const Color(0xFFC084FC).withOpacity(0.2),
                                   ],
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFF4F46E5).withOpacity(0.3),
+                                    color: const Color(0xFF8B5CF6).withOpacity(0.3),
                                     blurRadius: 30,
                                     spreadRadius: 5,
                                   ),
@@ -154,8 +154,8 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   Color(0xFF10B981),
-                                  Color(0xFF4F46E5),
-                                  Color(0xFF4338CA),
+                                  Color(0xFF8B5CF6),
+                                  Color(0xFF7C3AED),
                                 ],
                               ).createShader(bounds),
                               child: const Text(
@@ -226,7 +226,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                         children: [
                           Icon(
                             Icons.lightbulb_outline,
-                            color: const Color(0xFF4F46E5),
+                            color: const Color(0xFF8B5CF6),
                             size: 24,
                           ),
                           const SizedBox(width: 12),
@@ -258,7 +258,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                   child: ElevatedButton.icon(
                     onPressed: _isChecking ? null : _handleRetry,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4F46E5),
+                      backgroundColor: const Color(0xFF8B5CF6),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(

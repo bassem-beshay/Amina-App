@@ -59,7 +59,7 @@ class PaySkyCustomTabsScreen {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CircularProgressIndicator(
-                    color: Color(0xFF4F46E5),
+                    color: Color(0xFF8B5CF6),
                     strokeWidth: 3,
                   ),
                   SizedBox(height: 24),
@@ -121,7 +121,7 @@ class PaySkyCustomTabsScreen {
           Uri.parse(paymentFormUrl),
           customTabsOptions: CustomTabsOptions(
             colorSchemes: CustomTabsColorSchemes.defaults(
-              toolbarColor: const Color(0xFF4F46E5),
+              toolbarColor: const Color(0xFF8B5CF6),
             ),
             shareState: CustomTabsShareState.off,
             urlBarHidingEnabled: true,
@@ -131,7 +131,7 @@ class PaySkyCustomTabsScreen {
             ),
           ),
           safariVCOptions: SafariViewControllerOptions(
-            preferredBarTintColor: const Color(0xFF4F46E5),
+            preferredBarTintColor: const Color(0xFF8B5CF6),
             preferredControlTintColor: Colors.white,
             barCollapsingEnabled: true,
             dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,

@@ -85,16 +85,16 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
             AppLocalizations.of(context)?.bookingDetails ?? 'Details',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Colors.white,
             ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xFF8B5CF6),
           elevation: 0,
-          iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+          iconTheme: IconThemeData(color: Colors.white),
         ),
         body: Center(
           child: CircularProgressIndicator(
-            color: Color(0xFF4F46E5),
+            color: Color(0xFF8B5CF6),
           ),
         ),
       );
@@ -108,12 +108,12 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
             AppLocalizations.of(context)?.bookingDetails ?? 'Details',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Colors.white,
             ),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xFF8B5CF6),
           elevation: 0,
-          iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+          iconTheme: IconThemeData(color: Colors.white),
         ),
         body: Center(
           child: Column(
@@ -148,7 +148,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
               ConnectivityButton(
                 onPressed: _loadOfferDetails,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF4F46E5),
+                  backgroundColor: Color(0xFF8B5CF6),
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                   shape: RoundedRectangleBorder(
@@ -185,12 +185,12 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
           AppLocalizations.of(context)?.bookingDetails ?? 'Details',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
-        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.onSurface),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Center(
         child: Text(

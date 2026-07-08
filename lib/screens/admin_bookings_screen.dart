@@ -291,7 +291,7 @@ class _AdminBookingsScreenState extends State<AdminBookingsScreen> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF10B981), Color(0xFF4F46E5)],
+          colors: [Color(0xFF10B981), Color(0xFF8B5CF6)],
         ),
         borderRadius: BorderRadius.circular(16),
       ),

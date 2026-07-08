@@ -944,7 +944,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   isLoadingLocation ? 'جاري تحديد الموقع...' : 'تحديد موقعي الحالي',
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4F46E5),
+                  backgroundColor: const Color(0xFF8B5CF6),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                   shape: RoundedRectangleBorder(
@@ -1060,7 +1060,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: const BoxDecoration(
-                            color: Color(0xFF4F46E5),
+                            color: Color(0xFF8B5CF6),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
@@ -1110,7 +1110,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   isLoadingLocation ? 'جاري تحديد الموقع...' : 'تحديد موقعي الحالي',
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4F46E5),
+                  backgroundColor: const Color(0xFF8B5CF6),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                   shape: RoundedRectangleBorder(
@@ -1214,7 +1214,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 : ConnectivityButton(
                     onPressed: updateProfile,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4F46E5),
+                      backgroundColor: const Color(0xFF8B5CF6),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(

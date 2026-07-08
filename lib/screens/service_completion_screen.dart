@@ -148,18 +148,18 @@ class _ServiceCompletionScreenState extends State<ServiceCompletionScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
         title: Text(
           'Confirm Service Completion',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -198,7 +198,7 @@ class _ServiceCompletionScreenState extends State<ServiceCompletionScreen> {
               icon: Icon(Icons.refresh),
               label: Text('Retry'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF4F46E5),
+                backgroundColor: Color(0xFF8B5CF6),
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
             ),
@@ -355,7 +355,7 @@ class _ServiceCompletionScreenState extends State<ServiceCompletionScreen> {
                 height: 60,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF4F46E5).withOpacity(0.1),
+                  color: const Color(0xFF8B5CF6).withOpacity(0.1),
                   image: _provider!.profilePicture != null
                       ? DecorationImage(
                           image: NetworkImage(
@@ -371,7 +371,7 @@ class _ServiceCompletionScreenState extends State<ServiceCompletionScreen> {
                     ? const Icon(
                         Icons.person,
                         size: 32,
-                        color: Color(0xFF4F46E5),
+                        color: Color(0xFF8B5CF6),
                       )
                     : null,
               ),
@@ -457,7 +457,7 @@ class _ServiceCompletionScreenState extends State<ServiceCompletionScreen> {
             icon: Icons.cleaning_services,
             label: 'Service',
             value: 'Household Service',
-            iconColor: Color(0xFF4F46E5),
+            iconColor: Color(0xFF8B5CF6),
           ),
           Divider(height: 24),
           _buildDetailRow(
@@ -509,7 +509,7 @@ class _ServiceCompletionScreenState extends State<ServiceCompletionScreen> {
             icon: Icons.calendar_today,
             label: 'Date',
             value: DateFormat('yyyy-MM-dd').format(_booking!.bookingDate),
-            iconColor: Color(0xFF4F46E5),
+            iconColor: Color(0xFF8B5CF6),
           ),
           Divider(height: 24),
           _buildDetailRow(
@@ -558,7 +558,7 @@ class _ServiceCompletionScreenState extends State<ServiceCompletionScreen> {
               icon: Icons.note_alt,
               label: 'Worker Notes',
               value: _booking!.providerNotes!,
-              iconColor: Color(0xFF4F46E5),
+              iconColor: Color(0xFF8B5CF6),
             ),
           ],
         ],

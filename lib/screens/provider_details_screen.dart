@@ -145,7 +145,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF4F46E5)
+            ? const Color(0xFF8B5CF6)
             : Colors.white,
         elevation: 0,
         leading: IconButton(
@@ -153,7 +153,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
             Icons.arrow_back,
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.white
-                : Theme.of(context).colorScheme.onSurface,
+                : Colors.white,
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -162,7 +162,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
           style: TextStyle(
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.white
-                : Theme.of(context).colorScheme.onSurface,
+                : Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -172,7 +172,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                color: Color(0xFF4F46E5),
+                color: Color(0xFF8B5CF6),
               ),
             )
           : _errorMessage != null
@@ -197,7 +197,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                       ElevatedButton(
                         onPressed: _loadProviderDetails,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF4F46E5),
+                          backgroundColor: Color(0xFF8B5CF6),
                           foregroundColor: Colors.white,
                           padding: EdgeInsets.symmetric(
                             horizontal: 32,
@@ -259,7 +259,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                   height: 100,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFF4F46E5), width: 3),
+                    border: Border.all(color: const Color(0xFF8B5CF6), width: 3),
                   ),
                   child: ClipOval(
                     child: _buildProfileImage(profilePicture),
@@ -363,17 +363,17 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: Color(0xFF4F46E5).withOpacity(0.1),
+                        color: Color(0xFF8B5CF6).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: Color(0xFF4F46E5).withOpacity(0.3),
+                          color: Color(0xFF8B5CF6).withOpacity(0.3),
                         ),
                       ),
                       child: Text(
                         serviceName,
                         style: const TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF4F46E5),
+                          color: Color(0xFF8B5CF6),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -395,7 +395,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
                     icon: Icons.work,
                     title: AppLocalizations.of(context)?.experience ?? 'Experience',
                     value: '$yearsOfExperience ${AppLocalizations.of(context)?.yearUnit ?? 'year'}',
-                    iconColor: Color(0xFF4F46E5),
+                    iconColor: Color(0xFF8B5CF6),
                   ),
                   SizedBox(height: 12),
                 ],
@@ -464,7 +464,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
           return const Center(
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           );
         },
@@ -481,7 +481,7 @@ class _ProviderDetailsScreenState extends State<ProviderDetailsScreen> {
       height: 100,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+          colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
         ),
       ),
       child: Center(

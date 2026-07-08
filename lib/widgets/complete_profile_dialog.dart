@@ -195,7 +195,7 @@ class ProfileCompletionChecker {
               Navigator.of(context).pop('go_to_edit');
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4F46E5),
+              backgroundColor: const Color(0xFF8B5CF6),
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               shape: RoundedRectangleBorder(

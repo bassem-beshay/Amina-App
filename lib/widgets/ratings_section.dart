@@ -95,7 +95,7 @@ class _RatingsSectionState extends State<RatingsSection> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           ),
         ),
@@ -162,14 +162,14 @@ class _RatingsSectionState extends State<RatingsSection> {
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF4F46E5), Color(0xFF4338CA)],
+          colors: [Color(0xFF8B5CF6), Color(0xFF7C3AED)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF4F46E5).withOpacity(0.3),
+            color: const Color(0xFF8B5CF6).withOpacity(0.3),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -263,12 +263,12 @@ class _RatingsSectionState extends State<RatingsSection> {
                 // صورة العميل
                 CircleAvatar(
                   radius: 24,
-                  backgroundColor: const Color(0xFF4F46E5).withOpacity(0.1),
+                  backgroundColor: const Color(0xFF8B5CF6).withOpacity(0.1),
                   backgroundImage: profilePicture != null && profilePicture.isNotEmpty
                       ? NetworkImage('${ApiConfig.baseUrl}$profilePicture')
                       : null,
                   child: profilePicture == null || profilePicture.isEmpty
-                      ? const Icon(Icons.person, color: Color(0xFF4F46E5), size: 28)
+                      ? const Icon(Icons.person, color: Color(0xFF8B5CF6), size: 28)
                       : null,
                 ),
                 const SizedBox(width: 12),

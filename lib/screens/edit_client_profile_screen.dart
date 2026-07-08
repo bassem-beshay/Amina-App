@@ -291,7 +291,7 @@ class _EditClientProfileScreenState extends State<EditClientProfileScreen> {
       'تنظيف منزلي': {'icon': Icons.cleaning_services, 'color': const Color(0xFF10B981)},
       'طبخ': {'icon': Icons.restaurant, 'color': const Color(0xFFF59E0B)},
       'رعاية أطفال': {'icon': Icons.child_care, 'color': const Color(0xFF3B82F6)},
-      'رعاية مسنين': {'icon': Icons.accessible, 'color': const Color(0xFF4F46E5)},
+      'رعاية مسنين': {'icon': Icons.accessible, 'color': const Color(0xFF8B5CF6)},
       'غسيل ملابس': {'icon': Icons.local_laundry_service, 'color': const Color(0xFFEC4899)},
       'كي ملابس': {'icon': Icons.checkroom, 'color': const Color(0xFF06B6D4)},
     };
@@ -300,7 +300,7 @@ class _EditClientProfileScreenState extends State<EditClientProfileScreen> {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(20),
-          child: CircularProgressIndicator(color: Color(0xFF4F46E5)),
+          child: CircularProgressIndicator(color: Color(0xFF8B5CF6)),
         ),
       );
     }
@@ -325,7 +325,7 @@ class _EditClientProfileScreenState extends State<EditClientProfileScreen> {
         final isSelected = _selectedCategories.contains(category.id);
         final iconData = categoryIcons[category.name];
         final icon = iconData?['icon'] as IconData? ?? Icons.category;
-        final color = iconData?['color'] as Color? ?? const Color(0xFF4F46E5);
+        final color = iconData?['color'] as Color? ?? const Color(0xFF8B5CF6);
 
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
@@ -390,7 +390,7 @@ class _EditClientProfileScreenState extends State<EditClientProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(localizations.editProfile),
-        backgroundColor: const Color(0xFF4F46E5),
+        backgroundColor: const Color(0xFF8B5CF6),
         foregroundColor: Colors.white,
       ),
       body: _isLoading
@@ -453,7 +453,7 @@ class _EditClientProfileScreenState extends State<EditClientProfileScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF4F46E5),
+                                  color: const Color(0xFF8B5CF6),
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     color: Theme.of(context).colorScheme.surface,
@@ -537,7 +537,7 @@ class _EditClientProfileScreenState extends State<EditClientProfileScreen> {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        const Icon(Icons.favorite, color: Color(0xFF4F46E5)),
+                        const Icon(Icons.favorite, color: Color(0xFF8B5CF6)),
                         const SizedBox(width: 8),
                         Text(
                           AppLocalizations.of(context)?.preferredServices ?? 'الخدمات المفضلة',
@@ -648,7 +648,7 @@ class _EditClientProfileScreenState extends State<EditClientProfileScreen> {
                     ConnectivityButton(
                       onPressed: _isLoading ? null : _saveProfile,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF4F46E5),
+                        backgroundColor: const Color(0xFF8B5CF6),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(

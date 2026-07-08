@@ -189,7 +189,7 @@ mixin ConnectivityAwareMixin<T extends StatefulWidget> on State<T> {
               ElevatedButton.icon(
                 onPressed: onRetry,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4F46E5),
+                  backgroundColor: const Color(0xFF8B5CF6),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,
@@ -259,7 +259,7 @@ mixin ConnectivityAwareMixin<T extends StatefulWidget> on State<T> {
               ElevatedButton(
                 onPressed: onAction,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4F46E5),
+                  backgroundColor: const Color(0xFF8B5CF6),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,
@@ -291,7 +291,7 @@ mixin ConnectivityAwareMixin<T extends StatefulWidget> on State<T> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const CircularProgressIndicator(
-            color: Color(0xFF4F46E5),
+            color: Color(0xFF8B5CF6),
           ),
           if (message != null) ...[
             const SizedBox(height: 16),
@@ -351,7 +351,7 @@ mixin ConnectivityAwareMixin<T extends StatefulWidget> on State<T> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const CircularProgressIndicator(
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                     ),
                     if (loadingMessage != null) ...[
                       const SizedBox(height: 16),
@@ -423,7 +423,7 @@ mixin ConnectivityAwareMixin<T extends StatefulWidget> on State<T> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const CircularProgressIndicator(
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                     ),
                     if (loadingMessage != null) ...[
                       const SizedBox(height: 16),

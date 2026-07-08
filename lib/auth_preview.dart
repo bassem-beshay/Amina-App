@@ -11,7 +11,7 @@ class AuthPreviewApp extends StatelessWidget {
     return MaterialApp(
       title: 'Auth Preview',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4F46E5)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF8B5CF6)),
         useMaterial3: true,
         fontFamily: 'Tajawal',
       ),

@@ -68,8 +68,8 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: isDark ? const Color(0xFF4F46E5) : Colors.white,
-        foregroundColor: isDark ? Colors.white : Colors.black87,
+        backgroundColor: const Color(0xFF8B5CF6),
+        foregroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -82,7 +82,7 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(
-                color: Color(0xFF4F46E5),
+                color: Color(0xFF8B5CF6),
               ),
             )
           : _bookings.isEmpty
@@ -117,7 +117,7 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
                 )
               : RefreshIndicator(
                   onRefresh: _loadBookings,
-                  color: const Color(0xFF4F46E5),
+                  color: const Color(0xFF8B5CF6),
                   child: ListView.builder(
                     padding: const EdgeInsets.all(16),
                     itemCount: _bookings.length,
@@ -372,7 +372,7 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4F46E5),
+                      backgroundColor: const Color(0xFF8B5CF6),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
@@ -407,7 +407,7 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
     if (titleLower.contains('تنظيف')) return const Color(0xFF10B981);
     if (titleLower.contains('طبخ')) return const Color(0xFFF59E0B);
     if (titleLower.contains('أطفال')) return const Color(0xFF3B82F6);
-    if (titleLower.contains('مسن')) return const Color(0xFF4F46E5);
+    if (titleLower.contains('مسن')) return const Color(0xFF8B5CF6);
     if (titleLower.contains('غسيل')) return const Color(0xFFEC4899);
     if (titleLower.contains('كي')) return const Color(0xFF06B6D4);
     return const Color(0xFF3B82F6);
@@ -470,7 +470,7 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
       barrierDismissible: false,
       builder: (context) => const Center(
         child: CircularProgressIndicator(
-          color: Color(0xFF4F46E5),
+          color: Color(0xFF8B5CF6),
         ),
       ),
     );
@@ -497,14 +497,14 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xFF4F46E5).withOpacity(0.1),
+                color: const Color(0xFF8B5CF6).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 '${offers.length} ${localizations?.offer ?? 'عرض'}',
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF4F46E5),
+                  color: Color(0xFF8B5CF6),
                 ),
               ),
             ),
@@ -570,7 +570,7 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: const Color(0xFF4F46E5).withOpacity(0.3),
+          color: const Color(0xFF8B5CF6).withOpacity(0.3),
           width: 1.5,
         ),
       ),
@@ -582,10 +582,10 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
               // Worker avatar
               CircleAvatar(
                 radius: 24,
-                backgroundColor: const Color(0xFF4F46E5).withOpacity(0.1),
+                backgroundColor: const Color(0xFF8B5CF6).withOpacity(0.1),
                 child: const Icon(
                   Icons.person,
-                  color: Color(0xFF4F46E5),
+                  color: Color(0xFF8B5CF6),
                 ),
               ),
               const SizedBox(width: 12),
@@ -684,7 +684,7 @@ class _ClientBookingsScreenState extends State<ClientBookingsScreen> {
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4F46E5),
+                backgroundColor: const Color(0xFF8B5CF6),
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 shape: RoundedRectangleBorder(

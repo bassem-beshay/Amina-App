@@ -63,7 +63,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
           SliverAppBar(
             expandedHeight: 200,
             pinned: true,
-            backgroundColor: const Color(0xFF4F46E5),
+            backgroundColor: const Color(0xFF8B5CF6),
             iconTheme: const IconThemeData(color: Colors.white),
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
@@ -71,7 +71,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+                    colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
                   ),
                 ),
                 child: _isLoading
@@ -94,7 +94,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   child: const Icon(
                                     Icons.person,
                                     size: 60,
-                                    color: Color(0xFF4F46E5),
+                                    color: Color(0xFF8B5CF6),
                                   ),
                                 ),
                                 const SizedBox(height: 12),
@@ -146,7 +146,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                     padding: EdgeInsets.all(50),
                     child: Center(
                       child: CircularProgressIndicator(
-                        color: Color(0xFF4F46E5),
+                        color: Color(0xFF8B5CF6),
                       ),
                     ),
                   )
@@ -365,7 +365,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                           }
                                         : null,
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF4F46E5),
+                                      backgroundColor: const Color(0xFF8B5CF6),
                                       foregroundColor: Colors.white,
                                       padding: const EdgeInsets.symmetric(vertical: 16),
                                       shape: RoundedRectangleBorder(
@@ -400,7 +400,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
         Icon(
           icon,
           size: 20,
-          color: const Color(0xFF4F46E5),
+          color: const Color(0xFF8B5CF6),
         ),
         const SizedBox(width: 12),
         Expanded(

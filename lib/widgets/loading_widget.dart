@@ -30,7 +30,7 @@ class LoadingWidget extends StatelessWidget {
 
     // النسخة القديمة مع CircularProgressIndicator (للاستخدام النادر)
     return Container(
-      color: backgroundColor ?? const Color(0xFF4F46E5),
+      color: backgroundColor ?? const Color(0xFF8B5CF6),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +41,7 @@ class LoadingWidget extends StatelessWidget {
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4F46E5),
+                  color: const Color(0xFF8B5CF6),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -208,7 +208,7 @@ class LoadingDialog {
               : Container(
                   padding: const EdgeInsets.all(30),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF4F46E5),
+                    color: const Color(0xFF8B5CF6),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(

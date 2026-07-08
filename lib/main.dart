@@ -169,7 +169,7 @@ class _AminaDashboardState extends State<AminaDashboard> {
             height: 40,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+                colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
               ),
               borderRadius: BorderRadius.circular(12),
             ),
@@ -261,7 +261,7 @@ class _AminaDashboardState extends State<AminaDashboard> {
         onTap: (index) => setState(() => _currentIndex = index),
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF4F46E5),
+        selectedItemColor: const Color(0xFF8B5CF6),
         unselectedItemColor: const Color(0xFF9CA3AF),
         selectedLabelStyle: const TextStyle(
           fontSize: 12,
@@ -304,7 +304,7 @@ class _AminaDashboardState extends State<AminaDashboard> {
       margin: const EdgeInsets.only(bottom: 30),
       child: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: const Color(0xFF4F46E5),
+        backgroundColor: const Color(0xFF8B5CF6),
         foregroundColor: Colors.white,
         elevation: 4,
         child: const Icon(Icons.add, size: 28),
@@ -402,7 +402,7 @@ class DashboardHome extends StatelessWidget {
             "Month's Earnings",
             '${formatter.format(250000)} EGP',
             Icons.calendar_today,
-            const Color(0xFF4F46E5),
+            const Color(0xFF8B5CF6),
           ),
           const Spacer(),
           _buildCardButton('Financial Reports', Icons.bar_chart),
@@ -467,7 +467,7 @@ class DashboardHome extends StatelessWidget {
             'System update',
             '1 day ago',
             Icons.update,
-            const Color(0xFF4F46E5),
+            const Color(0xFF8B5CF6),
           ),
         ],
       ),
@@ -503,10 +503,10 @@ class DashboardHome extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4F46E5).withOpacity( 0.1),
+                  color: const Color(0xFF8B5CF6).withOpacity( 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(icon, color: const Color(0xFF4F46E5), size: 20),
+                child: Icon(icon, color: const Color(0xFF8B5CF6), size: 20),
               ),
               const SizedBox(width: 12),
               Text(
@@ -608,7 +608,7 @@ class DashboardHome extends StatelessWidget {
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
-                colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+                colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
               ),
             ),
             child: const Center(
@@ -828,25 +828,25 @@ class DashboardHome extends StatelessWidget {
     return Container(
       height: 40,
       decoration: BoxDecoration(
-        color: isPrimary ? const Color(0xFF4F46E5) : Colors.transparent,
+        color: isPrimary ? const Color(0xFF8B5CF6) : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
         border: isPrimary
             ? null
-            : Border.all(color: const Color(0xFF4F46E5), width: 1),
+            : Border.all(color: const Color(0xFF8B5CF6), width: 1),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             icon,
-            color: isPrimary ? Colors.white : const Color(0xFF4F46E5),
+            color: isPrimary ? Colors.white : const Color(0xFF8B5CF6),
             size: 16,
           ),
           const SizedBox(width: 6),
           Text(
             text,
             style: TextStyle(
-              color: isPrimary ? Colors.white : const Color(0xFF4F46E5),
+              color: isPrimary ? Colors.white : const Color(0xFF8B5CF6),
               fontSize: 12,
               fontWeight: FontWeight.w600,
             ),

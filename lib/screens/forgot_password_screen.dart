@@ -92,7 +92,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       Navigator.of(context).pop(); // Go back to auth screen
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4F46E5),
+                      backgroundColor: const Color(0xFF8B5CF6),
                     ),
                     child: const Text('إنشاء حساب'),
                   ),
@@ -225,7 +225,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         const Icon(
           Icons.email_outlined,
           size: 64,
-          color: Color(0xFF4F46E5),
+          color: Color(0xFF8B5CF6),
         ),
         const SizedBox(height: 24),
         Text(
@@ -297,7 +297,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         const Icon(
           Icons.lock_clock_outlined,
           size: 64,
-          color: Color(0xFF4F46E5),
+          color: Color(0xFF8B5CF6),
         ),
         const SizedBox(height: 24),
         Text(
@@ -383,7 +383,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         const Icon(
           Icons.lock_reset,
           size: 64,
-          color: Color(0xFF4F46E5),
+          color: Color(0xFF8B5CF6),
         ),
         const SizedBox(height: 24),
         Text(
@@ -526,7 +526,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: isActive || isCompleted
-                                      ? const Color(0xFF4F46E5)
+                                      ? const Color(0xFF8B5CF6)
                                       : Colors.grey[300],
                                 ),
                                 child: Center(
@@ -552,7 +552,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   width: 40,
                                   height: 2,
                                   color: isCompleted
-                                      ? const Color(0xFF4F46E5)
+                                      ? const Color(0xFF8B5CF6)
                                       : Colors.grey[300],
                                 ),
                             ],

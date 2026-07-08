@@ -33,12 +33,12 @@ class DurationDropdown extends StatelessWidget {
               : const Color(0xFFF3F4F6).withOpacity(0.9),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: const Color(0xFF4F46E5).withOpacity(0.4),
+            color: const Color(0xFF8B5CF6).withOpacity(0.4),
             width: 1.5,
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF4F46E5).withOpacity(0.1),
+              color: const Color(0xFF8B5CF6).withOpacity(0.1),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -51,7 +51,7 @@ class DurationDropdown extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    const Color(0xFF4F46E5).withOpacity(0.2),
+                    const Color(0xFF8B5CF6).withOpacity(0.2),
                     const Color(0xFF10B981).withOpacity(0.2),
                   ],
                 ),
@@ -59,7 +59,7 @@ class DurationDropdown extends StatelessWidget {
               ),
               child: const Icon(
                 Icons.timelapse_rounded,
-                color: Color(0xFF4F46E5),
+                color: Color(0xFF8B5CF6),
                 size: 22,
               ),
             ),
@@ -90,12 +90,12 @@ class DurationDropdown extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: const Color(0xFF4F46E5).withOpacity(0.1),
+                color: const Color(0xFF8B5CF6).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 Icons.keyboard_arrow_down_rounded,
-                color: const Color(0xFF4F46E5),
+                color: const Color(0xFF8B5CF6),
                 size: 24,
               ),
             ),
@@ -150,7 +150,7 @@ class DurationDropdown extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFF4F46E5), Color(0xFF10B981)],
+                          colors: [Color(0xFF8B5CF6), Color(0xFF10B981)],
                         ),
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -204,7 +204,7 @@ class DurationDropdown extends StatelessWidget {
                       decoration: BoxDecoration(
                         border: Border.symmetric(
                           horizontal: BorderSide(
-                            color: const Color(0xFF4F46E5).withOpacity(0.3),
+                            color: const Color(0xFF8B5CF6).withOpacity(0.3),
                             width: 1.5,
                           ),
                         ),
@@ -225,7 +225,7 @@ class DurationDropdown extends StatelessWidget {
                             fontSize: isSelected ? 24 : 18,
                             fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                             color: isSelected
-                                ? const Color(0xFF4F46E5)
+                                ? const Color(0xFF8B5CF6)
                                 : (isDark ? Colors.grey[400] : Colors.grey[600]),
                           ),
                           child: Row(
@@ -237,7 +237,7 @@ class DurationDropdown extends StatelessWidget {
                                   fontSize: isSelected ? 28 : 20,
                                   fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
                                   color: isSelected
-                                      ? const Color(0xFF4F46E5)
+                                      ? const Color(0xFF8B5CF6)
                                       : (isDark ? Colors.grey[400] : Colors.grey[600]),
                                 ),
                               ),
@@ -248,7 +248,7 @@ class DurationDropdown extends StatelessWidget {
                                   fontSize: isSelected ? 18 : 14,
                                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                                   color: isSelected
-                                      ? const Color(0xFF4F46E5).withOpacity(0.8)
+                                      ? const Color(0xFF8B5CF6).withOpacity(0.8)
                                       : (isDark ? Colors.grey[500] : Colors.grey[500]),
                                 ),
                               ),
@@ -272,7 +272,7 @@ class DurationDropdown extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4F46E5),
+                      backgroundColor: const Color(0xFF8B5CF6),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
@@ -344,8 +344,8 @@ class SimpleDurationDropdown extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          prefixIcon: const Icon(Icons.schedule, color: Color(0xFF4F46E5)),
-          suffixIcon: const Icon(Icons.arrow_drop_down, color: Color(0xFF4F46E5)),
+          prefixIcon: const Icon(Icons.schedule, color: Color(0xFF8B5CF6)),
+          suffixIcon: const Icon(Icons.arrow_drop_down, color: Color(0xFF8B5CF6)),
           filled: true,
           fillColor: isDark ? Colors.grey[800] : Colors.grey[100],
         ),
@@ -418,7 +418,7 @@ class SimpleDurationDropdown extends StatelessWidget {
                       child: const Text(
                         'تأكيد',
                         style: TextStyle(
-                          color: Color(0xFF4F46E5),
+                          color: Color(0xFF8B5CF6),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

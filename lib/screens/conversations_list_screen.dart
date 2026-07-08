@@ -89,13 +89,13 @@ class _ConversationsListScreenState extends State<ConversationsListScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: isDark ? const Color(0xFF4F46E5) : Colors.white,
+        backgroundColor: const Color(0xFF8B5CF6),
         elevation: 0,
         centerTitle: true,
         title: Text(
           'Chats',
           style: TextStyle(
-            color: isDark ? Colors.white : Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -103,7 +103,7 @@ class _ConversationsListScreenState extends State<ConversationsListScreen> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: isDark ? Colors.white : Theme.of(context).colorScheme.onSurface,
+            color: Colors.white,
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -111,14 +111,14 @@ class _ConversationsListScreenState extends State<ConversationsListScreen> {
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(
-                color: Color(0xFF4F46E5),
+                color: Color(0xFF8B5CF6),
               ),
             )
           : _conversations.isEmpty
               ? _buildEmptyState()
               : RefreshIndicator(
                   onRefresh: _loadConversations,
-                  color: Color(0xFF4F46E5),
+                  color: Color(0xFF8B5CF6),
                   child: ListView.builder(
                     padding: EdgeInsets.all(20),
                     itemCount: _conversations.length,
@@ -140,13 +140,13 @@ class _ConversationsListScreenState extends State<ConversationsListScreen> {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: Color(0xFF4F46E5).withOpacity( 0.1),
+              color: Color(0xFF8B5CF6).withOpacity( 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.chat_bubble_outline,
               size: 60,
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
             ),
           ),
           SizedBox(height: 24),
@@ -322,7 +322,7 @@ class _ConversationsListScreenState extends State<ConversationsListScreen> {
                       vertical: 4,
                     ),
                     decoration: const BoxDecoration(
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                       shape: BoxShape.circle,
                     ),
                     constraints: const BoxConstraints(
@@ -378,13 +378,13 @@ class _ConversationsListScreenState extends State<ConversationsListScreen> {
     if (profilePictureUrl == null || profilePictureUrl.isEmpty) {
       return CircleAvatar(
         radius: 30,
-        backgroundColor: const Color(0xFF4F46E5).withOpacity( 0.1),
+        backgroundColor: const Color(0xFF8B5CF6).withOpacity( 0.1),
         child: Text(
           user.firstName.isNotEmpty ? user.firstName[0].toUpperCase() : '?',
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF4F46E5),
+            color: Color(0xFF8B5CF6),
           ),
         ),
       );
@@ -399,21 +399,21 @@ class _ConversationsListScreenState extends State<ConversationsListScreen> {
       ),
       placeholder: (context, url) => CircleAvatar(
         radius: 30,
-        backgroundColor: const Color(0xFF4F46E5).withOpacity( 0.1),
+        backgroundColor: const Color(0xFF8B5CF6).withOpacity( 0.1),
         child: const CircularProgressIndicator(
           strokeWidth: 2,
-          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4F46E5)),
+          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8B5CF6)),
         ),
       ),
       errorWidget: (context, url, error) => CircleAvatar(
         radius: 30,
-        backgroundColor: const Color(0xFF4F46E5).withOpacity( 0.1),
+        backgroundColor: const Color(0xFF8B5CF6).withOpacity( 0.1),
         child: Text(
           user.firstName.isNotEmpty ? user.firstName[0].toUpperCase() : '?',
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF4F46E5),
+            color: Color(0xFF8B5CF6),
           ),
         ),
       ),

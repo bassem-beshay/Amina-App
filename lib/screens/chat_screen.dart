@@ -501,7 +501,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 await _submitRating(selectedRating, commentController.text);
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF4F46E5),
+                                backgroundColor: const Color(0xFF8B5CF6),
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 24,
                                   vertical: 12,
@@ -905,7 +905,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
-        backgroundColor: const Color(0xFF4F46E5),
+        backgroundColor: const Color(0xFF8B5CF6),
         actions: [
           // Retry connection button (only show when disconnected or error)
           if (_connectionState == WebSocketState.disconnected ||
@@ -1249,7 +1249,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24),
                               borderSide: BorderSide(
-                                color: const Color(0xFF4F46E5),
+                                color: const Color(0xFF8B5CF6),
                                 width: 2,
                               ),
                             ),
@@ -1270,7 +1270,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       const SizedBox(width: 8),
                       CircleAvatar(
-                        backgroundColor: const Color(0xFF4F46E5),
+                        backgroundColor: const Color(0xFF8B5CF6),
                         child: _isSending
                             ? const SizedBox(
                                 width: 20,
@@ -1301,7 +1301,7 @@ class _ChatScreenState extends State<ChatScreen> {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: isMe ? const Color(0xFF4F46E5) : Colors.grey[200],
+          color: isMe ? const Color(0xFF8B5CF6) : Colors.grey[200],
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
@@ -1495,18 +1495,18 @@ class _AnimatedPaymentButtonState extends State<_AnimatedPaymentButton>
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
               border: Border.all(
-                color: const Color(0xFF4F46E5),
+                color: const Color(0xFF8B5CF6),
                 width: 2.5,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF4F46E5).withOpacity(0.2),
+                  color: const Color(0xFF8B5CF6).withOpacity(0.2),
                   blurRadius: 20,
                   offset: const Offset(0, 8),
                   spreadRadius: 0,
                 ),
                 BoxShadow(
-                  color: const Color(0xFF4F46E5).withOpacity(0.1),
+                  color: const Color(0xFF8B5CF6).withOpacity(0.1),
                   blurRadius: 30,
                   offset: const Offset(0, 12),
                   spreadRadius: 5,
@@ -1518,8 +1518,8 @@ class _AnimatedPaymentButtonState extends State<_AnimatedPaymentButton>
               child: InkWell(
                 onTap: widget.onPressed,
                 borderRadius: BorderRadius.circular(18),
-                splashColor: const Color(0xFF4F46E5).withOpacity(0.1),
-                highlightColor: const Color(0xFF4F46E5).withOpacity(0.05),
+                splashColor: const Color(0xFF8B5CF6).withOpacity(0.1),
+                highlightColor: const Color(0xFF8B5CF6).withOpacity(0.05),
                 child: Stack(
                   children: [
                     // Shimmer effect overlay
@@ -1534,7 +1534,7 @@ class _AnimatedPaymentButtonState extends State<_AnimatedPaymentButton>
                               gradient: LinearGradient(
                                 colors: [
                                   Colors.transparent,
-                                  const Color(0xFF4F46E5).withOpacity(0.15),
+                                  const Color(0xFF8B5CF6).withOpacity(0.15),
                                   Colors.transparent,
                                 ],
                                 stops: const [0.0, 0.5, 1.0],
@@ -1555,8 +1555,8 @@ class _AnimatedPaymentButtonState extends State<_AnimatedPaymentButton>
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  const Color(0xFF4F46E5),
-                                  const Color(0xFF4338CA),
+                                  const Color(0xFF8B5CF6),
+                                  const Color(0xFF7C3AED),
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -1564,7 +1564,7 @@ class _AnimatedPaymentButtonState extends State<_AnimatedPaymentButton>
                               borderRadius: BorderRadius.circular(14),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFF4F46E5).withOpacity(0.3),
+                                  color: const Color(0xFF8B5CF6).withOpacity(0.3),
                                   blurRadius: 8,
                                   offset: const Offset(0, 4),
                                 ),
@@ -1580,7 +1580,7 @@ class _AnimatedPaymentButtonState extends State<_AnimatedPaymentButton>
                           Text(
                             AppLocalizations.of(context)?.completePaymentButton ?? 'إتمام الدفع',
                             style: const TextStyle(
-                              color: Color(0xFF4F46E5),
+                              color: Color(0xFF8B5CF6),
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 0.5,
@@ -1590,12 +1590,12 @@ class _AnimatedPaymentButtonState extends State<_AnimatedPaymentButton>
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF4F46E5).withOpacity(0.1),
+                              color: const Color(0xFF8B5CF6).withOpacity(0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(
                               Icons.arrow_back_ios_rounded,
-                              color: Color(0xFF4F46E5),
+                              color: Color(0xFF8B5CF6),
                               size: 16,
                             ),
                           ),

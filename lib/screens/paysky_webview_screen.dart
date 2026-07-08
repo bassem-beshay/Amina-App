@@ -475,15 +475,15 @@ class _PaySkyWebViewScreenState extends State<PaySkyWebViewScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xFF8B5CF6),
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.close, color: Color(0xFF1F2937)),
+            icon: const Icon(Icons.close, color: Colors.white),
             onPressed: () async {
               final shouldClose = await showDialog<bool>(
                 context: context,
                 builder: (context) => AlertDialog(
-                  backgroundColor: Colors.white,
+                  backgroundColor: const Color(0xFF8B5CF6),
                   title: const Text('تأكيد الإلغاء'),
                   content: const Text('هل تريد إلغاء عملية الدفع؟'),
                   actions: [
@@ -510,7 +510,7 @@ class _PaySkyWebViewScreenState extends State<PaySkyWebViewScreen> {
           title: const Text(
             'إتمام الدفع',
             style: TextStyle(
-              color: Color(0xFF1F2937),
+              color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -548,7 +548,7 @@ class _PaySkyWebViewScreenState extends State<PaySkyWebViewScreen> {
                 icon: const Icon(Icons.refresh),
                 label: const Text('إعادة المحاولة'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4F46E5),
+                  backgroundColor: const Color(0xFF8B5CF6),
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
               ),
@@ -577,7 +577,7 @@ class _PaySkyWebViewScreenState extends State<PaySkyWebViewScreen> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF4F46E5).withOpacity(0.2),
+                    color: const Color(0xFF8B5CF6).withOpacity(0.2),
                     blurRadius: 20,
                     spreadRadius: 5,
                   ),
@@ -586,12 +586,12 @@ class _PaySkyWebViewScreenState extends State<PaySkyWebViewScreen> {
               child: const Icon(
                 Icons.payment_rounded,
                 size: 60,
-                color: Color(0xFF4F46E5),
+                color: Color(0xFF8B5CF6),
               ),
             ),
             const SizedBox(height: 30),
             const CircularProgressIndicator(
-              color: Color(0xFF4F46E5),
+              color: Color(0xFF8B5CF6),
               strokeWidth: 3,
             ),
             const SizedBox(height: 24),
@@ -629,7 +629,7 @@ class _PaySkyWebViewScreenState extends State<PaySkyWebViewScreen> {
               child: LinearProgressIndicator(
                 value: _loadingProgress,
                 backgroundColor: Colors.grey[200],
-                valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4F46E5)),
+                valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF8B5CF6)),
               ),
             ),
           if (_isLoading)
@@ -640,7 +640,7 @@ class _PaySkyWebViewScreenState extends State<PaySkyWebViewScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const CircularProgressIndicator(
-                      color: Color(0xFF4F46E5),
+                      color: Color(0xFF8B5CF6),
                       strokeWidth: 3,
                     ),
                     const SizedBox(height: 16),
