@@ -3,19 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../config/onboarding_theme.dart';
 import '../../widgets/onboarding/onboarding_widgets.dart';
+import '../../services/auth_service.dart';
 
 /// Figma "2 · OTP Verification".
 ///
-/// Mock behaviour: any 4-digit code advances the flow (the backend does not
-/// support phone OTP yet). [onVerified] is invoked with a live BuildContext
-/// once all four digits are entered and "Verify" is tapped.
+/// The entered code is verified by the backend. For development the backend
+/// accepts its configured test OTP. [onVerified] is invoked with a live
+/// BuildContext after a successful verification.
 class OtpScreen extends StatefulWidget {
   final String phoneNumber;
-  final void Function(BuildContext context) onVerified;
+  final String? firstName;
+  final String? lastName;
+  final String role;
+  final Future<void> Function(BuildContext context, AuthResult result) onVerified;
 
   const OtpScreen({
     super.key,
     required this.phoneNumber,
+    this.firstName,
+    this.lastName,
+    this.role = 'CLIENT',
     required this.onVerified,
   });
 
@@ -31,6 +38,8 @@ class _OtpScreenState extends State<OtpScreen> {
 
   Timer? _timer;
   int _secondsLeft = 59;
+  bool _isLoading = false;
+  String? _error;
 
   @override
   void initState() {
@@ -73,9 +82,25 @@ class _OtpScreenState extends State<OtpScreen> {
     setState(() {});
   }
 
-  void _verify() {
-    // Mock: accept any 4-digit code.
-    widget.onVerified(context);
+  Future<void> _verify() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+    final result = await AuthService.verifyOtp(
+      phoneNumber: widget.phoneNumber,
+      otpCode: _controllers.map((c) => c.text).join(),
+      firstName: widget.firstName,
+      lastName: widget.lastName,
+      role: widget.role,
+    );
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+    if (!result.success) {
+      setState(() => _error = result.error ?? 'Invalid verification code');
+      return;
+    }
+    await widget.onVerified(context, result);
   }
 
   String get _timerText {
@@ -112,6 +137,11 @@ class _OtpScreenState extends State<OtpScreen> {
                     )),
               ),
               const SizedBox(height: 16),
+              if (_error != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Text(_error!, style: const TextStyle(color: Colors.red)),
+                ),
               Center(
                 child: _secondsLeft > 0
                     ? Text('Resend code in $_timerText',
@@ -123,7 +153,10 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
               ),
               const SizedBox(height: 32),
-              PrimaryButton(label: 'Verify', onPressed: _isComplete ? _verify : null),
+              PrimaryButton(
+                label: _isLoading ? 'Verifying…' : 'Verify',
+                onPressed: _isComplete && !_isLoading ? _verify : null,
+              ),
             ],
           ),
         ),

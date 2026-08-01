@@ -351,6 +351,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         
         if (resp.success) {
 
+          // Document changes require an explicit complete verification
+          // submission. The backend validates both documents and all required
+          // profile fields before moving the provider back to PENDING.
+          if (files.containsKey('identity_document') || files.containsKey('health_certificate')) {
+            final verificationResponse = await ProfileService.submitProviderVerification();
+            if (!verificationResponse.success) {
+              setState(() {
+                message = verificationResponse.error ?? 'Complete your provider profile before submitting verification';
+              });
+              return;
+            }
+          }
+
           // If location is detected, save it as an address automatically (for providers)
           if (latitude != null && longitude != null && formattedAddressController.text.isNotEmpty) {
             final addressResponse = await AddressService.addProviderAddress(

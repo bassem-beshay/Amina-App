@@ -5,9 +5,9 @@ import 'result_badge.dart';
 
 /// Figma "6 · Under Review (Provider)".
 class UnderReviewScreen extends StatelessWidget {
-  final void Function(BuildContext context) onGetStarted;
+  final void Function(BuildContext context) onUpdateDocuments;
 
-  const UnderReviewScreen({super.key, required this.onGetStarted});
+  const UnderReviewScreen({super.key, required this.onUpdateDocuments});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class UnderReviewScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              PrimaryButton(label: 'Get Started', onPressed: () => onGetStarted(context)),
+              PrimaryButton(label: 'Update documents', onPressed: () => onUpdateDocuments(context)),
               const SizedBox(height: 24),
             ],
           ),

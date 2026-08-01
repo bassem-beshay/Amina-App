@@ -229,6 +229,7 @@ class AuthService {
         return AuthResult(
           success: true,
           message: 'Verification code sent to your phone',
+          isNewUser: response.rawResponse?['is_new_user'] == true,
         );
       }
 
@@ -248,17 +249,42 @@ class AuthService {
   static Future<AuthResult> verifyOtp({
     required String phoneNumber,
     required String otpCode,
+    String? firstName,
+    String? lastName,
+    String role = 'CLIENT',
     bool rememberMe = false,
   }) async {
     try {
       final response = await ApiClient.post(
         ApiConfig.verifyOtp,
-        body: {'phone_number': phoneNumber, 'otp_code': otpCode},
+        body: {
+          'phone_number': phoneNumber,
+          'otp_code': otpCode,
+          if (firstName != null && firstName.trim().isNotEmpty)
+            'first_name': firstName.trim(),
+          if (lastName != null && lastName.trim().isNotEmpty)
+            'last_name': lastName.trim(),
+          'role': role,
+        },
       );
 
       if (response.success && response.rawResponse != null) {
         final token = response.rawResponse!['token'] as String?;
         final userData = response.rawResponse!['user'] as Map<String, dynamic>?;
+
+        // New users are intentionally not created at OTP time. Keep the
+        // short-lived registration token until they choose a role and submit
+        // the role-specific form.
+        final registrationToken =
+            response.rawResponse!['registration_token'] as String?;
+        if (registrationToken != null && token == null) {
+          return AuthResult(
+            success: true,
+            message: 'Phone verified',
+            isNewUser: true,
+            registrationToken: registrationToken,
+          );
+        }
 
         if (token != null && userData != null) {
           final user = User.fromJson(userData);
@@ -281,6 +307,7 @@ class AuthService {
             success: true,
             message: 'Login successful',
             user: user,
+            isNewUser: response.rawResponse!['is_new_user'] == true,
           );
         }
       }
@@ -288,6 +315,57 @@ class AuthService {
       return AuthResult(
         success: false,
         error: 'Login failed',
+      );
+    } catch (e) {
+      return AuthResult(
+        success: false,
+        error: 'Connection error: ${e.toString()}',
+      );
+    }
+  }
+
+  static Future<AuthResult> completeRegistration({
+    required String registrationToken,
+    required String role,
+    required String firstName,
+    required String lastName,
+    String? companyName,
+    String? email,
+    String? password,
+  }) async {
+    try {
+      final response = await ApiClient.post(
+        ApiConfig.completeRegistration,
+        body: {
+          'registration_token': registrationToken,
+          'role': role,
+          'first_name': firstName.trim(),
+          'last_name': lastName.trim(),
+          if (companyName != null && companyName.trim().isNotEmpty)
+            'company_name': companyName.trim(),
+          if (email != null && email.trim().isNotEmpty) 'email': email.trim(),
+          if (password != null && password.trim().isNotEmpty)
+            'password': password.trim(),
+        },
+      );
+      if (!response.success || response.rawResponse == null) {
+        return AuthResult(success: false, error: 'Registration failed');
+      }
+      final token = response.rawResponse!['token'] as String?;
+      final userData = response.rawResponse!['user'] as Map<String, dynamic>?;
+      if (token == null || userData == null) {
+        return AuthResult(success: false, error: 'Registration failed');
+      }
+      final user = User.fromJson(userData);
+      await SecureStorageService.saveAuthToken(token);
+      await StorageService.saveUser(user);
+      await StorageService.setLoggedIn(true);
+      ApiClient.setAuthToken(token);
+      return AuthResult(
+        success: true,
+        message: 'Registration successful',
+        user: user,
+        isNewUser: true,
       );
     } catch (e) {
       return AuthResult(
@@ -632,6 +710,8 @@ class AuthResult {
   final User? user;
   final bool requiresVerification;
   final String? email;
+  final bool isNewUser;
+  final String? registrationToken;
 
   AuthResult({
     required this.success,
@@ -640,6 +720,8 @@ class AuthResult {
     this.user,
     this.requiresVerification = false,
     this.email,
+    this.isNewUser = false,
+    this.registrationToken,
   });
 
   // Helper getter to get user data as Map

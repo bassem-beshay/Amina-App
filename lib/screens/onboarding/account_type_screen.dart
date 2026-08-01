@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../config/onboarding_theme.dart';
 import '../../models/onboarding_data.dart';
+import '../../services/auth_service.dart';
 import '../../widgets/onboarding/onboarding_widgets.dart';
 import '../../widgets/onboarding/selectable_card.dart';
+import '../client_flow_screens.dart';
 import 'company_documents_screen.dart';
-import 'id_verification_screen.dart';
+import 'provider_profile_screen.dart';
 import 'onboarding_nav.dart';
-import 'success_screen.dart';
 
-/// Figma "3 · Account Type" (+ "3b" provider sub-panel) — step 2 of 3.
+/// Role selection is the first account-creation step after OTP verification.
 class AccountTypeScreen extends StatefulWidget {
   final OnboardingData data;
 
@@ -19,34 +20,72 @@ class AccountTypeScreen extends StatefulWidget {
 }
 
 class _AccountTypeScreenState extends State<AccountTypeScreen> {
-  late AccountType _type = widget.data.accountType;
-  late ProviderType _providerType = widget.data.providerType;
+  final _name = TextEditingController();
+  final _companyName = TextEditingController();
+  AccountType _accountType = AccountType.user;
+  ProviderType _providerType = ProviderType.individual;
+  bool _saving = false;
 
-  void _next() {
-    widget.data.accountType = _type;
+  @override
+  void dispose() {
+    _name.dispose();
+    _companyName.dispose();
+    super.dispose();
+  }
+
+  Future<void> _next() async {
+    if (_name.text.trim().isEmpty || widget.data.registrationToken == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter your full name to continue')),
+      );
+      return;
+    }
+    final parts = _name.text.trim().split(RegExp(r'\s+'));
+    final firstName = parts.first;
+    final lastName = parts.skip(1).join(' ');
+    final role = _accountType == AccountType.user
+        ? 'CLIENT'
+        : (_providerType == ProviderType.company ? 'COMPANY' : 'PROVIDER');
+
+    setState(() => _saving = true);
+    final result = await AuthService.completeRegistration(
+      registrationToken: widget.data.registrationToken!,
+      role: role,
+      firstName: firstName,
+      lastName: lastName,
+      companyName: _providerType == ProviderType.company ? _companyName.text : null,
+    );
+    if (!mounted) return;
+    setState(() => _saving = false);
+    if (!result.success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result.error ?? 'Unable to complete registration')),
+      );
+      return;
+    }
+
+    widget.data.fullName = _name.text.trim();
+    widget.data.accountType = _accountType;
     widget.data.providerType = _providerType;
-
-    if (_type == AccountType.user) {
-      OnboardingNav.saveLastRole(AccountType.user);
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => SuccessScreen(
-            onGetStarted: (ctx) => OnboardingNav.goToHome(ctx, AccountType.user),
-          ),
-        ),
+    OnboardingNav.saveLastRole(_accountType);
+    if (_accountType == AccountType.user) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => ClientProfileSetupScreen(data: widget.data)),
+      );
+    } else if (_providerType == ProviderType.company) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => CompanyDocumentsScreen(data: widget.data)),
       );
     } else {
-      OnboardingNav.saveLastRole(AccountType.provider);
-      final next = _providerType == ProviderType.company
-          ? CompanyDocumentsScreen(data: widget.data)
-          : IdVerificationScreen(data: widget.data);
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => next));
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => ProviderProfileScreen(data: widget.data)),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool isProvider = _type == AccountType.provider;
+    final providerSelected = _accountType == AccountType.provider;
     return Scaffold(
       backgroundColor: OnboardingTheme.background,
       body: SafeArea(
@@ -63,81 +102,53 @@ class _AccountTypeScreenState extends State<AccountTypeScreen> {
               Text('Choose account type', style: OnboardingTheme.title),
               const SizedBox(height: 6),
               Text("Select how you'll use Amina", style: OnboardingTheme.subtitle),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               SelectableCard(
                 icon: Icons.person_outline,
-                title: 'User',
+                title: 'Client',
                 subtitle: 'Book and request services',
-                selected: _type == AccountType.user,
-                onTap: () => setState(() => _type = AccountType.user),
+                selected: _accountType == AccountType.user,
+                onTap: () => setState(() => _accountType = AccountType.user),
               ),
               const SizedBox(height: 16),
               SelectableCard(
-                icon: Icons.shopping_bag_outlined,
+                icon: Icons.work_outline,
                 title: 'Provider',
                 subtitle: 'Offer your services on Amina',
-                selected: isProvider,
-                onTap: () => setState(() => _type = AccountType.provider),
+                selected: providerSelected,
+                onTap: () => setState(() => _accountType = AccountType.provider),
               ),
-              AnimatedSize(
-                duration: const Duration(milliseconds: 180),
-                curve: Curves.easeOut,
-                alignment: Alignment.topCenter,
-                child: isProvider ? _providerSubPanel() : const SizedBox(width: double.infinity),
-              ),
-              const SizedBox(height: 32),
-              PrimaryButton(label: 'Next', onPressed: _next),
+              if (providerSelected) ...[
+                const SizedBox(height: 16),
+                Text("I'm registering as", style: OnboardingTheme.inter(size: 13, color: OnboardingTheme.muted)),
+                const SizedBox(height: 8),
+                SelectableCard(
+                  icon: Icons.business_outlined,
+                  title: 'Company',
+                  subtitle: 'A registered business',
+                  selected: _providerType == ProviderType.company,
+                  onTap: () => setState(() => _providerType = ProviderType.company),
+                ),
+                const SizedBox(height: 10),
+                SelectableCard(
+                  icon: Icons.person_pin_outlined,
+                  title: 'Individual',
+                  subtitle: 'An individual service provider',
+                  selected: _providerType == ProviderType.individual,
+                  onTap: () => setState(() => _providerType = ProviderType.individual),
+                ),
+                if (_providerType == ProviderType.company) ...[
+                  const SizedBox(height: 12),
+                  AppTextField(controller: _companyName, hint: 'Company Name'),
+                ],
+              ],
+              const SizedBox(height: 16),
+              AppTextField(controller: _name, hint: 'Full Name'),
+              const SizedBox(height: 28),
+              PrimaryButton(label: _saving ? 'Creating account…' : 'Next', onPressed: _saving ? null : _next),
               const SizedBox(height: 24),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _providerSubPanel() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: const Color(0xFFFBFAFF),
-          borderRadius: BorderRadius.circular(OnboardingTheme.radiusCard),
-          border: Border.all(color: OnboardingTheme.border),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8, left: 2),
-              child: Text(
-                "I'M REGISTERING AS",
-                style: OnboardingTheme.inter(
-                  size: 11,
-                  weight: FontWeight.w600,
-                  color: OnboardingTheme.muted,
-                  letterSpacing: 0.6,
-                ),
-              ),
-            ),
-            SelectableCard(
-              compact: true,
-              icon: Icons.business_outlined,
-              title: 'Company',
-              subtitle: 'A registered business with tax card',
-              selected: _providerType == ProviderType.company,
-              onTap: () => setState(() => _providerType = ProviderType.company),
-            ),
-            const SizedBox(height: 8),
-            SelectableCard(
-              compact: true,
-              icon: Icons.badge_outlined,
-              title: 'Individual',
-              subtitle: 'An individual service provider',
-              selected: _providerType == ProviderType.individual,
-              onTap: () => setState(() => _providerType = ProviderType.individual),
-            ),
-          ],
         ),
       ),
     );

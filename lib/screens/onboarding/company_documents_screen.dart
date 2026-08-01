@@ -1,7 +1,10 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../config/onboarding_theme.dart';
 import '../../models/onboarding_data.dart';
+import '../../services/profile_service.dart';
 import '../../widgets/onboarding/onboarding_widgets.dart';
 import '../../widgets/onboarding/upload_box.dart';
 import 'onboarding_nav.dart';
@@ -18,21 +21,46 @@ class CompanyDocumentsScreen extends StatefulWidget {
 }
 
 class _CompanyDocumentsScreenState extends State<CompanyDocumentsScreen> {
-  final _picker = ImagePicker();
+  bool _submitting = false;
 
-  Future<void> _pick(void Function(String path) assign) async {
-    final file = await _picker.pickImage(source: ImageSource.gallery);
-    if (file != null) setState(() => assign(file.path));
+  Future<void> _pick(void Function(String path) assign, {required bool imageOnly}) async {
+    final result = await FilePicker.platform.pickFiles(
+      type: imageOnly ? FileType.image : FileType.custom,
+      allowedExtensions: imageOnly ? null : ['pdf', 'jpg', 'jpeg', 'png'],
+    );
+    final path = result?.files.single.path;
+    if (path != null) setState(() => assign(path));
   }
 
-  String? _name(String? path) => path?.split('/').last;
+  String? _name(String? path) => path?.split(RegExp(r'[/\\]')).last;
 
-  void _submit() {
-    OnboardingNav.saveLastRole(AccountType.provider);
-    Navigator.of(context).push(
+  Future<void> _submit() async {
+    if (widget.data.taxCardPath == null || widget.data.companyLogoPath == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Upload the commercial register and company logo')),
+      );
+      return;
+    }
+    setState(() => _submitting = true);
+    final response = await ProfileService.updateCompanyProfile(
+      commercialRegisterDocument: File(widget.data.taxCardPath!),
+      logo: File(widget.data.companyLogoPath!),
+    );
+    if (!mounted) return;
+    setState(() => _submitting = false);
+    if (!response.success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(response.error ?? 'Unable to submit company verification')),
+      );
+      return;
+    }
+
+    await OnboardingNav.saveLastRole(AccountType.provider);
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => UnderReviewScreen(
-          onGetStarted: (ctx) => OnboardingNav.goToHome(ctx, AccountType.provider),
+          onUpdateDocuments: (ctx) => Navigator.of(ctx).pop(),
         ),
       ),
     );
@@ -53,25 +81,25 @@ class _CompanyDocumentsScreenState extends State<CompanyDocumentsScreen> {
               const SizedBox(height: 24),
               const OnboardingStepper(currentStep: 3),
               const SizedBox(height: 40),
-              Text('Company documents', style: OnboardingTheme.title),
+              Text('Company verification', style: OnboardingTheme.title),
               const SizedBox(height: 6),
-              Text('Upload your tax card and company logo', style: OnboardingTheme.subtitle),
+              Text('Upload your commercial register and company logo', style: OnboardingTheme.subtitle),
               const SizedBox(height: 24),
               UploadBox(
-                title: 'Tax Card',
-                subtitle: 'Tax registration document · PNG/JPG',
+                title: 'Commercial register',
+                subtitle: 'Commercial registration document · PDF/JPG',
                 fileName: _name(widget.data.taxCardPath),
-                onTap: () => _pick((p) => widget.data.taxCardPath = p),
+                onTap: () => _pick((p) => widget.data.taxCardPath = p, imageOnly: false),
               ),
               const SizedBox(height: 16),
               UploadBox(
                 title: 'Company Logo',
                 subtitle: 'Square image · PNG/JPG',
                 fileName: _name(widget.data.companyLogoPath),
-                onTap: () => _pick((p) => widget.data.companyLogoPath = p),
+                onTap: () => _pick((p) => widget.data.companyLogoPath = p, imageOnly: true),
               ),
               const SizedBox(height: 32),
-              PrimaryButton(label: 'Submit', onPressed: _submit),
+              PrimaryButton(label: _submitting ? 'Submittingâ€¦' : 'Submit', onPressed: _submitting ? null : _submit),
               const SizedBox(height: 24),
             ],
           ),

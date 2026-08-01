@@ -4,9 +4,10 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
-apply plugin: 'com.google.gms.google-services'
+// TEMP: Firebase disabled for local run without google-services.json — re-enable when the file is added
+// apply plugin: 'com.google.gms.google-services'
 // 🔒 CRASHLYTICS: Auto-upload native debug symbols
-apply plugin: 'com.google.firebase.crashlytics'
+// apply plugin: 'com.google.firebase.crashlytics'
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
@@ -132,14 +133,15 @@ android {
             }
 
             // 📊 CRASHLYTICS: Configure native symbol upload
-            firebaseCrashlytics {
-                // Upload native debug symbols automatically to Firebase
-                nativeSymbolUploadEnabled true
-                // Process symbols to reduce size
-                strippedNativeLibsDir 'build/intermediates/stripped_native_libs/release/out/lib'
-                // Upload unstripped symbols for better crash reports
-                unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
-            }
+            // TEMP: disabled with the crashlytics plugin above — re-enable when google-services.json is added
+            // firebaseCrashlytics {
+            //     // Upload native debug symbols automatically to Firebase
+            //     nativeSymbolUploadEnabled true
+            //     // Process symbols to reduce size
+            //     strippedNativeLibsDir 'build/intermediates/stripped_native_libs/release/out/lib'
+            //     // Upload unstripped symbols for better crash reports
+            //     unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
+            // }
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

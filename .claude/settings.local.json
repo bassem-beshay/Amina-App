@@ -48,7 +48,16 @@
       "Bash(\"/c/Program Files/PostgreSQL/17/bin/psql.exe\":*)",
       "Bash(PGPASSWORD=root \"/c/Program Files/PostgreSQL/17/bin/psql.exe\":*)",
       "Bash(PGPASSWORD=postgres \"/c/Program Files/PostgreSQL/17/bin/psql.exe\":*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(claude --version)",
+      "Read(//c/Users/win/.claude/**)",
+      "Read(//c/Users/win/**)",
+      "Bash(code \"C:/Users/win/amina-platform/Amina-App/arabic-output/test.md\")",
+      "Bash(code \"C:/Users/win/amina-platform/Amina-App/arabic-output/how-i-write-arabic.md\")",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git check-ignore *)",
+      "Bash(export MSYS_NO_PATHCONV=1)"
     ],
     "deny": [],
     "ask": []

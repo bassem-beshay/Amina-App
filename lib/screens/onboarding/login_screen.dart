@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../config/onboarding_theme.dart';
 import '../../widgets/onboarding/onboarding_widgets.dart';
+import '../../services/auth_service.dart';
+import '../../models/onboarding_data.dart';
 import 'onboarding_nav.dart';
 import 'otp_screen.dart';
 import 'signup_screen.dart';
+import 'account_type_screen.dart';
 
 /// Figma "login": phone-only sign in with social options.
 class LoginScreen extends StatefulWidget {
@@ -15,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _phone = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -22,21 +26,44 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _login() {
+  Future<void> _login() async {
     if (_phone.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter your phone number')),
       );
       return;
     }
-    // Mock flow: verify by OTP, then route by the last known role.
+    setState(() => _isLoading = true);
+    final sent = await AuthService.sendOtp(phoneNumber: _phone.text.trim());
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+    if (!sent.success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(sent.error ?? 'Unable to send verification code')),
+      );
+      return;
+    }
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => OtpScreen(
           phoneNumber: _phone.text.trim(),
-          onVerified: (ctx) async {
-            final role = await OnboardingNav.getLastRole();
-            if (ctx.mounted) OnboardingNav.goToHome(ctx, role);
+          onVerified: (ctx, result) async {
+            if (!ctx.mounted || !result.success) return;
+            if (result.isNewUser && result.registrationToken != null) {
+              final data = OnboardingData(
+                phoneNumber: _phone.text.trim(),
+                registrationToken: result.registrationToken,
+              );
+              Navigator.of(ctx).pushReplacement(
+                MaterialPageRoute(builder: (_) => AccountTypeScreen(data: data)),
+              );
+              return;
+            }
+            final normalizedRole = result.user?.role.toUpperCase();
+            final role = (normalizedRole == 'PROVIDER' || normalizedRole == 'COMPANY')
+                ? AccountType.provider
+                : AccountType.user;
+            OnboardingNav.goToHome(ctx, role);
           },
         ),
       ),
@@ -61,7 +88,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.phone,
               ),
               const SizedBox(height: OnboardingTheme.gap24),
-              PrimaryButton(label: 'Log In', onPressed: _login),
+              PrimaryButton(
+                label: _isLoading ? 'Sending…' : 'Log In',
+                onPressed: _isLoading ? null : _login,
+              ),
               const SizedBox(height: OnboardingTheme.gap32),
               const OrDivider(),
               const SizedBox(height: OnboardingTheme.gap32),

@@ -50,6 +50,7 @@ class ApiConfig {
   // OTP Login Endpoints
   static const String sendOtp = '$apiPrefix/users/auth/send_otp/';
   static const String verifyOtp = '$apiPrefix/users/auth/verify_otp/';
+  static const String completeRegistration = '$apiPrefix/users/auth/complete_registration/';
   // Password Reset Endpoints (Code-based - 6 digits)
   static const String sendPasswordResetCode = '$apiPrefix/users/auth/send_password_reset_code/';
   static const String verifyPasswordResetCode = '$apiPrefix/users/auth/verify_password_reset_code/';
@@ -76,6 +77,8 @@ class ApiConfig {
   // Provider Profile Endpoints
   static const String providerProfile = '$apiPrefix/users/provider-profile/';
   static const String updateProviderProfile = '$apiPrefix/users/provider-profile/update_profile/';
+  static const String submitProviderVerification = '$apiPrefix/users/provider-profile/submit_verification/';
+  static const String companyProfileMe = '$apiPrefix/users/companies/me/';
   static const String providerAddresses = '$apiPrefix/users/provider-profile/addresses/';
   static const String addProviderAddress = '$apiPrefix/users/provider-profile/add_address/';
   static String setProviderDefaultAddress(int id) => '$apiPrefix/users/provider-profile/$id/set_default/';

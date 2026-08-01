@@ -1,9 +1,47 @@
 import 'dart:io';
+import '../config/api_config.dart';
 import '../models/user_model.dart';
 import 'api_client.dart';
 import 'storage_service.dart';
 
 class ProfileService {
+  // Update the authenticated company's profile and verification files.
+  static Future<ApiResponse<Map<String, dynamic>>> updateCompanyProfile({
+    File? logo,
+    File? commercialRegisterDocument,
+  }) async {
+    try {
+      final token = await StorageService.getAuthToken();
+      if (token == null) {
+        return ApiResponse<Map<String, dynamic>>(
+          success: false,
+          error: 'Authentication token not found',
+          statusCode: 401,
+        );
+      }
+
+      ApiClient.setAuthToken(token);
+      final filePaths = <String, String>{};
+      if (logo != null) filePaths['logo'] = logo.path;
+      if (commercialRegisterDocument != null) {
+        filePaths['commercial_register_document'] = commercialRegisterDocument.path;
+      }
+
+      return await ApiClient.putMultipart<Map<String, dynamic>>(
+        ApiConfig.companyProfileMe,
+        needsAuth: true,
+        filePaths: filePaths.isEmpty ? null : filePaths,
+        fromJson: (json) => json as Map<String, dynamic>,
+      );
+    } catch (e) {
+      return ApiResponse<Map<String, dynamic>>(
+        success: false,
+        error: 'Company profile update failed: ${e.toString()}',
+        statusCode: 0,
+      );
+    }
+  }
+
   // Get Client Profile
   static Future<ApiResponse<ClientProfile>> getClientProfile() async {
     try {
@@ -160,6 +198,11 @@ class ProfileService {
     String? lastName,
     String? phoneNumber,
     String? bio,
+    String? city,
+    String? formattedAddress,
+    String? country,
+    double? latitude,
+    double? longitude,
     File? profilePicture,
     File? identityDocument,
     File? healthCertificate,
@@ -184,6 +227,11 @@ class ProfileService {
       if (lastName != null) fields['last_name'] = lastName;
       if (phoneNumber != null) fields['phone_number'] = phoneNumber;
       if (bio != null) fields['bio'] = bio;
+      if (city != null) fields['city'] = city;
+      if (formattedAddress != null) fields['formatted_address'] = formattedAddress;
+      if (country != null) fields['country'] = country;
+      if (latitude != null) fields['latitude'] = latitude.toString();
+      if (longitude != null) fields['longitude'] = longitude.toString();
 
       // Add preferred service categories
       // Send each category with indexed key for Django to parse as list
@@ -226,6 +274,33 @@ class ProfileService {
       return ApiResponse<Map<String, dynamic>>(
         success: false,
         error: 'خطأ في تحديث الملف الشخصي: \u200F${e.toString()}\u200F',
+        statusCode: 0,
+      );
+    }
+  }
+
+  /// Submit the completed provider onboarding payload for admin review.
+  static Future<ApiResponse<Map<String, dynamic>>> submitProviderVerification() async {
+    try {
+      final token = await StorageService.getAuthToken();
+      if (token == null) {
+        return ApiResponse<Map<String, dynamic>>(
+          success: false,
+          error: 'Authentication token not found',
+          statusCode: 401,
+        );
+      }
+
+      ApiClient.setAuthToken(token);
+      return ApiClient.post<Map<String, dynamic>>(
+        ApiConfig.submitProviderVerification,
+        needsAuth: true,
+        fromJson: (json) => json as Map<String, dynamic>,
+      );
+    } catch (e) {
+      return ApiResponse<Map<String, dynamic>>(
+        success: false,
+        error: 'Failed to submit verification: $e',
         statusCode: 0,
       );
     }
