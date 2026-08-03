@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/booking_model.dart';
 import '../services/booking_service.dart';
+import 'provider_remaining_screens.dart';
 
 class ProviderRateCustomerScreen extends StatefulWidget {
   const ProviderRateCustomerScreen(
@@ -121,7 +122,12 @@ class _ComplaintsState extends State<ProviderComplaintsScreen> {
                     child: ListTile(
                         title: Text(c.title),
                         subtitle: Text(c.description, maxLines: 2),
-                        trailing: Text(c.status))))
+                        trailing: Text(c.status),
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => ProviderComplaintDetailsScreen(
+                                    complaint: c))))))
                 .toList();
             return ListView(padding: const EdgeInsets.all(20), children: cards);
           },

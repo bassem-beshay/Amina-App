@@ -10,6 +10,8 @@ import 'package:aminaapplication/screens/provider_booking_details_screen.dart';
 import 'package:aminaapplication/screens/provider_reschedule_screens.dart';
 import 'package:aminaapplication/screens/provider_communication_screens.dart';
 import 'package:aminaapplication/screens/provider_feedback_screens.dart';
+import 'package:aminaapplication/screens/provider_remaining_screens.dart';
+import 'package:aminaapplication/models/user_model.dart';
 
 void main() {
   testWidgets('individual provider verified home matches P10 shell content',
@@ -224,5 +226,76 @@ void main() {
     expect(find.text('Notifications'), findsOneWidget);
     expect(find.text('Read all'), findsOneWidget);
     expect(find.text('No notifications'), findsOneWidget);
+  });
+
+  testWidgets('P30 ratings renders summary and empty state', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: ProviderRatingsReviewsScreen(
+            ratingsFuture: Future.value(const []))));
+    await tester.pumpAndSettle();
+    expect(find.text('Ratings & Reviews'), findsOneWidget);
+    expect(find.text('Trusted independent provider'), findsOneWidget);
+    expect(find.text('No ratings yet'), findsOneWidget);
+  });
+
+  testWidgets('P32 complaint details renders status and description',
+      (tester) async {
+    final complaint = Complaint(
+      id: 104,
+      bookingId: 20,
+      complainantId: 8,
+      againstId: 4,
+      title: 'Missing cleaning materials',
+      description: 'Materials were not provided.',
+      status: 'UNDER_REVIEW',
+      createdAt: DateTime(2026, 7, 21),
+    );
+    await tester.pumpWidget(MaterialApp(
+        home: ProviderComplaintDetailsScreen(complaint: complaint)));
+    expect(find.text('Complaint Details'), findsOneWidget);
+    expect(find.text('Under review'), findsOneWidget);
+    expect(find.text('Materials were not provided.'), findsOneWidget);
+  });
+
+  testWidgets('P36 provider profile renders settings entries', (tester) async {
+    final user = User(
+      id: 8,
+      email: 'provider@example.com',
+      firstName: 'Karim',
+      lastName: 'Hassan',
+      role: 'PROVIDER',
+      isActive: true,
+      dateJoined: DateTime(2026, 1, 1),
+      providerProfile: ServiceProviderProfile(
+          verificationStatus: 'VERIFIED', providerType: 'MEMBER'),
+    );
+    await tester.pumpWidget(MaterialApp(
+        home: ProviderProfileMoreScreen(userFuture: Future.value(user))));
+    await tester.pumpAndSettle();
+    expect(find.text('Karim Hassan'), findsOneWidget);
+    expect(find.text('Saved addresses'), findsOneWidget);
+    expect(find.text('Language'), findsOneWidget);
+  });
+
+  testWidgets('P38 saved addresses renders API empty state', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: ProviderSavedAddressesScreen(
+            addressesFuture: Future.value(const []))));
+    await tester.pumpAndSettle();
+    expect(find.text('Saved Addresses'), findsOneWidget);
+    expect(find.text('No saved addresses'), findsOneWidget);
+  });
+
+  testWidgets('P39 address form and P40 language screen render',
+      (tester) async {
+    await tester
+        .pumpWidget(const MaterialApp(home: ProviderAddEditAddressScreen()));
+    expect(find.text('Provider Address'), findsOneWidget);
+    expect(find.text('Save address'), findsOneWidget);
+    await tester.pumpWidget(MaterialApp(
+      home: ProviderLanguageSettingsScreen(),
+    ));
+    expect(find.text('Language'), findsOneWidget);
+    expect(find.text('English interface'), findsOneWidget);
   });
 }

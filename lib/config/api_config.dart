@@ -101,6 +101,8 @@ class ApiConfig {
       '$apiPrefix/users/provider-profile/$id/set_default/';
   static String deleteProviderAddress(int id) =>
       '$apiPrefix/users/provider-profile/$id/delete_address/';
+  static String updateProviderAddress(int id) =>
+      '$apiPrefix/users/provider-profile/$id/update_address/';
   static const String publicProviders =
       '$apiPrefix/users/providers/'; // Public list of verified providers
   static String publicProviderDetail(int id) =>

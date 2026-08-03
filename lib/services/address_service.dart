@@ -4,25 +4,21 @@ import '../config/api_config.dart';
 class AddressService {
   /// Get all addresses for the current user
   static Future<ApiResponse<List<Map<String, dynamic>>>> getAddresses() async {
-
     final response = await ApiClient.get<List<dynamic>>(
       '${ApiConfig.apiPrefix}/users/client-profile/addresses/',
       needsAuth: true,
     );
-
 
     if (response.success) {
       // Check if we have rawResponse (for List endpoints)
       final dynamic responseData = response.rawResponse ?? response.data;
 
       if (responseData != null) {
-
         final addresses = (responseData as List)
             .map((e) => e as Map<String, dynamic>)
             .toList();
 
-        for (var addr in addresses) {
-        }
+        for (var addr in addresses) {}
 
         return ApiResponse(
           success: true,
@@ -49,7 +45,6 @@ class AddressService {
     String? country,
     bool isDefault = false,
   }) async {
-
     final body = {
       if (label != null && label.isNotEmpty) 'label': label,
       'latitude': latitude.toString(),
@@ -132,26 +127,23 @@ class AddressService {
   // ============================================================
 
   /// Get all addresses for the provider
-  static Future<ApiResponse<List<Map<String, dynamic>>>> getProviderAddresses() async {
-
+  static Future<ApiResponse<List<Map<String, dynamic>>>>
+      getProviderAddresses() async {
     final response = await ApiClient.get<List<dynamic>>(
       ApiConfig.providerAddresses,
       needsAuth: true,
     );
-
 
     if (response.success) {
       // Check if we have rawResponse (for List endpoints)
       final dynamic responseData = response.rawResponse ?? response.data;
 
       if (responseData != null) {
-
         final addresses = (responseData as List)
             .map((e) => e as Map<String, dynamic>)
             .toList();
 
-        for (var addr in addresses) {
-        }
+        for (var addr in addresses) {}
 
         return ApiResponse(
           success: true,
@@ -178,7 +170,6 @@ class AddressService {
     String? country,
     bool isDefault = false,
   }) async {
-
     final body = {
       if (label != null && label.isNotEmpty) 'label': label,
       'latitude': latitude.toString(),
@@ -225,5 +216,25 @@ class AddressService {
     );
 
     return response;
+  }
+
+  static Future<ApiResponse<Map<String, dynamic>>> updateProviderAddress({
+    required int addressId,
+    String? label,
+    String? address,
+    String? city,
+    bool? isDefault,
+  }) async {
+    final body = <String, dynamic>{
+      if (label != null) 'label': label,
+      if (address != null) 'address': address,
+      if (city != null) 'city': city,
+      if (isDefault != null) 'is_default': isDefault,
+    };
+    return ApiClient.put<Map<String, dynamic>>(
+      ApiConfig.updateProviderAddress(addressId),
+      body: body,
+      needsAuth: true,
+    );
   }
 }

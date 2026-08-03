@@ -6,6 +6,7 @@ import 'provider_offers_screen.dart';
 import 'provider_bookings_screen.dart';
 import 'provider_communication_screens.dart';
 import 'provider_feedback_screens.dart';
+import 'provider_remaining_screens.dart';
 
 /// Shared shell for the Figma provider/company operational flows.
 ///
@@ -85,6 +86,11 @@ class _ProviderFlowScaffold extends StatelessWidget {
     if (!usePlaceholderDestinations && title == 'Notifications') {
       Navigator.of(context).push(MaterialPageRoute<void>(
           builder: (_) => const ProviderNotificationsScreen()));
+      return;
+    }
+    if (!usePlaceholderDestinations && title == 'More') {
+      Navigator.of(context).push(MaterialPageRoute<void>(
+          builder: (_) => const ProviderProfileMoreScreen()));
       return;
     }
     Navigator.of(context).push(
