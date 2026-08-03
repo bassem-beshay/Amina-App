@@ -962,7 +962,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 // Start service button for provider after payment completed
                 if (_currentUser != null &&
                     !_currentUser!.isClient &&
-                    _conversation?.bookingStatus == 'PAYMENT_COMPLETED')
+                    _conversation?.bookingStatus == 'CONFIRMED' &&
+                    _conversation?.paymentStatus == 'PAID')
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -1368,6 +1369,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
     switch (_conversation!.bookingStatus) {
       case 'CONFIRMED':
+        if (_conversation!.paymentStatus == 'PAID') {
+          return AppLocalizations.of(context)?.paymentCompletedStatus ?? 'تم الدفع';
+        }
         return AppLocalizations.of(context)?.confirmedStatus ?? 'مؤكد';
       case 'PAYMENT_COMPLETED':
         return AppLocalizations.of(context)?.paymentCompletedStatus ?? 'تم الدفع';

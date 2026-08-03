@@ -41,7 +41,8 @@ class _SignupScreenState extends State<SignupScreen> {
     setState(() => _isLoading = false);
     if (!sent.success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(sent.error ?? 'Unable to send verification code')),
+        SnackBar(
+            content: Text(sent.error ?? 'Unable to send verification code')),
       );
       return;
     }
@@ -54,10 +55,10 @@ class _SignupScreenState extends State<SignupScreen> {
           onVerified: (ctx, result) async {
             if (!result.success) return;
             if (result.user != null) {
-              final role = result.user!.role.toUpperCase();
-              OnboardingNav.goToHome(
+              OnboardingNav.goToUserHome(
                 ctx,
-                role == 'CLIENT' ? AccountType.user : AccountType.provider,
+                user: result.user,
+                userData: result.userData,
               );
               return;
             }
@@ -77,7 +78,8 @@ class _SignupScreenState extends State<SignupScreen> {
       backgroundColor: OnboardingTheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: OnboardingTheme.sidePadding),
+          padding: const EdgeInsets.symmetric(
+              horizontal: OnboardingTheme.sidePadding),
           child: Column(
             children: [
               const SizedBox(height: 28),
@@ -114,12 +116,14 @@ class _SignupScreenState extends State<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Already have an account?',
-                      style: OnboardingTheme.inter(size: 14, color: OnboardingTheme.textBlack)),
+                      style: OnboardingTheme.inter(
+                          size: 14, color: OnboardingTheme.textBlack)),
                   const SizedBox(width: 8),
                   GestureDetector(
                     onTap: () => Navigator.of(context).maybePop(),
                     child: Text('Log in',
-                        style: OnboardingTheme.inter(size: 14, color: OnboardingTheme.primary)),
+                        style: OnboardingTheme.inter(
+                            size: 14, color: OnboardingTheme.primary)),
                   ),
                 ],
               ),

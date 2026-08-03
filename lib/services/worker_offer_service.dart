@@ -3,6 +3,43 @@ import '../config/api_config.dart';
 import 'api_client.dart';
 
 class WorkerOfferService {
+  // Update a still-pending provider offer (P15).
+  static Future<WorkerOfferResult> updateOffer({
+    required int offerId,
+    required String priceAction,
+    required double offeredPrice,
+    String? message,
+    int? estimatedDuration,
+  }) async {
+    try {
+      final response = await ApiClient.patch<WorkerOffer>(
+        ApiConfig.updateWorkerOffer(offerId),
+        needsAuth: true,
+        body: {
+          'price_action': priceAction,
+          'offered_price': offeredPrice,
+          if (message != null && message.isNotEmpty) 'message': message,
+          if (estimatedDuration != null)
+            'estimated_duration': estimatedDuration,
+        },
+        fromJson: (json) {
+          final payload = json is Map<String, dynamic> && json['data'] is Map
+              ? json['data'] as Map<String, dynamic>
+              : json as Map<String, dynamic>;
+          return WorkerOffer.fromJson(payload);
+        },
+      );
+      return WorkerOfferResult(
+        success: response.success,
+        message: response.message,
+        error: response.error,
+        offer: response.data,
+      );
+    } catch (e) {
+      return WorkerOfferResult(success: false, error: 'Connection error: $e');
+    }
+  }
+
   // Create a worker offer
   static Future<WorkerOfferResult> createOffer({
     required int bookingRequestId,
@@ -12,7 +49,6 @@ class WorkerOfferService {
     int? estimatedDuration,
   }) async {
     try {
-
       final response = await ApiClient.post<WorkerOffer>(
         ApiConfig.createWorkerOffer,
         needsAuth: true,
@@ -21,10 +57,10 @@ class WorkerOfferService {
           'price_action': priceAction,
           'offered_price': offeredPrice,
           if (message != null && message.isNotEmpty) 'message': message,
-          if (estimatedDuration != null) 'estimated_duration': estimatedDuration,
+          if (estimatedDuration != null)
+            'estimated_duration': estimatedDuration,
         },
         fromJson: (json) {
-
           // Handle different response structures
           if (json is Map<String, dynamic>) {
             if (json.containsKey('data') && json['data'] != null) {
@@ -61,12 +97,10 @@ class WorkerOfferService {
   // Get single worker offer details by ID
   static Future<WorkerOffer?> getOfferById(int offerId) async {
     try {
-
       final response = await ApiClient.get<WorkerOffer>(
         ApiConfig.workerOfferDetail(offerId),
         needsAuth: true,
         fromJson: (json) {
-
           // Handle different response structures
           if (json is Map<String, dynamic>) {
             if (json.containsKey('data') && json['data'] != null) {
@@ -94,7 +128,6 @@ class WorkerOfferService {
     int? bookingRequestId,
   }) async {
     try {
-
       final queryParams = <String, dynamic>{};
       if (bookingRequestId != null) {
         queryParams['booking_request'] = bookingRequestId.toString();
@@ -105,7 +138,6 @@ class WorkerOfferService {
         needsAuth: true,
         queryParams: queryParams,
         fromJson: (json) {
-
           // Handle different response structures
           List<dynamic> data;
           if (json is Map<String, dynamic>) {
@@ -122,7 +154,9 @@ class WorkerOfferService {
             return <WorkerOffer>[];
           }
 
-          return data.map((item) => WorkerOffer.fromJson(item as Map<String, dynamic>)).toList();
+          return data
+              .map((item) => WorkerOffer.fromJson(item as Map<String, dynamic>))
+              .toList();
         },
       );
 
@@ -135,7 +169,6 @@ class WorkerOfferService {
   // Withdraw an offer
   static Future<WorkerOfferResult> withdrawOffer(int offerId) async {
     try {
-
       final response = await ApiClient.post(
         ApiConfig.withdrawWorkerOffer(offerId),
         needsAuth: true,
@@ -163,12 +196,10 @@ class WorkerOfferService {
   // Accept an offer (for client)
   static Future<WorkerOfferResult> acceptOffer(int offerId) async {
     try {
-
       final response = await ApiClient.post<WorkerOffer>(
         ApiConfig.acceptWorkerOffer(offerId),
         needsAuth: true,
         fromJson: (json) {
-
           if (json is Map<String, dynamic>) {
             if (json.containsKey('data') && json['data'] != null) {
               return WorkerOffer.fromJson(json['data'] as Map<String, dynamic>);

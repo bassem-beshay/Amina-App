@@ -14,6 +14,10 @@ class Booking {
   final DateTime? completedAt;
   final DateTime? canceledAt;
   final String? cancelReason;
+  final String? serviceTitle;
+  final String? serviceTitleEn;
+  final String? clientName;
+  final String? clientPhone;
   final DateTime createdAt;
 
   Booking({
@@ -32,6 +36,10 @@ class Booking {
     this.completedAt,
     this.canceledAt,
     this.cancelReason,
+    this.serviceTitle,
+    this.serviceTitleEn,
+    this.clientName,
+    this.clientPhone,
     required this.createdAt,
   });
 
@@ -59,10 +67,24 @@ class Booking {
       status: json['status'] as String,
       clientNotes: json['client_notes'] as String?,
       providerNotes: json['provider_notes'] as String?,
-      startedAt: json['started_at'] != null ? DateTime.parse(json['started_at'] as String) : null,
-      completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at'] as String) : null,
-      canceledAt: json['canceled_at'] != null ? DateTime.parse(json['canceled_at'] as String) : null,
+      startedAt: json['started_at'] != null
+          ? DateTime.parse(json['started_at'] as String)
+          : null,
+      completedAt: json['completed_at'] != null
+          ? DateTime.parse(json['completed_at'] as String)
+          : null,
+      canceledAt: json['canceled_at'] != null
+          ? DateTime.parse(json['canceled_at'] as String)
+          : null,
       cancelReason: json['cancel_reason'] as String?,
+      serviceTitle: json['service_title'] as String?,
+      serviceTitleEn: json['service_title_en'] as String?,
+      clientName: json['client_info'] is Map
+          ? (json['client_info']['full_name'] as String?)
+          : json['client_name'] as String?,
+      clientPhone: json['client_info'] is Map
+          ? (json['client_info']['phone_number'] as String?)
+          : json['client_phone'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
@@ -84,6 +106,10 @@ class Booking {
       'completed_at': completedAt?.toIso8601String(),
       'canceled_at': canceledAt?.toIso8601String(),
       'cancel_reason': cancelReason,
+      'service_title': serviceTitle,
+      'service_title_en': serviceTitleEn,
+      'client_name': clientName,
+      'client_phone': clientPhone,
       'created_at': createdAt.toIso8601String(),
     };
   }
@@ -310,7 +336,9 @@ class BookingNotification {
       title: json['title'] as String,
       message: json['message'] as String,
       isRead: json['is_read'] as bool? ?? false,
-      readAt: json['read_at'] != null ? DateTime.parse(json['read_at'] as String) : null,
+      readAt: json['read_at'] != null
+          ? DateTime.parse(json['read_at'] as String)
+          : null,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
   }

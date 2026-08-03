@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/onboarding/login_screen.dart';
 import 'screens/profile_screen.dart';
-import 'screens/customer_home_screen.dart';
+import 'screens/client_flow_screens.dart';
 import 'screens/admin_dashboard_screen.dart';
 import 'screens/edit_client_profile_screen.dart';
 import 'screens/service_completion_screen.dart';
@@ -15,6 +15,7 @@ import 'screens/splash_screen.dart';
 import 'services/storage_service.dart';
 import 'services/auth_service.dart';
 import 'screens/provider_home_screen.dart';
+import 'screens/provider_flow_shell.dart';
 import 'screens/conversations_list_screen.dart';
 import 'providers/theme_provider.dart';
 import 'providers/language_provider.dart';
@@ -96,8 +97,16 @@ class AminaPlatformApp extends StatelessWidget {
         '/auth': (context) => const ConnectivityWrapper(child: LoginScreen()),
         '/forgot-password': (context) => ConnectivityWrapper(child: ForgotPasswordScreen()),
         '/dashboard': (context) => const ConnectivityWrapper(child: AminaDashboard()),
-        '/customer-home': (context) => const ConnectivityWrapper(child: CustomerHomeScreen()),
+        '/customer-home': (context) => const ConnectivityWrapper(child: ClientHomeFlowScreen()),
         '/provider-home': (context) => const ConnectivityWrapper(child: ProviderHomeScreen()),
+        // Figma operational shells. The legacy provider route stays intact
+        // until all P/C destinations have parity and passing tests.
+        '/provider-flow-home': (context) => const ConnectivityWrapper(
+              child: ProviderFlowHomeScreen(),
+            ),
+        '/company-flow-home': (context) => const ConnectivityWrapper(
+              child: ProviderFlowHomeScreen(company: true),
+            ),
         '/edit-client-profile': (context) => const ConnectivityWrapper(child: EditClientProfileScreen()),
         '/conversations': (context) => ConnectivityWrapper(child: ConversationsListScreen()),
         '/admin-dashboard': (context) {

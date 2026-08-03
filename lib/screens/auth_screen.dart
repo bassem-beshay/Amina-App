@@ -8,6 +8,7 @@ import '../l10n/app_localizations.dart';
 import '../providers/theme_provider.dart';
 import 'email_verification_screen.dart';
 import '../widgets/connectivity_button.dart';
+import 'onboarding/onboarding_nav.dart';
 
 class AuthScreen extends StatefulWidget {
   final bool isLogin;
@@ -71,7 +72,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       },
       {
         'value': 'PROVIDER',
-        'label': AppLocalizations.of(context)?.serviceProvider ?? 'Service Provider'
+        'label':
+            AppLocalizations.of(context)?.serviceProvider ?? 'Service Provider'
       },
     ];
   }
@@ -255,8 +257,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       if (result.success) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-                AppLocalizations.of(context)?.loginSuccess ??
+            content: Text(AppLocalizations.of(context)?.loginSuccess ??
                 'Logged in successfully'),
             backgroundColor: Colors.green,
           ),
@@ -265,21 +266,20 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         // Initialize Push Notifications after successful login
         try {
           await PushNotificationService().initialize();
-        } catch (e) {
-        }
+        } catch (e) {}
 
         // Navigate based on role
         final userRole =
             result.user?.role ?? result.userData?['role'] ?? 'CLIENT';
         final userRoleUpper = userRole.toString().toUpperCase();
 
-        if (userRoleUpper == 'ADMIN') {
-          Navigator.of(context).pushReplacementNamed('/admin-dashboard');
-        } else if (userRoleUpper == 'PROVIDER') {
-          Navigator.of(context).pushReplacementNamed('/provider-home');
-        } else {
-          Navigator.of(context).pushReplacementNamed('/customer-home');
-        }
+        Navigator.of(context).pushReplacementNamed(
+          OnboardingNav.routeForRole(
+            userRoleUpper,
+            providerType: result.user?.providerProfile?.providerType ??
+                result.userData?['provider_type']?.toString(),
+          ),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -347,7 +347,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           // Navigate to email verification screen
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(result.message ?? 'Verification code sent to your email'),
+              content: Text(
+                  result.message ?? 'Verification code sent to your email'),
               backgroundColor: Colors.green,
             ),
           );
@@ -366,37 +367,31 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
         // Normal login/registration (already verified)
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-                AppLocalizations.of(context)?.loginSuccess ??
+            content: Text(AppLocalizations.of(context)?.loginSuccess ??
                 'Logged in successfully'),
             backgroundColor: Colors.green,
           ),
         );
 
         // Initialize Push Notifications after successful login
-        if (ApiClient.authToken != null) {
-        }
+        if (ApiClient.authToken != null) {}
 
         try {
           await PushNotificationService().initialize();
-        } catch (e) {
-        }
+        } catch (e) {}
 
         // Navigate based on role
         final userRole =
             result.user?.role ?? result.userData?['role'] ?? 'CLIENT';
         final userRoleUpper = userRole.toString().toUpperCase();
 
-        if (userRoleUpper == 'ADMIN') {
-          // Admin -> Admin Dashboard
-          Navigator.of(context).pushReplacementNamed('/admin-dashboard');
-        } else if (userRoleUpper == 'PROVIDER') {
-          // Provider -> Provider Home
-          Navigator.of(context).pushReplacementNamed('/provider-home');
-        } else {
-          // Client -> Customer Home
-          Navigator.of(context).pushReplacementNamed('/customer-home');
-        }
+        Navigator.of(context).pushReplacementNamed(
+          OnboardingNav.routeForRole(
+            userRoleUpper,
+            providerType: result.user?.providerProfile?.providerType ??
+                result.userData?['provider_type']?.toString(),
+          ),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -444,8 +439,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
             ),
             ListTile(
               leading: const Icon(Icons.work),
-              title: Text(
-                  AppLocalizations.of(context)?.serviceProvider ?? 'Service Provider'),
+              title: Text(AppLocalizations.of(context)?.serviceProvider ??
+                  'Service Provider'),
               subtitle: Text(
                   AppLocalizations.of(context)?.provideHomeServices ??
                       'I provide home services'),
@@ -468,34 +463,31 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
       if (result.success) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-                AppLocalizations.of(context)?.loginSuccess ??
+            content: Text(AppLocalizations.of(context)?.loginSuccess ??
                 'Logged in successfully'),
             backgroundColor: Colors.green,
           ),
         );
 
         // Initialize Push Notifications after successful Google login
-        if (ApiClient.authToken != null) {
-        }
+        if (ApiClient.authToken != null) {}
 
         try {
           await PushNotificationService().initialize();
-        } catch (e) {
-        }
+        } catch (e) {}
 
         // Navigate based on role
         final userRole =
             result.user?.role ?? result.userData?['role'] ?? 'CLIENT';
         final userRoleUpper = userRole.toString().toUpperCase();
 
-        if (userRoleUpper == 'ADMIN') {
-          Navigator.of(context).pushReplacementNamed('/admin-dashboard');
-        } else if (userRoleUpper == 'PROVIDER') {
-          Navigator.of(context).pushReplacementNamed('/provider-home');
-        } else {
-          Navigator.of(context).pushReplacementNamed('/customer-home');
-        }
+        Navigator.of(context).pushReplacementNamed(
+          OnboardingNav.routeForRole(
+            userRoleUpper,
+            providerType: result.user?.providerProfile?.providerType ??
+                result.userData?['provider_type']?.toString(),
+          ),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -530,7 +522,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     // Basic phone number format validation
     final phoneRegex = RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$');
     if (!phoneRegex.hasMatch(value)) {
-      return AppLocalizations.of(context)?.invalidPhone ?? 'Enter a valid phone number';
+      return AppLocalizations.of(context)?.invalidPhone ??
+          'Enter a valid phone number';
     }
 
     if (value.length < 8) {
@@ -548,635 +541,748 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: themeProvider.isDarkMode
-                ? [
-                    const Color(0xFF8B5CF6).withOpacity(0.1),
-                    const Color(0xFF121212),
-                  ]
-                : [
-                    const Color(0xFF8B5CF6).withOpacity(0.05),
-                    Colors.white,
-                  ],
-          ),
-        ),
-        child: SafeArea(
-          child: Stack(
-            children: [
-              // Main content (must be first element)
-              Center(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 36),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    child: FadeTransition(
-                      opacity: _fadeAnimation,
-                      child: SlideTransition(
-                        position: _slideAnimation,
-                        child: Card(
-                      elevation: 8,
-                      color: theme.colorScheme.surface,
-                      shadowColor: const Color(0xFF8B5CF6).withOpacity(0.2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(32.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            // Header with enhanced logo
-                            Column(
-                              children: [
-                                // Enhanced logo with multiple animations
-                                AnimatedBuilder(
-                                  animation: Listenable.merge([
-                                    _pulseAnimation,
-                                    _rotationAnimation,
-                                  ]),
-                                  builder: (context, child) {
-                                    return TweenAnimationBuilder<double>(
-                                      tween: Tween(begin: 0.8, end: 1.0),
-                                      duration:
-                                          const Duration(milliseconds: 600),
-                                      curve: Curves.elasticOut,
-                                      builder: (context, scaleValue, _) {
-                                        return Transform.scale(
-                                          scale: scaleValue *
-                                              _pulseAnimation.value,
-                                          child: Transform.rotate(
-                                            angle: _rotationAnimation.value,
-                                            child: Container(
-                                              width: 90,
-                                              height: 90,
-                                              decoration: BoxDecoration(
-                                                gradient: const LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    Color(0xFF818CF8),
-                                                    Color(0xFF8B5CF6),
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: themeProvider.isDarkMode
+                    ? [
+                        const Color(0xFF8B5CF6).withOpacity(0.1),
+                        const Color(0xFF121212),
+                      ]
+                    : [
+                        const Color(0xFF8B5CF6).withOpacity(0.05),
+                        Colors.white,
+                      ],
+              ),
+            ),
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  // Main content (must be first element)
+                  Center(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 36),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        child: FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: SlideTransition(
+                            position: _slideAnimation,
+                            child: Card(
+                              elevation: 8,
+                              color: theme.colorScheme.surface,
+                              shadowColor:
+                                  const Color(0xFF8B5CF6).withOpacity(0.2),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(32.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    // Header with enhanced logo
+                                    Column(
+                                      children: [
+                                        // Enhanced logo with multiple animations
+                                        AnimatedBuilder(
+                                          animation: Listenable.merge([
+                                            _pulseAnimation,
+                                            _rotationAnimation,
+                                          ]),
+                                          builder: (context, child) {
+                                            return TweenAnimationBuilder<
+                                                double>(
+                                              tween:
+                                                  Tween(begin: 0.8, end: 1.0),
+                                              duration: const Duration(
+                                                  milliseconds: 600),
+                                              curve: Curves.elasticOut,
+                                              builder:
+                                                  (context, scaleValue, _) {
+                                                return Transform.scale(
+                                                  scale: scaleValue *
+                                                      _pulseAnimation.value,
+                                                  child: Transform.rotate(
+                                                    angle: _rotationAnimation
+                                                        .value,
+                                                    child: Container(
+                                                      width: 90,
+                                                      height: 90,
+                                                      decoration: BoxDecoration(
+                                                        gradient:
+                                                            const LinearGradient(
+                                                          begin:
+                                                              Alignment.topLeft,
+                                                          end: Alignment
+                                                              .bottomRight,
+                                                          colors: [
+                                                            Color(0xFF818CF8),
+                                                            Color(0xFF8B5CF6),
+                                                          ],
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(24),
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: const Color(
+                                                                    0xFF8B5CF6)
+                                                                .withOpacity(0.3 *
+                                                                    _pulseAnimation
+                                                                        .value),
+                                                            blurRadius: 20 *
+                                                                _pulseAnimation
+                                                                    .value,
+                                                            offset:
+                                                                const Offset(
+                                                                    0, 8),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      child: Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          // Background icon
+                                                          Icon(
+                                                            Icons
+                                                                .cleaning_services_rounded,
+                                                            size: 48,
+                                                            color: Colors.white
+                                                                .withOpacity(
+                                                                    0.3),
+                                                          ),
+                                                          // Front icon
+                                                          Icon(
+                                                            Icons
+                                                                .home_work_rounded,
+                                                            size: 42,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .surface,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                        ),
+                                        const SizedBox(height: 24),
+                                        // Title
+                                        Text(
+                                          _isLogin
+                                              ? (AppLocalizations.of(context)
+                                                      ?.welcomeBack ??
+                                                  'Welcome Back')
+                                              : (AppLocalizations.of(context)
+                                                      ?.joinUs ??
+                                                  'Join Us'),
+                                          style: theme.textTheme.headlineSmall
+                                              ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: const Color(0xFF8B5CF6),
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          _isLogin
+                                              ? (AppLocalizations.of(context)
+                                                      ?.gladToSeeYouAgain ??
+                                                  'Glad to see you again, sign in to continue')
+                                              : (AppLocalizations.of(context)
+                                                      ?.createNewAccount ??
+                                                  'Create a new account and start your journey with us'),
+                                          style: theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                            color: Colors.grey[600],
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+
+                                    const SizedBox(height: 32),
+
+                                    // Form
+                                    Form(
+                                      key: _formKey,
+                                      child: Column(
+                                        children: [
+                                          // ===== Login Mode: Phone + OTP =====
+                                          if (_isLogin) ...[
+                                            if (_loginStep == 1) ...[
+                                              // Step 1: Enter phone number
+                                              TextFormField(
+                                                controller:
+                                                    _loginPhoneController,
+                                                decoration: InputDecoration(
+                                                  labelText:
+                                                      AppLocalizations.of(
+                                                                  context)
+                                                              ?.phoneNumber ??
+                                                          'Phone Number',
+                                                  hintText:
+                                                      'Enter your registered phone number',
+                                                  prefixIcon:
+                                                      const Icon(Icons.phone),
+                                                ),
+                                                keyboardType:
+                                                    TextInputType.phone,
+                                                textInputAction:
+                                                    TextInputAction.done,
+                                                focusNode: _loginPhoneFocus,
+                                                onFieldSubmitted: (_) =>
+                                                    _submit(),
+                                                onSaved: (v) =>
+                                                    _loginPhoneNumber = v ?? '',
+                                                validator: _validatePhoneNumber,
+                                              ),
+                                            ] else ...[
+                                              // Step 2: Show number + enter OTP
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.all(12),
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0xFF8B5CF6)
+                                                      .withOpacity(0.05),
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    const Icon(Icons.phone,
+                                                        color:
+                                                            Color(0xFF8B5CF6)),
+                                                    const SizedBox(width: 8),
+                                                    Expanded(
+                                                      child: Text(
+                                                        _loginPhoneNumber,
+                                                        style: theme
+                                                            .textTheme.bodyLarge
+                                                            ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          _loginStep = 1;
+                                                          _otpController
+                                                              .clear();
+                                                          _otpCode = '';
+                                                        });
+                                                      },
+                                                      child:
+                                                          const Text('Change'),
+                                                    ),
                                                   ],
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color:
-                                                        const Color(0xFF8B5CF6)
-                                                            .withOpacity(0.3 *
-                                                                _pulseAnimation
-                                                                    .value),
-                                                    blurRadius: 20 *
-                                                        _pulseAnimation.value,
-                                                    offset: const Offset(0, 8),
-                                                  ),
-                                                ],
                                               ),
-                                              child: Stack(
+                                              const SizedBox(height: 16),
+                                              Text(
+                                                'Enter the verification code sent to your phone',
+                                                style: theme
+                                                    .textTheme.bodyMedium
+                                                    ?.copyWith(
+                                                  color: Colors.grey[600],
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              const SizedBox(height: 12),
+                                              TextFormField(
+                                                controller: _otpController,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  labelText:
+                                                      'Verification Code',
+                                                  hintText: '1234',
+                                                  prefixIcon:
+                                                      Icon(Icons.lock_outline),
+                                                ),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                textInputAction:
+                                                    TextInputAction.done,
+                                                focusNode: _otpFocus,
+                                                maxLength: 4,
+                                                textAlign: TextAlign.center,
+                                                style: theme
+                                                    .textTheme.headlineSmall
+                                                    ?.copyWith(
+                                                  letterSpacing: 8,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                onFieldSubmitted: (_) =>
+                                                    _submit(),
+                                                onSaved: (v) =>
+                                                    _otpCode = v ?? '',
+                                                validator: (v) => (v == null ||
+                                                        v.length != 4)
+                                                    ? 'Enter the 4-digit verification code'
+                                                    : null,
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Align(
                                                 alignment: Alignment.center,
+                                                child: TextButton(
+                                                  onPressed: _isLoading
+                                                      ? null
+                                                      : () => _sendOtp(),
+                                                  child:
+                                                      const Text('Resend Code'),
+                                                ),
+                                              ),
+                                            ],
+
+                                            // Remember Me checkbox
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8.0),
+                                              child: Row(
                                                 children: [
-                                                  // Background icon
-                                                  Icon(
-                                                    Icons
-                                                        .cleaning_services_rounded,
-                                                    size: 48,
-                                                    color: Colors.white
-                                                        .withOpacity(0.3),
+                                                  Checkbox(
+                                                    value: _rememberMe,
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        _rememberMe =
+                                                            value ?? false;
+                                                      });
+                                                    },
+                                                    materialTapTargetSize:
+                                                        MaterialTapTargetSize
+                                                            .shrinkWrap,
+                                                    visualDensity:
+                                                        VisualDensity.compact,
                                                   ),
-                                                  // Front icon
-                                                  Icon(
-                                                    Icons.home_work_rounded,
-                                                    size: 42,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .surface,
+                                                  Expanded(
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          _rememberMe =
+                                                              !_rememberMe;
+                                                        });
+                                                      },
+                                                      child: Text(
+                                                        AppLocalizations.of(
+                                                                    context)
+                                                                ?.rememberMe ??
+                                                            'Remember Me',
+                                                        style: theme.textTheme
+                                                            .bodyMedium,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
                                             ),
+                                          ],
+
+                                          // ===== Registration Mode: Original fields =====
+                                          if (!_isLogin) ...[
+                                            // First name field
+                                            TextFormField(
+                                              decoration: InputDecoration(
+                                                labelText:
+                                                    AppLocalizations.of(context)
+                                                            ?.firstName ??
+                                                        'First Name',
+                                              ),
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              focusNode: _firstNameFocus,
+                                              onFieldSubmitted: (_) =>
+                                                  FocusScope.of(
+                                                context,
+                                              ).requestFocus(_lastNameFocus),
+                                              onSaved: (v) =>
+                                                  _firstName = v ?? '',
+                                              validator: (v) => (v == null ||
+                                                      v.trim().length < 2)
+                                                  ? (AppLocalizations.of(
+                                                              context)
+                                                          ?.enterValidName ??
+                                                      'Please enter a valid name')
+                                                  : null,
+                                            ),
+                                            const SizedBox(height: 12),
+
+                                            // Last name field
+                                            TextFormField(
+                                              decoration: InputDecoration(
+                                                labelText:
+                                                    AppLocalizations.of(context)
+                                                            ?.lastName ??
+                                                        'Last Name',
+                                              ),
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              focusNode: _lastNameFocus,
+                                              onFieldSubmitted: (_) =>
+                                                  FocusScope.of(
+                                                context,
+                                              ).requestFocus(_emailFocus),
+                                              onSaved: (v) =>
+                                                  _lastName = v ?? '',
+                                              validator: (v) => (v == null ||
+                                                      v.trim().length < 2)
+                                                  ? (AppLocalizations.of(
+                                                              context)
+                                                          ?.enterValidName ??
+                                                      'Please enter a valid name')
+                                                  : null,
+                                            ),
+                                            const SizedBox(height: 12),
+
+                                            // Email field
+                                            TextFormField(
+                                              controller: _emailController,
+                                              decoration: InputDecoration(
+                                                labelText:
+                                                    AppLocalizations.of(context)
+                                                            ?.email ??
+                                                        'Email',
+                                              ),
+                                              keyboardType:
+                                                  TextInputType.emailAddress,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              focusNode: _emailFocus,
+                                              onFieldSubmitted: (_) =>
+                                                  FocusScope.of(context)
+                                                      .requestFocus(
+                                                          _phoneFocus),
+                                              onSaved: (v) => _email = v ?? '',
+                                              validator: (v) => (v == null ||
+                                                      !v.contains('@'))
+                                                  ? (AppLocalizations.of(
+                                                              context)
+                                                          ?.enterValidEmail ??
+                                                      'Please enter a valid email')
+                                                  : null,
+                                            ),
+                                            const SizedBox(height: 12),
+
+                                            // Phone number field (required for registration)
+                                            TextFormField(
+                                              decoration: InputDecoration(
+                                                labelText:
+                                                    AppLocalizations.of(context)
+                                                            ?.phoneNumber ??
+                                                        'Phone Number',
+                                                hintText: AppLocalizations.of(
+                                                            context)
+                                                        ?.enterPhoneNumber ??
+                                                    'Enter your phone number',
+                                              ),
+                                              keyboardType: TextInputType.phone,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              focusNode: _phoneFocus,
+                                              onFieldSubmitted: (_) =>
+                                                  FocusScope.of(
+                                                context,
+                                              ).requestFocus(_passwordFocus),
+                                              onSaved: (v) =>
+                                                  _phoneNumber = v ?? '',
+                                              validator: _validatePhoneNumber,
+                                            ),
+                                            const SizedBox(height: 12),
+
+                                            // Role selection field (required for registration)
+                                            DropdownButtonFormField<String>(
+                                              decoration: InputDecoration(
+                                                labelText:
+                                                    AppLocalizations.of(context)
+                                                            ?.accountType ??
+                                                        'Account Type',
+                                              ),
+                                              value: _role,
+                                              items: _getRoles(context)
+                                                  .map((role) {
+                                                return DropdownMenuItem(
+                                                  value: role['value'],
+                                                  child: Text(role['label']!),
+                                                );
+                                              }).toList(),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _role = value ?? 'CLIENT';
+                                                });
+                                              },
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return AppLocalizations.of(
+                                                              context)
+                                                          ?.fieldRequired ??
+                                                      'Please select an account type';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                            const SizedBox(height: 12),
+
+                                            // Password field (for registration only)
+                                            TextFormField(
+                                              controller: _passwordController,
+                                              decoration: InputDecoration(
+                                                labelText:
+                                                    AppLocalizations.of(context)
+                                                            ?.password ??
+                                                        'Password',
+                                                suffixIcon: IconButton(
+                                                  icon: Icon(
+                                                    _obscure
+                                                        ? Icons.visibility
+                                                        : Icons.visibility_off,
+                                                  ),
+                                                  onPressed: () => setState(
+                                                      () =>
+                                                          _obscure = !_obscure),
+                                                  tooltip: _obscure
+                                                      ? (AppLocalizations.of(
+                                                                  context)
+                                                              ?.showPassword ??
+                                                          'Show password')
+                                                      : (AppLocalizations.of(
+                                                                  context)
+                                                              ?.hidePassword ??
+                                                          'Hide password'),
+                                                ),
+                                              ),
+                                              obscureText: _obscure,
+                                              focusNode: _passwordFocus,
+                                              textInputAction:
+                                                  TextInputAction.done,
+                                              onFieldSubmitted: (_) =>
+                                                  _submit(),
+                                              onSaved: (v) =>
+                                                  _password = v ?? '',
+                                              validator: (v) => (v == null ||
+                                                      v.length < 6)
+                                                  ? (AppLocalizations.of(
+                                                              context)
+                                                          ?.passwordMinLength ??
+                                                      'Password must be at least 6 characters')
+                                                  : null,
+                                            ),
+                                          ],
+
+                                          const SizedBox(height: 20),
+
+                                          // Submit button with animation
+                                          TweenAnimationBuilder<double>(
+                                            tween: Tween(begin: 1.0, end: 1.0),
+                                            duration: const Duration(
+                                                milliseconds: 200),
+                                            builder: (context, scale, child) {
+                                              return Transform.scale(
+                                                scale: scale,
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: theme
+                                                            .colorScheme.primary
+                                                            .withOpacity(0.3),
+                                                        blurRadius: 8,
+                                                        offset:
+                                                            const Offset(0, 4),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: ConnectivityButton(
+                                                    onPressed: _isLoading
+                                                        ? null
+                                                        : () => _submit(),
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        vertical: 14,
+                                                      ),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                      ),
+                                                      elevation: 0,
+                                                    ),
+                                                    child: _isLoading
+                                                        ? const SizedBox(
+                                                            height: 18,
+                                                            width: 18,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              strokeWidth: 2,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          )
+                                                        : Text(
+                                                            _isLogin
+                                                                ? (_loginStep ==
+                                                                        1
+                                                                    ? 'Send Verification Code'
+                                                                    : 'Verify & Login')
+                                                                : (AppLocalizations.of(
+                                                                            context)
+                                                                        ?.createAccount ??
+                                                                    'Create Account'),
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                                const SizedBox(height: 24),
-                                // Title
-                                Text(
-                                  _isLogin
-                                      ? (AppLocalizations.of(context)
-                                              ?.welcomeBack ??
-                                          'Welcome Back')
-                                      : (AppLocalizations.of(context)?.joinUs ??
-                                          'Join Us'),
-                                  style:
-                                      theme.textTheme.headlineSmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color(0xFF8B5CF6),
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  _isLogin
-                                      ? (AppLocalizations.of(context)
-                                              ?.gladToSeeYouAgain ??
-                                          'Glad to see you again, sign in to continue')
-                                      : (AppLocalizations.of(context)
-                                              ?.createNewAccount ??
-                                          'Create a new account and start your journey with us'),
-                                  style: theme.textTheme.bodyMedium?.copyWith(
-                                    color: Colors.grey[600],
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
 
-                            const SizedBox(height: 32),
+                                          const SizedBox(height: 12),
 
-                            // Form
-                            Form(
-                              key: _formKey,
-                              child: Column(
-                                children: [
-                                  // ===== Login Mode: Phone + OTP =====
-                                  if (_isLogin) ...[
-                                    if (_loginStep == 1) ...[
-                                      // Step 1: Enter phone number
-                                      TextFormField(
-                                        controller: _loginPhoneController,
-                                        decoration: InputDecoration(
-                                          labelText: AppLocalizations.of(context)
-                                                  ?.phoneNumber ??
-                                              'Phone Number',
-                                          hintText: 'Enter your registered phone number',
-                                          prefixIcon: const Icon(Icons.phone),
-                                        ),
-                                        keyboardType: TextInputType.phone,
-                                        textInputAction: TextInputAction.done,
-                                        focusNode: _loginPhoneFocus,
-                                        onFieldSubmitted: (_) => _submit(),
-                                        onSaved: (v) => _loginPhoneNumber = v ?? '',
-                                        validator: _validatePhoneNumber,
-                                      ),
-                                    ] else ...[
-                                      // Step 2: Show number + enter OTP
-                                      Container(
-                                        padding: const EdgeInsets.all(12),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFF8B5CF6).withOpacity(0.05),
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            const Icon(Icons.phone, color: Color(0xFF8B5CF6)),
-                                            const SizedBox(width: 8),
-                                            Expanded(
-                                              child: Text(
-                                                _loginPhoneNumber,
-                                                style: theme.textTheme.bodyLarge?.copyWith(
-                                                  fontWeight: FontWeight.bold,
+                                          // Toggle between registration and login
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                _isLogin
+                                                    ? (AppLocalizations.of(
+                                                                context)
+                                                            ?.dontHaveAccount ??
+                                                        "Don't have an account?")
+                                                    : (AppLocalizations.of(
+                                                                context)
+                                                            ?.alreadyHaveAccount ??
+                                                        'Already have an account?'),
+                                              ),
+                                              ConnectivityTextButton(
+                                                onPressed: _toggleMode,
+                                                child: Text(
+                                                  _isLogin
+                                                      ? (AppLocalizations.of(
+                                                                  context)
+                                                              ?.register ??
+                                                          'Sign Up')
+                                                      : (AppLocalizations.of(
+                                                                  context)
+                                                              ?.login ??
+                                                          'Sign In'),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          const SizedBox(height: 16),
+
+                                          // "or" divider
+                                          Row(
+                                            children: [
+                                              const Expanded(child: Divider()),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16),
+                                                child: Text(
+                                                  AppLocalizations.of(context)
+                                                          ?.or ??
+                                                      'or',
+                                                  style: theme
+                                                      .textTheme.bodyMedium
+                                                      ?.copyWith(
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              ),
+                                              const Expanded(child: Divider()),
+                                            ],
+                                          ),
+
+                                          const SizedBox(height: 16),
+
+                                          // Sign in with Google button
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: OutlinedButton.icon(
+                                              onPressed: _isLoading
+                                                  ? null
+                                                  : _signInWithGoogle,
+                                              style: OutlinedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 14),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                side: BorderSide(
+                                                  color:
+                                                      theme.colorScheme.outline,
+                                                ),
+                                              ),
+                                              icon: Icon(
+                                                Icons.g_mobiledata,
+                                                size: 32,
+                                                color: _isLoading
+                                                    ? Colors.grey
+                                                    : Colors.red,
+                                              ),
+                                              label: Text(
+                                                AppLocalizations.of(context)
+                                                        ?.signInWithGoogle ??
+                                                    'Sign in with Google',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: _isLoading
+                                                      ? Colors.grey
+                                                      : theme.colorScheme
+                                                          .onSurface,
                                                 ),
                                               ),
                                             ),
-                                            TextButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  _loginStep = 1;
-                                                  _otpController.clear();
-                                                  _otpCode = '';
-                                                });
-                                              },
-                                              child: const Text('Change'),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16),
-                                      Text(
-                                        'Enter the verification code sent to your phone',
-                                        style: theme.textTheme.bodyMedium?.copyWith(
-                                          color: Colors.grey[600],
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(height: 12),
-                                      TextFormField(
-                                        controller: _otpController,
-                                        decoration: const InputDecoration(
-                                          labelText: 'Verification Code',
-                                          hintText: '1234',
-                                          prefixIcon: Icon(Icons.lock_outline),
-                                        ),
-                                        keyboardType: TextInputType.number,
-                                        textInputAction: TextInputAction.done,
-                                        focusNode: _otpFocus,
-                                        maxLength: 4,
-                                        textAlign: TextAlign.center,
-                                        style: theme.textTheme.headlineSmall?.copyWith(
-                                          letterSpacing: 8,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        onFieldSubmitted: (_) => _submit(),
-                                        onSaved: (v) => _otpCode = v ?? '',
-                                        validator: (v) => (v == null || v.length != 4)
-                                            ? 'Enter the 4-digit verification code'
-                                            : null,
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: TextButton(
-                                          onPressed: _isLoading ? null : () => _sendOtp(),
-                                          child: const Text('Resend Code'),
-                                        ),
-                                      ),
-                                    ],
+                                          ),
 
-                                    // Remember Me checkbox
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0),
-                                      child: Row(
-                                        children: [
-                                          Checkbox(
-                                            value: _rememberMe,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _rememberMe = value ?? false;
-                                              });
-                                            },
-                                            materialTapTargetSize:
-                                                MaterialTapTargetSize
-                                                    .shrinkWrap,
-                                            visualDensity:
-                                                VisualDensity.compact,
-                                          ),
-                                          Expanded(
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  _rememberMe = !_rememberMe;
-                                                });
-                                              },
-                                              child: Text(
-                                                AppLocalizations.of(context)
-                                                        ?.rememberMe ??
-                                                    'Remember Me',
-                                                style:
-                                                    theme.textTheme.bodyMedium,
-                                              ),
-                                            ),
-                                          ),
+                                          const SizedBox(height: 8),
                                         ],
                                       ),
                                     ),
                                   ],
-
-                                  // ===== Registration Mode: Original fields =====
-                                  if (!_isLogin) ...[
-                                    // First name field
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                        labelText: AppLocalizations.of(context)
-                                                ?.firstName ??
-                                            'First Name',
-                                      ),
-                                      textInputAction: TextInputAction.next,
-                                      focusNode: _firstNameFocus,
-                                      onFieldSubmitted: (_) => FocusScope.of(
-                                        context,
-                                      ).requestFocus(_lastNameFocus),
-                                      onSaved: (v) => _firstName = v ?? '',
-                                      validator: (v) =>
-                                          (v == null || v.trim().length < 2)
-                                              ? (AppLocalizations.of(context)
-                                                      ?.enterValidName ??
-                                                  'Please enter a valid name')
-                                              : null,
-                                    ),
-                                    const SizedBox(height: 12),
-
-                                    // Last name field
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                        labelText: AppLocalizations.of(context)
-                                                ?.lastName ??
-                                            'Last Name',
-                                      ),
-                                      textInputAction: TextInputAction.next,
-                                      focusNode: _lastNameFocus,
-                                      onFieldSubmitted: (_) => FocusScope.of(
-                                        context,
-                                      ).requestFocus(_emailFocus),
-                                      onSaved: (v) => _lastName = v ?? '',
-                                      validator: (v) =>
-                                          (v == null || v.trim().length < 2)
-                                              ? (AppLocalizations.of(context)
-                                                      ?.enterValidName ??
-                                                  'Please enter a valid name')
-                                              : null,
-                                    ),
-                                    const SizedBox(height: 12),
-
-                                    // Email field
-                                    TextFormField(
-                                      controller: _emailController,
-                                      decoration: InputDecoration(
-                                        labelText:
-                                            AppLocalizations.of(context)?.email ??
-                                                'Email',
-                                      ),
-                                      keyboardType: TextInputType.emailAddress,
-                                      textInputAction: TextInputAction.next,
-                                      focusNode: _emailFocus,
-                                      onFieldSubmitted: (_) => FocusScope.of(context)
-                                              .requestFocus(_phoneFocus),
-                                      onSaved: (v) => _email = v ?? '',
-                                      validator: (v) =>
-                                          (v == null || !v.contains('@'))
-                                              ? (AppLocalizations.of(context)
-                                                      ?.enterValidEmail ??
-                                                  'Please enter a valid email')
-                                              : null,
-                                    ),
-                                    const SizedBox(height: 12),
-
-                                    // Phone number field (required for registration)
-                                    TextFormField(
-                                      decoration: InputDecoration(
-                                        labelText: AppLocalizations.of(context)
-                                                ?.phoneNumber ??
-                                            'Phone Number',
-                                        hintText: AppLocalizations.of(context)
-                                                ?.enterPhoneNumber ??
-                                            'Enter your phone number',
-                                      ),
-                                      keyboardType: TextInputType.phone,
-                                      textInputAction: TextInputAction.next,
-                                      focusNode: _phoneFocus,
-                                      onFieldSubmitted: (_) => FocusScope.of(
-                                        context,
-                                      ).requestFocus(_passwordFocus),
-                                      onSaved: (v) => _phoneNumber = v ?? '',
-                                      validator: _validatePhoneNumber,
-                                    ),
-                                    const SizedBox(height: 12),
-
-                                    // Role selection field (required for registration)
-                                    DropdownButtonFormField<String>(
-                                      decoration: InputDecoration(
-                                        labelText: AppLocalizations.of(context)
-                                                ?.accountType ??
-                                            'Account Type',
-                                      ),
-                                      value: _role,
-                                      items: _getRoles(context).map((role) {
-                                        return DropdownMenuItem(
-                                          value: role['value'],
-                                          child: Text(role['label']!),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _role = value ?? 'CLIENT';
-                                        });
-                                      },
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return AppLocalizations.of(context)
-                                                  ?.fieldRequired ??
-                                              'Please select an account type';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                    const SizedBox(height: 12),
-
-                                    // Password field (for registration only)
-                                    TextFormField(
-                                      controller: _passwordController,
-                                      decoration: InputDecoration(
-                                        labelText: AppLocalizations.of(context)
-                                                ?.password ??
-                                            'Password',
-                                        suffixIcon: IconButton(
-                                          icon: Icon(
-                                            _obscure
-                                                ? Icons.visibility
-                                                : Icons.visibility_off,
-                                          ),
-                                          onPressed: () => setState(
-                                              () => _obscure = !_obscure),
-                                          tooltip: _obscure
-                                              ? (AppLocalizations.of(context)
-                                                      ?.showPassword ??
-                                                  'Show password')
-                                              : (AppLocalizations.of(context)
-                                                      ?.hidePassword ??
-                                                  'Hide password'),
-                                        ),
-                                      ),
-                                      obscureText: _obscure,
-                                      focusNode: _passwordFocus,
-                                      textInputAction: TextInputAction.done,
-                                      onFieldSubmitted: (_) => _submit(),
-                                      onSaved: (v) => _password = v ?? '',
-                                      validator: (v) => (v == null ||
-                                              v.length < 6)
-                                          ? (AppLocalizations.of(context)
-                                                  ?.passwordMinLength ??
-                                              'Password must be at least 6 characters')
-                                          : null,
-                                    ),
-                                  ],
-
-                                  const SizedBox(height: 20),
-
-                                  // Submit button with animation
-                                  TweenAnimationBuilder<double>(
-                                    tween: Tween(begin: 1.0, end: 1.0),
-                                    duration: const Duration(milliseconds: 200),
-                                    builder: (context, scale, child) {
-                                      return Transform.scale(
-                                        scale: scale,
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: theme.colorScheme.primary
-                                                    .withOpacity(0.3),
-                                                blurRadius: 8,
-                                                offset: const Offset(0, 4),
-                                              ),
-                                            ],
-                                          ),
-                                          child: ConnectivityButton(
-                                            onPressed: _isLoading
-                                                ? null
-                                                : () => _submit(),
-                                            style: ElevatedButton.styleFrom(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 14,
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                              ),
-                                              elevation: 0,
-                                            ),
-                                            child: _isLoading
-                                                ? const SizedBox(
-                                                    height: 18,
-                                                    width: 18,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      strokeWidth: 2,
-                                                      color: Colors.white,
-                                                    ),
-                                                  )
-                                                : Text(
-                                                    _isLogin
-                                                        ? (_loginStep == 1
-                                                            ? 'Send Verification Code'
-                                                            : 'Verify & Login')
-                                                        : (AppLocalizations.of(
-                                                                    context)
-                                                                ?.createAccount ??
-                                                            'Create Account'),
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-
-                                  const SizedBox(height: 12),
-
-                                  // Toggle between registration and login
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        _isLogin
-                                            ? (AppLocalizations.of(context)
-                                                    ?.dontHaveAccount ??
-                                                "Don't have an account?")
-                                            : (AppLocalizations.of(context)
-                                                    ?.alreadyHaveAccount ??
-                                                'Already have an account?'),
-                                      ),
-                                      ConnectivityTextButton(
-                                        onPressed: _toggleMode,
-                                        child: Text(
-                                          _isLogin
-                                              ? (AppLocalizations.of(context)
-                                                      ?.register ??
-                                                  'Sign Up')
-                                              : (AppLocalizations.of(context)
-                                                      ?.login ??
-                                                  'Sign In'),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  const SizedBox(height: 16),
-
-                                  // "or" divider
-                                  Row(
-                                    children: [
-                                      const Expanded(child: Divider()),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16),
-                                        child: Text(
-                                          AppLocalizations.of(context)?.or ??
-                                              'or',
-                                          style: theme.textTheme.bodyMedium
-                                              ?.copyWith(
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                      const Expanded(child: Divider()),
-                                    ],
-                                  ),
-
-                                  const SizedBox(height: 16),
-
-                                  // Sign in with Google button
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: OutlinedButton.icon(
-                                      onPressed:
-                                          _isLoading ? null : _signInWithGoogle,
-                                      style: OutlinedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 14),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        side: BorderSide(
-                                          color: theme.colorScheme.outline,
-                                        ),
-                                      ),
-                                      icon: Icon(
-                                        Icons.g_mobiledata,
-                                        size: 32,
-                                        color: _isLoading
-                                            ? Colors.grey
-                                            : Colors.red,
-                                      ),
-                                      label: Text(
-                                        AppLocalizations.of(context)
-                                                ?.signInWithGoogle ??
-                                            'Sign in with Google',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: _isLoading
-                                              ? Colors.grey
-                                              : theme.colorScheme.onSurface,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-
-                                  const SizedBox(height: 8),
-                                ],
+                                ),
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-                ),
-              ),
-
-            ],
+            ),
           ),
-        ),
-      ),
         );
       },
     );

@@ -39,7 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = false);
     if (!sent.success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(sent.error ?? 'Unable to send verification code')),
+        SnackBar(
+            content: Text(sent.error ?? 'Unable to send verification code')),
       );
       return;
     }
@@ -55,15 +56,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 registrationToken: result.registrationToken,
               );
               Navigator.of(ctx).pushReplacement(
-                MaterialPageRoute(builder: (_) => AccountTypeScreen(data: data)),
+                MaterialPageRoute(
+                    builder: (_) => AccountTypeScreen(data: data)),
               );
               return;
             }
-            final normalizedRole = result.user?.role.toUpperCase();
-            final role = (normalizedRole == 'PROVIDER' || normalizedRole == 'COMPANY')
-                ? AccountType.provider
-                : AccountType.user;
-            OnboardingNav.goToHome(ctx, role);
+            OnboardingNav.goToUserHome(ctx,
+                user: result.user, userData: result.userData);
           },
         ),
       ),
@@ -76,7 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: OnboardingTheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: OnboardingTheme.sidePadding),
+          padding: const EdgeInsets.symmetric(
+              horizontal: OnboardingTheme.sidePadding),
           child: Column(
             children: [
               const SizedBox(height: 28),
@@ -111,14 +111,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have an account?",
-                      style: OnboardingTheme.inter(size: 14, color: OnboardingTheme.textBlack)),
+                      style: OnboardingTheme.inter(
+                          size: 14, color: OnboardingTheme.textBlack)),
                   const SizedBox(width: 8),
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const SignupScreen()),
                     ),
                     child: Text('Sign up',
-                        style: OnboardingTheme.inter(size: 14, color: OnboardingTheme.primary)),
+                        style: OnboardingTheme.inter(
+                            size: 14, color: OnboardingTheme.primary)),
                   ),
                 ],
               ),

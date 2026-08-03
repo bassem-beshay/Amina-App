@@ -5,6 +5,7 @@ import '../services/storage_service.dart';
 import '../services/auth_service.dart';
 import '../widgets/onboarding/amina_logo.dart';
 import 'onboarding/login_screen.dart';
+import 'onboarding/onboarding_nav.dart';
 
 /// Splash shown on launch (Figma "Splash · Enter" → "Reveal"): the Amina
 /// wordmark reveals on a purple field with the tagline, then the app decides
@@ -34,13 +35,19 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     _logoFade = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.0, 0.5, curve: Curves.easeIn)),
+      CurvedAnimation(
+          parent: _controller,
+          curve: const Interval(0.0, 0.5, curve: Curves.easeIn)),
     );
     _logoScale = Tween<double>(begin: 0.85, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.0, 0.55, curve: Curves.easeOutBack)),
+      CurvedAnimation(
+          parent: _controller,
+          curve: const Interval(0.0, 0.55, curve: Curves.easeOutBack)),
     );
     _taglineFade = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.45, 0.85, curve: Curves.easeIn)),
+      CurvedAnimation(
+          parent: _controller,
+          curve: const Interval(0.45, 0.85, curve: Curves.easeIn)),
     );
 
     _controller.forward();
@@ -69,16 +76,8 @@ class _SplashScreenState extends State<SplashScreen>
       final user = await AuthService.getCurrentUser();
       if (user != null && mounted) {
         _isNavigating = true;
-        final role = user.role.toUpperCase();
-        if (role == 'CLIENT') {
-          Navigator.of(context).pushReplacementNamed('/customer-home');
-        } else if (role == 'PROVIDER') {
-          Navigator.of(context).pushReplacementNamed('/provider-home');
-        } else if (role == 'ADMIN') {
-          Navigator.of(context).pushReplacementNamed('/admin-dashboard');
-        } else {
-          _goToLogin();
-        }
+        final route = OnboardingNav.routeForUser(user);
+        Navigator.of(context).pushReplacementNamed(route);
         return;
       }
     }

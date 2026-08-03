@@ -11,6 +11,10 @@ class Conversation {
   final int bookingId;
   @JsonKey(name: 'booking_status')
   final String bookingStatus;
+  /// Payment state is intentionally separate from the booking lifecycle.
+  /// A paid booking remains CONFIRMED until the provider starts the service.
+  @JsonKey(name: 'payment_status')
+  final String paymentStatus;
   @JsonKey(name: 'service_name')
   final String serviceName;
   @JsonKey(name: 'service_name_en')
@@ -32,6 +36,7 @@ class Conversation {
     required this.booking,
     required this.bookingId,
     required this.bookingStatus,
+    this.paymentStatus = 'PENDING',
     required this.serviceName,
     this.serviceNameEn,
     required this.client,
